@@ -13,15 +13,17 @@ const rotuloStatus: Record<Cliente['status'], string> = {
  * O `peso` distribui a largura no PDF e na folha impressa.
  */
 export function exportacaoClientes(params: ListParams): ConfigExport<Cliente> {
+  const naLixeira = params.escopo === 'lixeira'
   const filtros = [
+    naLixeira && 'somente registros na lixeira',
     params.search && `busca: "${params.search}"`,
     params.filters?.status && `status: ${rotuloStatus[params.filters.status as Cliente['status']]}`,
     params.filters?.plano && `plano: ${params.filters.plano}`,
   ].filter(Boolean)
 
   return {
-    nomeArquivo: 'clientes',
-    titulo: 'Clientes',
+    nomeArquivo: naLixeira ? 'clientes-lixeira' : 'clientes',
+    titulo: naLixeira ? 'Clientes na lixeira' : 'Clientes',
     subtitulo: filtros.length ? filtros.join(' · ') : 'Todos os registros',
     orientacao: 'paisagem',
     rodape: 'Documento gerado pelo painel SoftEmp · uso interno',
@@ -32,7 +34,9 @@ export function exportacaoClientes(params: ListParams): ConfigExport<Cliente> {
       { chave: 'plano', cabecalho: 'Plano', peso: 1, valor: (c) => c.plano },
       { chave: 'status', cabecalho: 'Status', peso: 1.2, valor: (c) => rotuloStatus[c.status] },
       { chave: 'mrr', cabecalho: 'MRR', peso: 1.1, alinhamento: 'direita', valor: (c) => money(c.mrr), valorCsv: (c) => c.mrr },
-      { chave: 'criadoEm', cabecalho: 'Cliente desde', peso: 1.2, alinhamento: 'direita', valor: (c) => date(c.criadoEm), valorCsv: (c) => c.criadoEm.slice(0, 10) },
+      naLixeira
+        ? { chave: 'excluidoEm', cabecalho: 'Excluído em', peso: 1.2, alinhamento: 'direita' as const, valor: (c: Cliente) => (c.excluidoEm ? date(c.excluidoEm) : '—'), valorCsv: (c: Cliente) => c.excluidoEm?.slice(0, 10) ?? '' }
+        : { chave: 'criadoEm', cabecalho: 'Cliente desde', peso: 1.2, alinhamento: 'direita' as const, valor: (c: Cliente) => date(c.criadoEm), valorCsv: (c: Cliente) => c.criadoEm.slice(0, 10) },
     ],
     // Leva a lista INTEIRA com os filtros da tela — não a página visível.
     buscarLinhas: async () => {

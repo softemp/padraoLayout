@@ -14,6 +14,7 @@ const RegisterPage = lazy(() => import('@/features/auth/RegisterPage').then((m) 
 const ForgotPasswordPage = lazy(() => import('@/features/auth/ForgotPasswordPage').then((m) => ({ default: m.ForgotPasswordPage })))
 const DashboardPage = lazy(() => import('@/features/dashboard/DashboardPage').then((m) => ({ default: m.DashboardPage })))
 const ClientesPage = lazy(() => import('@/features/clientes/ClientesPage').then((m) => ({ default: m.ClientesPage })))
+const ContaClientePage = lazy(() => import('@/features/clientes/ContaClientePage').then((m) => ({ default: m.ContaClientePage })))
 const PerfilPage = lazy(() => import('@/features/perfil/PerfilPage').then((m) => ({ default: m.PerfilPage })))
 const ComponentesPage = lazy(() => import('@/features/componentes/ComponentesPage').then((m) => ({ default: m.ComponentesPage })))
 const EmConstrucaoPage = lazy(() => import('@/features/sistema/EmConstrucaoPage').then((m) => ({ default: m.EmConstrucaoPage })))
@@ -46,6 +47,7 @@ export function App() {
         <Route element={<AppShell />}>
           <Route path="/" element={<DashboardPage />} />
           <Route path="/clientes" element={<ClientesPage />} />
+          <Route path="/clientes/:id" element={<ContaClientePage />} />
           <Route path="/perfil" element={<PerfilPage />} />
           <Route path="/componentes" element={<ComponentesPage />} />
           <Route path="/em-construcao" element={<EmConstrucaoPage />} />

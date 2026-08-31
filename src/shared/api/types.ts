@@ -6,7 +6,11 @@ export type ListParams = {
   sortDir: 'asc' | 'desc'
   search?: string
   filters?: Record<string, string | undefined>
+  /** Exclusão é LÓGICA: a lixeira é um escopo da mesma listagem. */
+  escopo?: EscopoRegistro
 }
+
+export type EscopoRegistro = 'ativos' | 'lixeira'
 
 export type ListResponse<T> = {
   data: T[]
@@ -25,6 +29,8 @@ export type Cliente = {
   mrr: number
   criadoEm: string
   ultimoAcesso: string
+  /** null = ativo. Preenchido = está na lixeira (soft delete). */
+  excluidoEm: string | null
 }
 
 export type Notificacao = {
@@ -56,4 +62,60 @@ export type AtividadeItem = {
   alvo: string
   criadoEm: string
   tipo: 'info' | 'sucesso' | 'alerta' | 'critico'
+}
+
+// ── Conta do cliente ─────────────────────────────────────────────────────────
+
+export type TipoMovimento = 'credito' | 'debito' | 'cobranca' | 'estorno'
+
+export type MovimentoConta = {
+  id: number
+  criadoEm: string
+  tipo: TipoMovimento
+  categoria: string
+  descricao: string
+  /** Assinado: entra positivo, sai negativo. */
+  valor: number
+  /** Saldo DEPOIS deste movimento — gravado junto, nunca recalculado depois. */
+  saldoApos: number
+  autor: string
+}
+
+export type ExtratoConta = {
+  saldo: number
+  movimentos: MovimentoConta[]
+}
+
+export type UsuarioDaConta = {
+  id: number
+  nome: string
+  email: string
+  papel: 'Titular' | 'Financeiro' | 'Operador' | 'Somente leitura'
+  ativo: boolean
+  ultimoAcesso: string
+}
+
+export type EventoAuditoria = {
+  id: number
+  criadoEm: string
+  autor: string
+  acao: string
+  detalhe: string
+}
+
+export type Assinatura = {
+  plano: Cliente['plano']
+  ciclo: 'Mensal' | 'Anual'
+  valor: number
+  proximaCobranca: string
+  formaPagamento: string
+  desde: string
+  renovacaoAutomatica: boolean
+}
+
+export type AjusteConta = {
+  tipo: 'credito' | 'debito'
+  valor: number
+  categoria: string
+  descricao: string
 }

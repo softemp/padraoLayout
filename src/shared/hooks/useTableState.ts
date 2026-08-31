@@ -1,7 +1,7 @@
 import { useCallback, useMemo } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { readPrefs, writePrefs } from '@/shared/lib/ui-prefs'
-import type { ListParams } from '@/shared/api/types'
+import type { EscopoRegistro, ListParams } from '@/shared/api/types'
 
 /**
  * Estado da listagem na URL (?page=&perPage=&sortBy=&sortDir=&search=&status=).
@@ -9,6 +9,7 @@ import type { ListParams } from '@/shared/api/types'
  * devolvendo a MESMA página — o que `useState` não faz.
  */
 export type TableState = ListParams & {
+  setEscopo: (e: EscopoRegistro) => void
   setPage: (p: number) => void
   setPerPage: (p: number) => void
   setSort: (col: string) => void
@@ -28,6 +29,9 @@ export function useTableState(defaults: { sortBy: string; sortDir?: 'asc' | 'des
   const search = params.get('search') || ''
   const status = params.get('status') || undefined
   const plano = params.get('plano') || undefined
+  // Escopo (ativos × lixeira) também mora na URL: a aba aberta sobrevive ao F5
+  // e vai junto no link compartilhado.
+  const escopo: EscopoRegistro = params.get('aba') === 'lixeira' ? 'lixeira' : 'ativos'
 
   const patch = useCallback(
     (novo: Record<string, string | undefined>, resetPage = true) => {
@@ -51,8 +55,10 @@ export function useTableState(defaults: { sortBy: string; sortDir?: 'asc' | 'des
       sortBy,
       sortDir,
       search,
+      escopo,
       filters: { status, plano },
       temFiltro: Boolean(search || status || plano),
+      setEscopo: (e) => patch({ aba: e === 'lixeira' ? 'lixeira' : undefined }),
       setPage: (p) => patch({ page: p > 1 ? String(p) : undefined }, false),
       setPerPage: (p) => {
         writePrefs({ tablePageSize: p })
@@ -68,6 +74,6 @@ export function useTableState(defaults: { sortBy: string; sortDir?: 'asc' | 'des
       setFilter: (chave, valor) => patch({ [chave]: valor }),
       limparFiltros: () => patch({ search: undefined, status: undefined, plano: undefined }),
     }),
-    [page, perPage, sortBy, sortDir, search, status, plano, patch],
+    [page, perPage, sortBy, sortDir, search, escopo, status, plano, patch],
   )
 }

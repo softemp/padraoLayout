@@ -1,5 +1,11 @@
-import { clientes, notificacoes } from './mock-db'
-import type { Cliente, ListParams, ListResponse, Notificacao } from './types'
+import {
+  assinaturaDoCliente, auditoriaDoCliente, clientes, extratoDoCliente, notificacoes,
+  registrarMovimento, usuariosDaConta,
+} from './mock-db'
+import type {
+  AjusteConta, Assinatura, Cliente, EventoAuditoria, ExtratoConta, ListParams, ListResponse,
+  MovimentoConta, Notificacao, UsuarioDaConta,
+} from './types'
 
 /**
  * API FALSA — o projeto é só frontend. Ela existe para que a listagem seja
@@ -17,8 +23,11 @@ const texto = (v: string) =>
 export async function listarClientes(params: ListParams): Promise<ListResponse<Cliente>> {
   await latencia()
 
-  const { page, perPage, sortBy, sortDir, search, filters } = params
-  let linhas = [...clientes]
+  const { page, perPage, sortBy, sortDir, search, filters, escopo = 'ativos' } = params
+
+  // A lixeira é um ESCOPO da mesma consulta, não outra tela: o registro
+  // continua no banco com a data de exclusão preenchida.
+  let linhas = clientes.filter((c) => (escopo === 'lixeira' ? c.excluidoEm !== null : c.excluidoEm === null))
 
   if (search?.trim()) {
     const q = texto(search.trim())
@@ -50,6 +59,93 @@ export async function listarClientes(params: ListParams): Promise<ListResponse<C
   const data = linhas.slice((pagina - 1) * perPage, (pagina - 1) * perPage + perPage)
 
   return { data, meta: { total, totalPages, page: pagina, perPage } }
+}
+
+/** Contagem da lixeira — alimenta o badge da aba. */
+export async function contarLixeira(): Promise<number> {
+  await latencia(180)
+  return clientes.filter((c) => c.excluidoEm !== null).length
+}
+
+/** Exclusão LÓGICA: reversível, é o que a lixeira devolve. */
+export async function moverParaLixeira(id: number): Promise<void> {
+  await latencia(320)
+  const cliente = clientes.find((c) => c.id === id)
+  if (!cliente) throw new Error('Cliente não encontrado.')
+  cliente.excluidoEm = new Date().toISOString()
+}
+
+export async function restaurarCliente(id: number): Promise<void> {
+  await latencia(320)
+  const cliente = clientes.find((c) => c.id === id)
+  if (!cliente) throw new Error('Cliente não encontrado.')
+  cliente.excluidoEm = null
+}
+
+/**
+ * Exclusão FÍSICA: sem volta. Só a partir da lixeira, e só depois de
+ * confirmação explícita na tela.
+ */
+export async function excluirDefinitivo(id: number): Promise<void> {
+  await latencia(420)
+  const i = clientes.findIndex((c) => c.id === id)
+  if (i < 0) throw new Error('Cliente não encontrado.')
+  if (clientes[i].excluidoEm === null) throw new Error('Só é possível excluir em definitivo o que está na lixeira.')
+  clientes.splice(i, 1)
+}
+
+export async function salvarCliente(id: number, dados: Partial<Cliente>): Promise<Cliente> {
+  await latencia(520)
+  const cliente = clientes.find((c) => c.id === id)
+  if (!cliente) throw new Error('Cliente não encontrado.')
+  Object.assign(cliente, dados)
+  return { ...cliente }
+}
+
+// ── Conta do cliente ─────────────────────────────────────────────────────────
+
+export async function obterCliente(id: number): Promise<Cliente> {
+  await latencia(280)
+  const cliente = clientes.find((c) => c.id === id)
+  if (!cliente) throw new Error('Cliente não encontrado.')
+  return { ...cliente }
+}
+
+export async function obterExtrato(clienteId: number): Promise<ExtratoConta> {
+  await latencia(360)
+  return extratoDoCliente(clienteId)
+}
+
+/**
+ * Crédito e débito manuais. O valor chega SEMPRE positivo da tela e o sinal é
+ * decidido aqui, pelo tipo: deixar a tela mandar número negativo é como um
+ * crédito vira débito sem ninguém perceber.
+ */
+export async function lancarAjuste(clienteId: number, ajuste: AjusteConta): Promise<MovimentoConta> {
+  await latencia(520)
+  if (!(ajuste.valor > 0)) throw new Error('O valor precisa ser maior que zero.')
+  return registrarMovimento(clienteId, {
+    tipo: ajuste.tipo,
+    categoria: ajuste.categoria,
+    descricao: ajuste.descricao,
+    valor: ajuste.tipo === 'credito' ? ajuste.valor : -ajuste.valor,
+    autor: 'Paulo Roberto',
+  })
+}
+
+export async function obterUsuariosDaConta(clienteId: number): Promise<UsuarioDaConta[]> {
+  await latencia(300)
+  return usuariosDaConta(clienteId)
+}
+
+export async function obterAssinatura(clienteId: number): Promise<Assinatura> {
+  await latencia(260)
+  return assinaturaDoCliente(clienteId)
+}
+
+export async function obterAuditoria(clienteId: number): Promise<EventoAuditoria[]> {
+  await latencia(320)
+  return auditoriaDoCliente(clienteId)
 }
 
 export async function listarNotificacoes(): Promise<Notificacao[]> {

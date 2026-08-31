@@ -53,7 +53,7 @@ export function DataTable<T>({
 
       {/* A tabela larga rola DENTRO da própria caixa — o <body> nunca rola de lado. */}
       <div className="overflow-x-auto">
-        <table className="w-full min-w-[46rem] border-collapse text-sm">
+        <table className="w-full min-w-[52rem] border-collapse text-sm">
           <thead>
             {table.getHeaderGroups().map((grupo) => (
               <tr key={grupo.id} className="border-b border-border bg-surface-2/60">
