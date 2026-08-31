@@ -159,9 +159,45 @@ export async function marcarTodasLidas(): Promise<Notificacao[]> {
   return [...notificacoes]
 }
 
-/** Autenticação de mentira: qualquer senha com 6+ caracteres entra. */
-export async function login(email: string, senha: string) {
+// ── Acesso (tudo mocado) ─────────────────────────────────────────────────────
+
+/**
+ * Autenticação de mentira: qualquer senha com 6+ caracteres entra.
+ * Devolve se o segundo fator é exigido — quem decide é o SERVIDOR, nunca a tela.
+ */
+export async function login(identificador: string, senha: string) {
   await latencia(700)
-  if (senha.length < 6) throw new Error('E-mail ou senha inválidos.')
-  return { nome: 'Paulo Roberto', email, papel: 'Administrador' }
+  if (senha.length < 6) throw new Error('Credenciais inválidas.')
+  return {
+    usuario: { nome: 'Paulo Roberto', identificador, papel: 'Administrador' },
+    exigeSegundoFator: true,
+    // Só o suficiente para a tela dizer para onde o código foi.
+    destinoSegundoFator: 'app' as 'app' | 'whatsapp' | 'sms',
+  }
+}
+
+/** Códigos de 6 dígitos; 000000 é sempre inválido, para exercitar o erro. */
+export async function verificarSegundoFator(codigo: string) {
+  await latencia(600)
+  if (!/^\d{6}$/.test(codigo) || codigo === '000000') throw new Error('Código inválido ou expirado.')
+  return { ok: true }
+}
+
+/**
+ * Destinos disponíveis para recuperação. Vêm MASCARADOS do servidor: a tela
+ * de recuperação não pode virar um consultador de e-mail e telefone alheios.
+ */
+export async function destinosRecuperacao(_identificador: string) {
+  await latencia(420)
+  return {
+    email: 'pa••••••@softemp.com.br',
+    whatsapp: '(48) •••••-0000',
+    sms: '(48) •••••-0000',
+  }
+}
+
+export async function enviarRecuperacao(_identificador: string, _canal: string) {
+  await latencia(680)
+  // Resposta IDÊNTICA para cadastro existente ou não — sempre "enviamos".
+  return { ok: true }
 }

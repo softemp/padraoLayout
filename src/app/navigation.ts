@@ -42,6 +42,7 @@ export const navegacao: NavSecao[] = [
         icone: '⚙️',
         filhos: [
           { rotulo: 'Perfil', icone: '👤', rota: '/perfil' },
+          { rotulo: 'Comunicação', icone: '📡', rota: '/configuracoes/comunicacao' },
           { rotulo: 'Usuários e acessos', icone: '🔐', rota: '/em-construcao?t=Usuários e acessos' },
           { rotulo: 'Integrações', icone: '🔌', rota: '/em-construcao?t=Integrações' },
         ],

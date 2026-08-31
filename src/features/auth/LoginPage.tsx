@@ -6,11 +6,12 @@ import { z } from 'zod'
 import { login } from '@/shared/api/api'
 import { Button } from '@/shared/ui/Button'
 import { Checkbox, Input } from '@/shared/ui/Field'
+import { configAcesso, rotuloIdentificador } from '@/app/auth-config'
+import { detectarTipo, formatarIdentificador } from '@/shared/lib/identificador'
 import { AuthCard } from './AuthLayout'
 
-/** Validação no front é UX; o backend revalida sempre. */
 const schema = z.object({
-  email: z.string().min(1, 'Informe o e-mail').email('E-mail inválido'),
+  identificador: z.string().min(1, 'Informe seu acesso'),
   senha: z.string().min(1, 'Informe a senha'),
   manterConectado: z.boolean().default(true),
 })
@@ -19,33 +20,42 @@ type Formulario = z.infer<typeof schema>
 export function LoginPage() {
   const navigate = useNavigate()
   const [erroGeral, setErroGeral] = useState<string | null>(null)
+  const [identificador, setIdentificador] = useState('')
 
-  const { register, handleSubmit, formState } = useForm<Formulario>({
+  const { register, handleSubmit, formState, setValue } = useForm<Formulario>({
     resolver: zodResolver(schema),
-    defaultValues: { email: 'paulo@softemp.com.br', senha: '', manterConectado: true },
+    defaultValues: { identificador: '', senha: '', manterConectado: true },
   })
 
-  const enviar = handleSubmit(async ({ email, senha }) => {
+  const tipo = detectarTipo(identificador)
+  const aceitos = configAcesso.identificadores.map((i) => rotuloIdentificador[i])
+
+  const enviar = handleSubmit(async ({ identificador: id, senha }) => {
     setErroGeral(null)
     try {
-      await login(email, senha)
-      navigate('/')
+      const { exigeSegundoFator } = await login(id, senha)
+      // Quem decide se há segundo fator é o servidor. A tela só obedece.
+      navigate(exigeSegundoFator && configAcesso.segundoFator ? '/verificacao' : '/')
     } catch {
-      // Mensagem que NÃO distingue e-mail de senha (quem enumera conta agradece
-      // a distinção). Qual dos dois falhou vai para o log do servidor.
-      setErroGeral('E-mail ou senha inválidos.')
+      // Mensagem única: não distingue identificador de senha, nem diz se a
+      // conta existe — senão o login vira um verificador de cadastro.
+      setErroGeral('Não foi possível entrar. Confira seus dados e tente de novo.')
     }
   })
 
   return (
     <AuthCard
       titulo="Entrar"
-      descricao="Acesse o painel com suas credenciais."
+      descricao={`Acesse com ${aceitos.slice(0, -1).join(', ')} ou ${aceitos.at(-1)}.`}
       rodape={
-        <>
-          Ainda não tem conta?{' '}
-          <Link to="/cadastro" className="font-medium text-primary hover:underline">Criar conta</Link>
-        </>
+        configAcesso.autoCadastro ? (
+          <>
+            Ainda não tem conta?{' '}
+            <Link to="/cadastro" className="font-medium text-primary hover:underline">Criar conta</Link>
+          </>
+        ) : (
+          <span className="text-text-muted">Acesso restrito a usuários cadastrados pelo administrador.</span>
+        )
       }
     >
       <form onSubmit={enviar} noValidate className="space-y-4">
@@ -56,14 +66,29 @@ export function LoginPage() {
           </p>
         )}
 
-        <Input
-          label="E-mail"
-          type="email"
-          autoComplete="email"
-          placeholder="voce@empresa.com.br"
-          error={formState.errors.email?.message}
-          {...register('email')}
-        />
+        {/* UM campo para as três formas: o tipo é detectado pelo formato.
+            Três campos (ou um seletor "entrar com…") fazem a pessoa declarar
+            o que ela acabou de digitar. */}
+        <div className="relative">
+          <Input
+            label="E-mail, telefone ou CPF"
+            inputMode={tipo === 'email' || tipo === null ? 'text' : 'numeric'}
+            autoComplete="username"
+            placeholder="voce@empresa.com.br"
+            error={formState.errors.identificador?.message}
+            value={identificador}
+            onChange={(e) => {
+              const formatado = formatarIdentificador(e.target.value)
+              setIdentificador(formatado)
+              setValue('identificador', formatado, { shouldValidate: false })
+            }}
+          />
+          {tipo && (
+            <span className="pointer-events-none absolute right-3 top-[2.15rem] rounded-md bg-surface-3 px-1.5 py-0.5 text-[11px] font-medium text-text-muted">
+              {rotuloIdentificador[tipo]}
+            </span>
+          )}
+        </div>
 
         <Input
           label="Senha"
@@ -72,7 +97,6 @@ export function LoginPage() {
           placeholder="••••••••"
           error={formState.errors.senha?.message}
           acao={
-            // Piso inegociável nº 1: recuperação de senha nasce com a tela.
             <Link to="/recuperar-senha" className="text-[13px] font-medium text-primary hover:underline">
               Esqueci minha senha
             </Link>
@@ -80,13 +104,11 @@ export function LoginPage() {
           {...register('senha')}
         />
 
-        {/* Piso inegociável nº 2: "manter conectado" muda o prazo do refresh,
-            decidido no servidor — nunca o prazo do access token. */}
+        {/* "Manter conectado" muda o prazo do refresh, decidido no servidor —
+            nunca o prazo do access token. */}
         <Checkbox label="Manter conectado neste dispositivo" {...register('manterConectado')} />
 
-        <Button type="submit" size="lg" block loading={formState.isSubmitting}>
-          Entrar
-        </Button>
+        <Button type="submit" size="lg" block loading={formState.isSubmitting}>Entrar</Button>
 
         <p className="text-center text-[12px] text-text-muted">
           Demonstração: qualquer senha com 6+ caracteres entra.

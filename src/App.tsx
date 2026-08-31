@@ -12,6 +12,8 @@ import { Skeleton } from '@/shared/ui/Skeleton'
  */
 const RegisterPage = lazy(() => import('@/features/auth/RegisterPage').then((m) => ({ default: m.RegisterPage })))
 const ForgotPasswordPage = lazy(() => import('@/features/auth/ForgotPasswordPage').then((m) => ({ default: m.ForgotPasswordPage })))
+const VerificacaoPage = lazy(() => import('@/features/auth/VerificacaoPage').then((m) => ({ default: m.VerificacaoPage })))
+const ComunicacaoPage = lazy(() => import('@/features/configuracoes/ComunicacaoPage').then((m) => ({ default: m.ComunicacaoPage })))
 const DashboardPage = lazy(() => import('@/features/dashboard/DashboardPage').then((m) => ({ default: m.DashboardPage })))
 const ClientesPage = lazy(() => import('@/features/clientes/ClientesPage').then((m) => ({ default: m.ClientesPage })))
 const ContaClientePage = lazy(() => import('@/features/clientes/ContaClientePage').then((m) => ({ default: m.ContaClientePage })))
@@ -41,6 +43,7 @@ export function App() {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/cadastro" element={<RegisterPage />} />
           <Route path="/recuperar-senha" element={<ForgotPasswordPage />} />
+          <Route path="/verificacao" element={<VerificacaoPage />} />
         </Route>
 
         {/* Área logada — um AppShell só, para todos os painéis */}
@@ -50,6 +53,7 @@ export function App() {
           <Route path="/clientes/:id" element={<ContaClientePage />} />
           <Route path="/perfil" element={<PerfilPage />} />
           <Route path="/componentes" element={<ComponentesPage />} />
+          <Route path="/configuracoes/comunicacao" element={<ComunicacaoPage />} />
           <Route path="/em-construcao" element={<EmConstrucaoPage />} />
         </Route>
 
