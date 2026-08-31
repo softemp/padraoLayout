@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0f1115" />
+    <title>Padrão Layout · SoftEmp</title>
+    <script>
+      // Tema aplicado ANTES da primeira pintura (evita flash de tela branca no dark).
+      try {
+        var p = JSON.parse(localStorage.getItem('ui-prefs') || '{}')
+        var t = p.theme || 'system'
+        var dark = t === 'dark' || (t === 'system' && matchMedia('(prefers-color-scheme: dark)').matches)
+        document.documentElement.dataset.theme = dark ? 'dark' : 'light'
+      } catch (e) { document.documentElement.dataset.theme = 'light' }
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
