@@ -6,8 +6,10 @@ import { useDebouncedValue } from '@/shared/hooks/useDebouncedValue'
 import { DataTable } from '@/shared/ui/DataTable'
 import { PageHeader } from '@/shared/ui/PageHeader'
 import { Button } from '@/shared/ui/Button'
+import { BotaoExportar } from '@/shared/ui/BotaoExportar'
 import { Select } from '@/shared/ui/Field'
 import { colunasClientes } from './colunas'
+import { exportacaoClientes } from './exportacao'
 
 export function ClientesPage() {
   const tabela = useTableState({ sortBy: 'nome', sortDir: 'asc' })
@@ -19,17 +21,18 @@ export function ClientesPage() {
     if (buscaDebounced !== (tabela.search ?? '')) tabela.setSearch(buscaDebounced)
   }, [buscaDebounced]) // eslint-disable-line react-hooks/exhaustive-deps
 
+  const paramsAtuais = {
+    page: tabela.page,
+    perPage: tabela.perPage,
+    sortBy: tabela.sortBy,
+    sortDir: tabela.sortDir,
+    search: tabela.search,
+    filters: tabela.filters,
+  }
+
   const { data, isFetching, error } = useQuery({
     queryKey: ['clientes', tabela.page, tabela.perPage, tabela.sortBy, tabela.sortDir, tabela.search, tabela.filters],
-    queryFn: () =>
-      listarClientes({
-        page: tabela.page,
-        perPage: tabela.perPage,
-        sortBy: tabela.sortBy,
-        sortDir: tabela.sortDir,
-        search: tabela.search,
-        filters: tabela.filters,
-      }),
+    queryFn: () => listarClientes(paramsAtuais),
     // Mantém a página anterior visível enquanto a nova chega: a tabela não
     // pisca em branco a cada clique de paginação.
     placeholderData: keepPreviousData,
@@ -42,9 +45,8 @@ export function ClientesPage() {
         descricao="Paginação, ordenação e busca acontecem no servidor — a tela abre igual com 200 ou 200 mil linhas."
         acoes={
           <>
-            <Button variant="secondary">
-              <span aria-hidden>⬇️</span> Exportar
-            </Button>
+            {/* Os três formatos ligados: CSV, PDF e impressão direta. */}
+            <BotaoExportar {...exportacaoClientes(paramsAtuais)} />
             <Button>
               <span aria-hidden>＋</span> Novo cliente
             </Button>

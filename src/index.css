@@ -147,7 +147,106 @@
   }
 }
 
+/* ─────────────────────────────────────────────────────────────
+   IMPRESSÃO — a folha é outro dispositivo, com outra regra de layout.
+   O documento (#doc-impressao) é o ÚNICO elemento que vai ao papel;
+   o resto da aplicação (sidebar, navbar, filtros, paginação) some.
+   ───────────────────────────────────────────────────────────── */
+@page {
+  size: A4 portrait;
+  margin: 12mm;
+}
+
+#doc-impressao { display: none; }
+
 @media print {
+  /* Nada de cor de fundo desperdiçando tinta, e tudo em preto no branco. */
+  html, body {
+    background: #fff !important;
+    color: #000 !important;
+  }
+
+  body > *:not(#doc-impressao) { display: none !important; }
   .no-print { display: none !important; }
-  body { background: #fff; }
+
+  #doc-impressao {
+    display: block;
+    font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+    font-size: 9.5pt;
+    color: #111;
+  }
+
+  /* Cabeçalho do documento: não se separa da primeira leva de linhas. */
+  #doc-impressao .doc-cabecalho {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12mm;
+    border-bottom: 0.4pt solid #999;
+    padding-bottom: 3mm;
+    margin-bottom: 4mm;
+    break-after: avoid;
+    page-break-after: avoid;
+  }
+  #doc-impressao h1 { font-size: 14pt; font-weight: 700; margin: 0; }
+  #doc-impressao .doc-cabecalho p { margin: 1.5mm 0 0; font-size: 8pt; color: #555; }
+  #doc-impressao .doc-marca { font-size: 9pt; font-weight: 700; letter-spacing: 0.04em; color: #444; }
+
+  #doc-impressao table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+  }
+
+  /* O cabeçalho da tabela se repete em TODA folha — sem isso, da página 2 em
+     diante ninguém sabe o que é cada coluna. */
+  #doc-impressao thead { display: table-header-group; }
+  #doc-impressao tfoot { display: table-footer-group; }
+
+  /* Linha NUNCA parte ao meio: se não couber, desce inteira para a folha
+     seguinte. Vale para a linha e para a célula. */
+  #doc-impressao tr,
+  #doc-impressao td,
+  #doc-impressao th {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  #doc-impressao th {
+    text-align: left;
+    font-size: 8pt;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    color: #333;
+    border-bottom: 0.4pt solid #999;
+    padding: 1.8mm 2mm;
+  }
+  #doc-impressao td {
+    padding: 1.6mm 2mm;
+    border-bottom: 0.2pt solid #ddd;
+    overflow-wrap: anywhere;
+  }
+  #doc-impressao [data-alinhamento='direita'] { text-align: right; }
+  #doc-impressao [data-alinhamento='centro'] { text-align: center; }
+
+  #doc-impressao .doc-rodape {
+    margin-top: 4mm;
+    font-size: 8pt;
+    color: #666;
+    break-before: avoid;
+    page-break-before: avoid;
+  }
+
+  /* Órfãs e viúvas: nunca uma linha solta no fim ou no começo da folha. */
+  #doc-impressao p, #doc-impressao td { orphans: 3; widows: 3; }
+}
+
+/* Paisagem é escolha do documento, não do navegador. */
+@media print {
+  #doc-impressao[data-orientacao='paisagem'] { page: paisagem; }
+}
+@page paisagem {
+  size: A4 landscape;
+  margin: 12mm;
 }

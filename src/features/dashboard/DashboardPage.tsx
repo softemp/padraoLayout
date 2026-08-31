@@ -10,7 +10,8 @@ import { Avatar } from '@/shared/ui/Avatar'
 import { CanaisBarras } from '@/shared/charts/CanaisBarras'
 import { CategoriasBarras } from '@/shared/charts/CategoriasBarras'
 import { ReceitaArea } from '@/shared/charts/ReceitaArea'
-import { atividades, kpis, metaMes } from '@/shared/api/mock-db'
+import { BotaoExportar } from '@/shared/ui/BotaoExportar'
+import { atividades, kpis, metaMes, serieReceita } from '@/shared/api/mock-db'
 import { money, timeAgo } from '@/shared/lib/format'
 import { cn } from '@/shared/lib/cn'
 
@@ -45,9 +46,22 @@ export function DashboardPage() {
                 </button>
               ))}
             </div>
-            <Button variant="secondary" size="md">
-              <span aria-hidden>⬇️</span> Exportar
-            </Button>
+            {/* Aqui a impressão está DESLIGADA: painel de acompanhamento não
+                é documento de papel. É só virar a prop. */}
+            <BotaoExportar
+              formatos={{ csv: true, pdf: true, imprimir: false }}
+              nomeArquivo="receita-mensal"
+              titulo="Receita mensal"
+              subtitulo={`Período: ${periodo}`}
+              rodape="Painel SoftEmp · valores em reais"
+              colunas={[
+                { chave: 'mes', cabecalho: 'Mês', peso: 1, valor: (l) => l.mes },
+                { chave: 'receita', cabecalho: 'Receita', peso: 1.4, alinhamento: 'direita', valor: (l) => money(l.receita), valorCsv: (l) => l.receita },
+                { chave: 'meta', cabecalho: 'Meta', peso: 1.4, alinhamento: 'direita', valor: (l) => money(l.meta), valorCsv: (l) => l.meta },
+                { chave: 'atingimento', cabecalho: 'Atingimento', peso: 1.2, alinhamento: 'direita', valor: (l) => `${Math.round((l.receita / l.meta) * 100)}%`, valorCsv: (l) => Math.round((l.receita / l.meta) * 100) },
+              ]}
+              buscarLinhas={() => serieReceita}
+            />
           </>
         }
       />

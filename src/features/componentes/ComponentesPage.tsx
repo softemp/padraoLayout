@@ -7,7 +7,8 @@ import { Meter } from '@/shared/ui/Meter'
 import { PageHeader } from '@/shared/ui/PageHeader'
 import { Skeleton } from '@/shared/ui/Skeleton'
 import { StatTile } from '@/shared/ui/StatTile'
-import { kpis } from '@/shared/api/mock-db'
+import { BotaoExportar } from '@/shared/ui/BotaoExportar'
+import { categorias, kpis } from '@/shared/api/mock-db'
 import { money } from '@/shared/lib/format'
 
 const TOKENS_SUPERFICIE = [
@@ -25,6 +26,26 @@ const TOKENS_STATUS = [
   { nome: 'critical', classe: 'bg-critical' },
 ]
 const SERIES = [1, 2, 3, 4, 5, 6]
+
+/** Configuração de exportação usada nas demonstrações abaixo. */
+const exportacaoDemo = {
+  nomeArquivo: 'receita-por-linha',
+  titulo: 'Receita por linha de produto',
+  subtitulo: 'Mês corrente',
+  rodape: 'Exemplo do kit de componentes',
+  colunas: [
+    { chave: 'categoria', cabecalho: 'Linha de produto', peso: 2, valor: (l: (typeof categorias)[number]) => l.categoria },
+    {
+      chave: 'valor',
+      cabecalho: 'Receita',
+      peso: 1,
+      alinhamento: 'direita' as const,
+      valor: (l: (typeof categorias)[number]) => money(l.valor),
+      valorCsv: (l: (typeof categorias)[number]) => l.valor,
+    },
+  ],
+  buscarLinhas: () => categorias,
+}
 
 function Secao({ titulo, descricao, children }: { titulo: string; descricao: string; children: React.ReactNode }) {
   return (
@@ -101,6 +122,40 @@ export function ComponentesPage() {
           </Card>
         </div>
       </div>
+
+      <Card>
+        <CardHeader
+          titulo="Exportação"
+          descricao="Um componente, três saídas — e cada formato liga ou desliga por prop."
+        />
+        <CardBody className="space-y-5">
+          <div className="flex flex-wrap items-center gap-3">
+            <BotaoExportar {...exportacaoDemo} />
+            <span className="text-[13px] text-text-muted">
+              <code className="font-mono text-[12px]">formatos</code> ausente — os três ligados
+            </span>
+          </div>
+          <div className="flex flex-wrap items-center gap-3">
+            <BotaoExportar {...exportacaoDemo} formatos={{ csv: true }} rotulo="Baixar CSV" />
+            <span className="text-[13px] text-text-muted">
+              <code className="font-mono text-[12px]">{'{ csv: true }'}</code> — formato único vira botão direto, sem menu
+            </span>
+          </div>
+          <div className="flex flex-wrap items-center gap-3">
+            <BotaoExportar {...exportacaoDemo} formatos={{ pdf: true, imprimir: true }} variante="primary" />
+            <span className="text-[13px] text-text-muted">
+              <code className="font-mono text-[12px]">{'{ pdf: true, imprimir: true }'}</code> — sem planilha
+            </span>
+          </div>
+
+          <ul className="space-y-1.5 border-t border-border pt-4 text-[13px] text-text-secondary">
+            <li><strong className="text-text">CSV</strong> — separador <code className="font-mono text-[12px]">;</code> e BOM UTF-8 (Excel pt-BR abre certo); número vai cru, então a coluna soma.</li>
+            <li><strong className="text-text">PDF</strong> — cabeçalho repetido em toda folha, linha nunca partida ao meio, “Página X de Y” no rodapé. Texto pesquisável, não imagem da tela.</li>
+            <li><strong className="text-text">Imprimir</strong> — só o documento vai ao papel; sidebar, filtros e paginação somem. Mesmas regras de quebra, pela folha de impressão.</li>
+            <li>Os três exportam a lista <strong className="text-text">inteira</strong> com os filtros aplicados — nunca só a página visível.</li>
+          </ul>
+        </CardBody>
+      </Card>
 
       <Card>
         <CardHeader titulo="Indicadores" descricao="Rótulo · valor · variação contra período nomeado · minigráfico." />
