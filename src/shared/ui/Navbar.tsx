@@ -6,8 +6,19 @@ import { ThemeToggle } from './ThemeToggle'
 import { UserMenu } from './UserMenu'
 import { ehPai, navegacao } from '@/app/navigation'
 
+/**
+ * Rotas que existem mas NÃO moram no menu (chegam pelo dropdown do usuário,
+ * por link de linha ou por atalho). Sem isso a navbar cairia no genérico.
+ */
+const FORA_DO_MENU: Record<string, string> = {
+  '/perfil': 'Perfil',
+  '/em-construcao': 'Módulo',
+}
+
 /** Título da página derivado da navegação (uma fonte só para menu e navbar). */
 function tituloDaRota(pathname: string) {
+  if (FORA_DO_MENU[pathname]) return FORA_DO_MENU[pathname]
+  if (/^\/clientes\/\d+$/.test(pathname)) return 'Clientes · Conta do cliente'
   for (const secao of navegacao) {
     for (const item of secao.itens) {
       if (!ehPai(item)) {

@@ -115,7 +115,7 @@ export function DashboardPage() {
           <CardHeader
             titulo="Atividade recente"
             descricao="O que aconteceu no sistema nas últimas 48 horas"
-            acoes={<Link to="/em-construcao?t=Auditoria" className="text-[13px] font-medium text-primary hover:underline">Ver auditoria</Link>}
+            acoes={<Link to="/auditoria" className="text-[13px] font-medium text-primary hover:underline">Ver auditoria</Link>}
           />
           <ul className="divide-y divide-border">
             {atividades.map((a) => (
@@ -140,12 +140,12 @@ export function DashboardPage() {
           <CardHeader titulo="Atalhos" descricao="As ações que este painel mais executa" />
           <CardBody className="grid grid-cols-2 gap-2.5">
             {[
-              { icone: '➕', rotulo: 'Novo cliente', rota: '/em-construcao?t=Novo cliente' },
-              { icone: '🧾', rotulo: 'Emitir fatura', rota: '/em-construcao?t=Emitir fatura' },
+              { icone: '➕', rotulo: 'Novo cliente', rota: '/clientes' },
+              { icone: '🧾', rotulo: 'Faturas', rota: '/financeiro/faturas' },
               { icone: '📇', rotulo: 'Clientes', rota: '/clientes' },
               { icone: '🧩', rotulo: 'Componentes', rota: '/componentes' },
-              { icone: '📈', rotulo: 'Relatórios', rota: '/em-construcao?t=Relatórios' },
-              { icone: '🔐', rotulo: 'Acessos', rota: '/em-construcao?t=Acessos' },
+              { icone: '📈', rotulo: 'Relatórios', rota: '/relatorios' },
+              { icone: '🔐', rotulo: 'Acessos', rota: '/configuracoes/acessos' },
             ].map((a) => (
               <Link
                 key={a.rotulo}

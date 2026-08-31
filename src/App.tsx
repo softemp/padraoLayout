@@ -14,6 +14,14 @@ const RegisterPage = lazy(() => import('@/features/auth/RegisterPage').then((m) 
 const ForgotPasswordPage = lazy(() => import('@/features/auth/ForgotPasswordPage').then((m) => ({ default: m.ForgotPasswordPage })))
 const VerificacaoPage = lazy(() => import('@/features/auth/VerificacaoPage').then((m) => ({ default: m.VerificacaoPage })))
 const ComunicacaoPage = lazy(() => import('@/features/configuracoes/ComunicacaoPage').then((m) => ({ default: m.ComunicacaoPage })))
+const AcessosPage = lazy(() => import('@/features/acessos/AcessosPage').then((m) => ({ default: m.AcessosPage })))
+const FaturasPage = lazy(() => import('@/features/financeiro/FaturasPage').then((m) => ({ default: m.FaturasPage })))
+const RecebimentosPage = lazy(() => import('@/features/financeiro/RecebimentosPage').then((m) => ({ default: m.RecebimentosPage })))
+const ConciliacaoPage = lazy(() => import('@/features/financeiro/ConciliacaoPage').then((m) => ({ default: m.ConciliacaoPage })))
+const ContasPage = lazy(() => import('@/features/financeiro/contas/ContasPage').then((m) => ({ default: m.ContasPage })))
+const RelatoriosPage = lazy(() => import('@/features/relatorios/RelatoriosPage').then((m) => ({ default: m.RelatoriosPage })))
+const AuditoriaPage = lazy(() => import('@/features/auditoria/AuditoriaPage').then((m) => ({ default: m.AuditoriaPage })))
+const IntegracoesPage = lazy(() => import('@/features/configuracoes/IntegracoesPage').then((m) => ({ default: m.IntegracoesPage })))
 const DashboardPage = lazy(() => import('@/features/dashboard/DashboardPage').then((m) => ({ default: m.DashboardPage })))
 const ClientesPage = lazy(() => import('@/features/clientes/ClientesPage').then((m) => ({ default: m.ClientesPage })))
 const ContaClientePage = lazy(() => import('@/features/clientes/ContaClientePage').then((m) => ({ default: m.ContaClientePage })))
@@ -54,6 +62,14 @@ export function App() {
           <Route path="/perfil" element={<PerfilPage />} />
           <Route path="/componentes" element={<ComponentesPage />} />
           <Route path="/configuracoes/comunicacao" element={<ComunicacaoPage />} />
+          <Route path="/configuracoes/acessos" element={<AcessosPage />} />
+          <Route path="/configuracoes/integracoes" element={<IntegracoesPage />} />
+          <Route path="/financeiro/contas" element={<ContasPage />} />
+          <Route path="/financeiro/faturas" element={<FaturasPage />} />
+          <Route path="/financeiro/recebimentos" element={<RecebimentosPage />} />
+          <Route path="/financeiro/conciliacao" element={<ConciliacaoPage />} />
+          <Route path="/relatorios" element={<RelatoriosPage />} />
+          <Route path="/auditoria" element={<AuditoriaPage />} />
           <Route path="/em-construcao" element={<EmConstrucaoPage />} />
         </Route>
 

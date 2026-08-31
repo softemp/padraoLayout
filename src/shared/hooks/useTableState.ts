@@ -19,7 +19,14 @@ export type TableState = ListParams & {
   temFiltro: boolean
 }
 
-export function useTableState(defaults: { sortBy: string; sortDir?: 'asc' | 'desc' }): TableState {
+export function useTableState(defaults: {
+  sortBy: string
+  sortDir?: 'asc' | 'desc'
+  /** Chaves de filtro que ESTA tela usa. Sem declarar, o filtro entra na URL
+      e não chega na consulta — foi o que aconteceu com o filtro de meio de
+      pagamento das faturas. */
+  filtros?: string[]
+}): TableState {
   const [params, setParams] = useSearchParams()
 
   const page = Number(params.get('page') || 1)
@@ -27,8 +34,10 @@ export function useTableState(defaults: { sortBy: string; sortDir?: 'asc' | 'des
   const sortBy = params.get('sortBy') || defaults.sortBy
   const sortDir = (params.get('sortDir') as 'asc' | 'desc') || defaults.sortDir || 'desc'
   const search = params.get('search') || ''
-  const status = params.get('status') || undefined
-  const plano = params.get('plano') || undefined
+  const chavesFiltro = defaults.filtros ?? ['status', 'plano']
+  const filtros: Record<string, string | undefined> = {}
+  chavesFiltro.forEach((chave) => (filtros[chave] = params.get(chave) || undefined))
+  const assinaturaFiltros = JSON.stringify(filtros)
   // Escopo (ativos × lixeira) também mora na URL: a aba aberta sobrevive ao F5
   // e vai junto no link compartilhado.
   const escopo: EscopoRegistro = params.get('aba') === 'lixeira' ? 'lixeira' : 'ativos'
@@ -56,8 +65,8 @@ export function useTableState(defaults: { sortBy: string; sortDir?: 'asc' | 'des
       sortDir,
       search,
       escopo,
-      filters: { status, plano },
-      temFiltro: Boolean(search || status || plano),
+      filters: filtros,
+      temFiltro: Boolean(search || Object.values(filtros).some(Boolean)),
       setEscopo: (e) => patch({ aba: e === 'lixeira' ? 'lixeira' : undefined }),
       setPage: (p) => patch({ page: p > 1 ? String(p) : undefined }, false),
       setPerPage: (p) => {
@@ -72,8 +81,11 @@ export function useTableState(defaults: { sortBy: string; sortDir?: 'asc' | 'des
         }),
       setSearch: (q) => patch({ search: q || undefined }),
       setFilter: (chave, valor) => patch({ [chave]: valor }),
-      limparFiltros: () => patch({ search: undefined, status: undefined, plano: undefined }),
+      limparFiltros: () =>
+        patch({ search: undefined, ...Object.fromEntries(chavesFiltro.map((c) => [c, undefined])) }),
     }),
-    [page, perPage, sortBy, sortDir, search, escopo, status, plano, patch],
+    // assinaturaFiltros no lugar do objeto: recriar o objeto a cada render
+    // invalidaria o memo (e a queryKey) sem nada ter mudado.
+    [page, perPage, sortBy, sortDir, search, escopo, assinaturaFiltros, patch], // eslint-disable-line react-hooks/exhaustive-deps
   )
 }

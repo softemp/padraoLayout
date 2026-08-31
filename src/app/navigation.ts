@@ -25,12 +25,14 @@ export const navegacao: NavSecao[] = [
         rotulo: 'Financeiro',
         icone: '💳',
         filhos: [
-          { rotulo: 'Faturas', icone: '🧾', rota: '/em-construcao?t=Faturas' },
-          { rotulo: 'Recebimentos', icone: '💰', rota: '/em-construcao?t=Recebimentos' },
-          { rotulo: 'Conciliação', icone: '⚖️', rota: '/em-construcao?t=Conciliação' },
+          { rotulo: 'Contas a pagar e receber', icone: '📒', rota: '/financeiro/contas' },
+          { rotulo: 'Faturas', icone: '🧾', rota: '/financeiro/faturas' },
+          { rotulo: 'Recebimentos', icone: '💰', rota: '/financeiro/recebimentos' },
+          { rotulo: 'Conciliação', icone: '⚖️', rota: '/financeiro/conciliacao' },
         ],
       },
-      { rotulo: 'Relatórios', icone: '📈', rota: '/em-construcao?t=Relatórios' },
+      { rotulo: 'Relatórios', icone: '📈', rota: '/relatorios' },
+      { rotulo: 'Auditoria', icone: '🕘', rota: '/auditoria' },
     ],
   },
   {
@@ -40,11 +42,12 @@ export const navegacao: NavSecao[] = [
       {
         rotulo: 'Configurações',
         icone: '⚙️',
+        // Perfil NÃO entra aqui: o lugar dele é o dropdown do usuário, na navbar.
+        // Duas portas para a mesma tela é como o menu incha.
         filhos: [
-          { rotulo: 'Perfil', icone: '👤', rota: '/perfil' },
           { rotulo: 'Comunicação', icone: '📡', rota: '/configuracoes/comunicacao' },
-          { rotulo: 'Usuários e acessos', icone: '🔐', rota: '/em-construcao?t=Usuários e acessos' },
-          { rotulo: 'Integrações', icone: '🔌', rota: '/em-construcao?t=Integrações' },
+          { rotulo: 'Usuários e acessos', icone: '🔐', rota: '/configuracoes/acessos' },
+          { rotulo: 'Integrações', icone: '🔌', rota: '/configuracoes/integracoes' },
         ],
       },
     ],

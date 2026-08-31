@@ -23,7 +23,7 @@ type Confirmacao = { tipo: 'lixeira' | 'excluir'; cliente: Cliente } | null
 export function ClientesPage() {
   const qc = useQueryClient()
   const navigate = useNavigate()
-  const tabela = useTableState({ sortBy: 'nome', sortDir: 'asc' })
+  const tabela = useTableState({ sortBy: 'nome', sortDir: 'asc', filtros: ['status', 'plano'] })
   const [busca, setBusca] = useState(tabela.search ?? '')
   const buscaDebounced = useDebouncedValue(busca, 450)
 
