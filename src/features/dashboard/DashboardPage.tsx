@@ -10,6 +10,7 @@ import { Avatar } from '@/shared/ui/Avatar'
 import { CanaisBarras } from '@/shared/charts/CanaisBarras'
 import { CategoriasBarras } from '@/shared/charts/CategoriasBarras'
 import { ReceitaArea } from '@/shared/charts/ReceitaArea'
+import { TopClientesCard } from './TopClientesCard'
 import { BotaoExportar } from '@/shared/ui/BotaoExportar'
 import { atividades, kpis, metaMes, serieReceita } from '@/shared/api/mock-db'
 import { money, timeAgo } from '@/shared/lib/format'
@@ -100,6 +101,8 @@ export function DashboardPage() {
             </div>
           </CardBody>
         </Card>
+
+        <TopClientesCard />
       </section>
 
       <section className="grid grid-cols-1 gap-3 sm:gap-4 lg:grid-cols-2 lg:gap-5">
