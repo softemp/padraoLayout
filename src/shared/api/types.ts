@@ -635,3 +635,61 @@ export type TotaisTarefas = {
   semPrazo: number
   concluidasSemana: number
 }
+
+// ── Estoque ──────────────────────────────────────────────────────────────────
+
+export type TipoMovimentoEstoque = 'entrada' | 'saida' | 'ajuste' | 'transferencia'
+
+export type Deposito = { id: number; nome: string; sigla: string; principal: boolean }
+
+export type ItemEstoque = {
+  id: number
+  sku: string
+  nome: string
+  categoria: string
+  unidade: 'un' | 'cx' | 'kg' | 'm' | 'l'
+  /** Custo médio PONDERADO — recalculado só na entrada. */
+  custoMedio: number
+  precoVenda: number
+  /** Físico, somando os depósitos. */
+  saldo: number
+  /** Prometido a pedidos: disponível = saldo − reservado. */
+  reservado: number
+  estoqueSeguranca: number
+  /** Dias entre pedir ao fornecedor e a mercadoria chegar. */
+  prazoReposicaoDias: number
+  consumoMedioDiario: number
+  fornecedor: string
+  localizacao: string
+  ativo: boolean
+  ultimaMovimentacao: string | null
+}
+
+export type SaldoPorDeposito = { depositoId: number; deposito: string; saldo: number }
+
+export type MovimentoEstoque = {
+  id: number
+  itemId: number
+  criadoEm: string
+  tipo: TipoMovimentoEstoque
+  /** Assinada: entrada positiva, saída negativa. */
+  quantidade: number
+  /** Custo unitário do movimento (só entrada informa; saída usa o médio vigente). */
+  custoUnitario: number
+  /** Saldo DEPOIS deste movimento — gravado junto, nunca recalculado. */
+  saldoApos: number
+  /** Custo médio DEPOIS deste movimento. */
+  custoMedioApos: number
+  documento: string
+  motivo: string
+  depositoId: number
+  autor: string
+}
+
+export type TotaisEstoque = {
+  itens: number
+  valorTotal: number
+  abaixoMinimo: number
+  precisamRepor: number
+  semGiro: number
+}
