@@ -693,3 +693,68 @@ export type TotaisEstoque = {
   precisamRepor: number
   semGiro: number
 }
+
+// ── Compras ──────────────────────────────────────────────────────────────────
+
+/** "Atrasado" é derivado da previsão de entrega, não estado gravado. */
+export type SituacaoPedido =
+  | 'rascunho' | 'aguardando_aprovacao' | 'aprovado' | 'enviado'
+  | 'recebido_parcial' | 'recebido' | 'cancelado'
+
+export type ItemPedido = {
+  id: number
+  itemEstoqueId: number
+  sku: string
+  nome: string
+  unidade: string
+  quantidade: number
+  quantidadeRecebida: number
+  precoUnitario: number
+}
+
+export type PedidoCompra = {
+  id: number
+  numero: string
+  fornecedor: string
+  situacao: SituacaoPedido
+  criadoPor: string
+  criadoEm: string
+  aprovadoPor: string | null
+  aprovadoEm: string | null
+  previsaoEntrega: string
+  condicaoPagamento: string
+  observacao: string
+  itens: ItemPedido[]
+  /** Vínculos criados no recebimento. */
+  lancamentoId: number | null
+}
+
+export type EventoPedido = {
+  id: number
+  pedidoId: number
+  criadoEm: string
+  autor: string
+  acao: string
+  detalhe: string
+}
+
+export type SugestaoCompra = {
+  itemEstoqueId: number
+  sku: string
+  nome: string
+  unidade: string
+  disponivel: number
+  pontoDePedido: number
+  sugerido: number
+  custoMedio: number
+  fornecedor: string
+  prazoReposicaoDias: number
+}
+
+export type TotaisCompras = {
+  aguardandoAprovacao: number
+  aReceber: number
+  atrasados: number
+  valorEmAberto: number
+  sugestoes: number
+}
