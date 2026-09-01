@@ -29,7 +29,14 @@ export const navegacao: NavSecao[] = [
       { rotulo: 'Vendas', icone: '💼', rota: '/vendas' },
       { rotulo: 'Pessoas (RH)', icone: '🧑‍💼', rota: '/rh' },
       { rotulo: 'Compras', icone: '🛒', rota: '/compras' },
-      { rotulo: 'Contratos', icone: '📜', rota: '/contratos' },
+      {
+        rotulo: 'Contratos',
+        icone: '📜',
+        filhos: [
+          { rotulo: 'De clientes', icone: '🤝', rota: '/contratos' },
+          { rotulo: 'De fornecedores', icone: '🏭', rota: '/contratos-fornecedores' },
+        ],
+      },
       { rotulo: 'Documentos', icone: '🗂️', rota: '/documentos' },
       {
         rotulo: 'Financeiro',

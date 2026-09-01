@@ -20,6 +20,7 @@ function tituloDaRota(pathname: string) {
   if (FORA_DO_MENU[pathname]) return FORA_DO_MENU[pathname]
   if (/^\/clientes\/\d+$/.test(pathname)) return 'Clientes · Conta do cliente'
   if (/^\/contratos\/\d+$/.test(pathname)) return 'Contratos · Ficha do contrato'
+  if (/^\/contratos-fornecedores\/\d+$/.test(pathname)) return 'Contratos · Fornecedor'
   if (/^\/documentos\/\d+$/.test(pathname)) return 'Documentos · Ficha do documento'
   if (/^\/estoque\/\d+$/.test(pathname)) return 'Estoque · Ficha do item'
   if (/^\/compras\/\d+$/.test(pathname)) return 'Compras · Pedido de compra'

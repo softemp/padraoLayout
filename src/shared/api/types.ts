@@ -1079,3 +1079,67 @@ export type RevisaoMeta = {
   para: number
   motivo: string
 }
+
+// ── Contratos de fornecedores ────────────────────────────────────────────────
+
+export type TipoContratoFornecedor = 'assinatura' | 'fornecimento' | 'servico' | 'locacao' | 'manutencao'
+export type SituacaoContratoFornecedor = 'em_negociacao' | 'vigente' | 'em_aviso' | 'encerrado' | 'rescindido'
+
+export type ItemContratado = {
+  id: number
+  sku: string | null
+  descricao: string
+  /** Preço ACORDADO no contrato — é contra ele que a nota é conferida. */
+  precoContratado: number
+  unidade: string
+}
+
+export type CertidaoFornecedor = {
+  id: number
+  tipo: 'CND federal' | 'FGTS' | 'Trabalhista' | 'Municipal'
+  validade: string
+}
+
+export type ContratoFornecedor = {
+  id: number
+  numero: string
+  fornecedor: string
+  objeto: string
+  tipo: TipoContratoFornecedor
+  situacao: SituacaoContratoFornecedor
+  /** Custo recorrente mensal — zero em contratos por demanda. */
+  custoMensal: number
+  inicio: string
+  fim: string
+  renovacaoAutomatica: boolean
+  avisoPrevioDias: number
+  indice: IndiceReajuste
+  ultimoReajusteEm: string | null
+  gestor: string
+  /** Prazo de entrega prometido, em dias. */
+  slaEntregaDias: number
+  itens: ItemContratado[]
+  certidoes: CertidaoFornecedor[]
+  criticidade: 'baixa' | 'media' | 'alta'
+  observacao: string
+}
+
+export type DesvioPreco = {
+  pedido: string
+  data: string
+  sku: string
+  descricao: string
+  precoContratado: number
+  precoPraticado: number
+  quantidade: number
+}
+
+export type TotaisContratosFornecedor = {
+  vigentes: number
+  custoMensal: number
+  renovamSozinhos: number
+  custoRenovacaoAutomatica: number
+  emJanelaDeAviso: number
+  certidaoVencida: number
+  comDesvioDePreco: number
+}
