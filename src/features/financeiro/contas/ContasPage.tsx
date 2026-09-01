@@ -126,7 +126,7 @@ export function ContasPage() {
 
       {/* Barra de recorte: vale para TODAS as abas. Período e base do período
           juntos, porque mudar um sem o outro dá número que não bate. */}
-      <div className="flex flex-wrap items-center gap-2 rounded-xl border border-border bg-surface p-2 shadow-card sm:gap-3 sm:p-2.5">
+      <div className="flex flex-wrap items-center gap-2 rounded-xl border border-border bg-surface p-2 shadow-card sm:gap-4 sm:p-4 lg:p-6">
         <div className="flex flex-wrap gap-1">
           {(Object.keys(PERIODOS) as PeriodoId[]).map((p) => (
             <button

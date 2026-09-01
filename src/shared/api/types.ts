@@ -1203,3 +1203,91 @@ export type TotaisComissoes = {
   estornado: number
   aguardandoRecebimento: number
 }
+
+// ── Chat de atendimento ───────────────────────────────────────────────────────
+export type StatusAtendente = 'disponivel' | 'ocupado' | 'ausente' | 'offline'
+
+export type Atendente = {
+  nome: string
+  status: StatusAtendente
+  /** Máximo de conversas simultâneas. Transferência acima disso é recusada. */
+  capacidade: number
+  emAtendimento: number
+  equipe: string
+}
+
+export type SituacaoConversa = 'na_fila' | 'em_atendimento' | 'aguardando_cliente' | 'encerrada'
+export type CanalChat = 'whatsapp' | 'site' | 'email' | 'telefone'
+export type AutorMensagem = 'cliente' | 'atendente' | 'sistema'
+
+export type MensagemChat = {
+  id: number
+  conversaId: number
+  autor: AutorMensagem
+  /** Nome de quem escreveu; `null` em mensagem de sistema. */
+  de: string | null
+  texto: string
+  em: string
+  /** Nota interna: fica no histórico, o cliente não vê. */
+  interna: boolean
+}
+
+export type SituacaoTransferencia = 'pendente' | 'aceita' | 'recusada' | 'expirada'
+
+export type TransferenciaChat = {
+  id: number
+  conversaId: number
+  de: string
+  para: string
+  motivo: string
+  em: string
+  situacao: SituacaoTransferencia
+  resolvidaEm: string | null
+}
+
+export type Conversa = {
+  id: number
+  protocolo: string
+  clienteId: number
+  cliente: string
+  canal: CanalChat
+  assunto: string
+  situacao: SituacaoConversa
+  /** `null` só enquanto está na fila: conversa em atendimento nunca fica sem dono. */
+  atendente: string | null
+  prioridade: Prioridade
+  abertaEm: string
+  /** Quando alguém assumiu — fecha o relógio da fila. */
+  assumidaEm: string | null
+  primeiraRespostaEm: string | null
+  ultimaMensagemEm: string
+  ultimaMensagemDe: AutorMensagem
+  encerradaEm: string | null
+  /** Quantas vezes já mudou de mão. 3+ é sintoma de roteamento errado. */
+  transferencias: number
+  naoLidas: number
+  tags: string[]
+}
+
+export type RelogiosConversa = {
+  /** Minutos de espera na fila (ou os que já correram, se ainda não assumida). */
+  fila: number
+  /** Minutos até a primeira resposta humana (ou correndo). */
+  primeiraResposta: number
+  /** Minutos desde a última mensagem do cliente sem resposta. */
+  aguardando: number
+  metaFila: number
+  metaResposta: number
+  estourouFila: boolean
+  estourouResposta: boolean
+}
+
+export type TotaisChat = {
+  naFila: number
+  emAtendimento: number
+  minhas: number
+  esperaMediaFila: number
+  primeiraRespostaMedia: number
+  estouros: number
+  transferidasHoje: number
+}

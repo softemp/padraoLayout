@@ -33,6 +33,7 @@ const ProjetosPage = lazy(() => import('@/features/projetos/ProjetosPage').then(
 const ProjetoPage = lazy(() => import('@/features/projetos/ProjetoPage').then((m) => ({ default: m.ProjetoPage })))
 const RhPage = lazy(() => import('@/features/rh/RhPage').then((m) => ({ default: m.RhPage })))
 const ColaboradorPage = lazy(() => import('@/features/rh/ColaboradorPage').then((m) => ({ default: m.ColaboradorPage })))
+const ChatPage = lazy(() => import('@/features/chat/ChatPage').then((m) => ({ default: m.ChatPage })))
 const ComissoesPage = lazy(() => import('@/features/comissoes/ComissoesPage').then((m) => ({ default: m.ComissoesPage })))
 const VendasPage = lazy(() => import('@/features/vendas/VendasPage').then((m) => ({ default: m.VendasPage })))
 const VendaPage = lazy(() => import('@/features/vendas/VendaPage').then((m) => ({ default: m.VendaPage })))
@@ -98,6 +99,7 @@ export function App() {
           <Route path="/rh/:id" element={<ColaboradorPage />} />
           <Route path="/vendas" element={<VendasPage />} />
           <Route path="/comissoes" element={<ComissoesPage />} />
+          <Route path="/chat" element={<ChatPage />} />
           <Route path="/vendas/:id" element={<VendaPage />} />
           <Route path="/compras" element={<ComprasPage />} />
           <Route path="/compras/:id" element={<PedidoCompraPage />} />
