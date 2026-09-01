@@ -22,6 +22,7 @@ export const navegacao: NavSecao[] = [
           { rotulo: 'Novos no mês', icone: '✨', rota: '/clientes?sortBy=criadoEm&sortDir=desc' },
         ],
       },
+      { rotulo: 'Reservas', icone: '🗓️', rota: '/reservas' },
       { rotulo: 'Chat de atendimento', icone: '💬', rota: '/chat' },
       { rotulo: 'Chamados', icone: '🎧', rota: '/chamados' },
       { rotulo: 'Projetos', icone: '📁', rota: '/projetos' },

@@ -1291,3 +1291,97 @@ export type TotaisChat = {
   estouros: number
   transferidasHoje: number
 }
+
+// ── Reservas (hotelaria / pousada) ───────────────────────────────────────────
+export type TipoUnidade = 'quarto' | 'suite' | 'chale' | 'cabana'
+
+/** Característica que VENDE: entra na busca e no anúncio. */
+export type Comodidade =
+  | 'ar_condicionado' | 'wifi' | 'tv' | 'frigobar' | 'cozinha' | 'hidro' | 'lareira'
+  | 'varanda' | 'vista_mar' | 'churrasqueira' | 'aceita_pet' | 'acessivel' | 'estacionamento'
+
+/** Item que se CONFERE: enxoval, eletrônico, utensílio. Nada a ver com comodidade. */
+export type ItemInventario = {
+  id: number
+  nome: string
+  quantidade: number
+  /** Conferido na saída (some, quebra, vai embora na mala). */
+  conferirNaSaida: boolean
+  valorReposicao: number
+}
+
+export type UnidadeHospedagem = {
+  id: number
+  nome: string
+  tipo: TipoUnidade
+  capacidade: number
+  camas: string
+  /** Tarifa de referência; a diária efetiva é copiada em cada noite da reserva. */
+  tarifaBase: number
+  comodidades: Comodidade[]
+  inventario: ItemInventario[]
+  ativa: boolean
+  observacao: string | null
+}
+
+export type SituacaoReserva =
+  | 'pre_reserva' | 'confirmada' | 'hospedado' | 'finalizada' | 'cancelada' | 'no_show'
+
+export type OrigemOcupacao = 'hospede' | 'bloqueio'
+export type CanalReserva = 'direto' | 'telefone' | 'site' | 'ota' | 'balcao'
+
+/** Uma NOITE, com o valor congelado no momento da reserva. */
+export type Diaria = {
+  data: string
+  valor: number
+}
+
+export type Reserva = {
+  id: number
+  codigo: string
+  unidadeId: number
+  origem: OrigemOcupacao
+  /** `null` em bloqueio (manutenção, uso interno). */
+  hospede: string | null
+  documento: string | null
+  telefone: string | null
+  adultos: number
+  criancas: number
+  /** Data da diária de entrada (a noite começa aqui). */
+  entrada: string
+  /** Data da saída — NÃO é uma noite ocupada: intervalo semi-aberto [entrada, saída). */
+  saida: string
+  situacao: SituacaoReserva
+  canal: CanalReserva
+  diarias: Diaria[]
+  valorDiarias: number
+  valorExtras: number
+  checkinReal: string | null
+  checkoutReal: string | null
+  motivo: string | null
+  observacao: string | null
+  criadaEm: string
+}
+
+export type CelulaMapa = {
+  data: string
+  reserva: Reserva | null
+  /** Primeira noite da reserva nesta faixa — onde o rótulo é desenhado. */
+  inicio: boolean
+}
+
+export type LinhaMapa = {
+  unidade: UnidadeHospedagem
+  celulas: CelulaMapa[]
+}
+
+export type TotaisReservas = {
+  ocupacao: number
+  diariaMedia: number
+  receitaPorUnidade: number
+  chegadasHoje: number
+  saidasHoje: number
+  hospedados: number
+  noitesVendidas: number
+  unidadesAtivas: number
+}
