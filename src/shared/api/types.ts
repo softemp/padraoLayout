@@ -1042,3 +1042,40 @@ export type TotaisChamados = {
   primeiraRespostaMedia: number
   taxaReabertura: number
 }
+
+// ── Metas e indicadores ──────────────────────────────────────────────────────
+
+export type Perspectiva = 'financeiro' | 'cliente' | 'operacao' | 'pessoas'
+export type DirecaoMeta = 'maior_melhor' | 'menor_melhor'
+export type FormatoIndicador = 'moeda' | 'numero' | 'percentual' | 'minutos'
+
+export type Indicador = {
+  id: string
+  nome: string
+  perspectiva: Perspectiva
+  descricao: string
+  /** De ONDE o número sai — indicador digitado é indicador que ninguém confia. */
+  fonte: string
+  rotaFonte: string | null
+  formato: FormatoIndicador
+  direcao: DirecaoMeta
+  meta: number
+  /** Indicador que serve de contrapeso a este (o par que impede o jogo). */
+  contrapesoId: string | null
+  responsavel: string
+  periodo: string
+  /** Fração do período já decorrida (0–1). */
+  decorrido: number
+  atual: number
+  serie: { rotulo: string; valor: number }[]
+}
+
+export type RevisaoMeta = {
+  id: number
+  indicadorId: string
+  criadoEm: string
+  autor: string
+  de: number
+  para: number
+  motivo: string
+}

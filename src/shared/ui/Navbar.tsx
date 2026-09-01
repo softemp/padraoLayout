@@ -27,6 +27,7 @@ function tituloDaRota(pathname: string) {
   if (/^\/rh\/\d+$/.test(pathname)) return 'Pessoas · Ficha do colaborador'
   if (/^\/projetos\/\d+$/.test(pathname)) return 'Projetos · Ficha do projeto'
   if (/^\/chamados\/\d+$/.test(pathname)) return 'Chamados · Atendimento'
+  if (/^\/metas\/[\w_]+$/.test(pathname)) return 'Metas · Indicador'
   for (const secao of navegacao) {
     for (const item of secao.itens) {
       if (!ehPai(item)) {

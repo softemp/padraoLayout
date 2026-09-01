@@ -12,6 +12,7 @@ export const navegacao: NavSecao[] = [
     titulo: 'Operação',
     itens: [
       { rotulo: 'Dashboard', icone: '📊', rota: '/' },
+      { rotulo: 'Metas e indicadores', icone: '🎯', rota: '/metas' },
       {
         rotulo: 'Clientes',
         icone: '👥',
