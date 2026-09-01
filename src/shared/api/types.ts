@@ -803,3 +803,66 @@ export type TotaisVendas = {
   faturadoMes: number
   margemMedia: number
 }
+
+// ── RH ───────────────────────────────────────────────────────────────────────
+
+export type SituacaoColaborador = 'ativo' | 'ferias' | 'afastado' | 'aviso_previo' | 'desligado'
+export type TipoContrato = 'CLT' | 'PJ' | 'Estágio' | 'Aprendiz'
+
+export type Colaborador = {
+  id: number
+  nome: string
+  email: string
+  /** Só dígitos; exibido mascarado mesmo para quem pode ver. */
+  cpf: string
+  cargo: string
+  departamento: string
+  gestor: string
+  contrato: TipoContrato
+  admissao: string
+  desligamento: string | null
+  situacao: SituacaoColaborador
+  /** RESTRITO: só chega ao cliente para quem tem permissão de remuneração. */
+  salario: number | null
+  telefone: string
+  localizacao: string
+  fotoUrl: string | null
+}
+
+/**
+ * Período AQUISITIVO (12 meses trabalhados) × CONCESSIVO (12 meses seguintes
+ * para gozar). Passou do concessivo sem conceder, a empresa paga em DOBRO.
+ */
+export type PeriodoFerias = {
+  id: number
+  colaboradorId: number
+  aquisitivoInicio: string
+  aquisitivoFim: string
+  concessivoFim: string
+  diasDireito: number
+  diasGozados: number
+  diasVendidos: number
+  agendadoPara: string | null
+}
+
+export type Ausencia = {
+  id: number
+  colaboradorId: number
+  tipo: 'falta' | 'atestado' | 'licenca' | 'home_office' | 'folga'
+  inicio: string
+  fim: string
+  dias: number
+  justificada: boolean
+  observacao: string
+}
+
+export type ItemDesligamento = { id: number; rotulo: string; responsavel: string; feito: boolean; critico: boolean }
+
+export type TotaisRh = {
+  ativos: number
+  emFerias: number
+  feriasVencendo: number
+  feriasEmDobra: number
+  aniversariantes: number
+  custoFolha: number | null
+}
