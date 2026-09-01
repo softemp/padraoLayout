@@ -990,3 +990,55 @@ export type NovoProjeto = {
   custoHora: number
   horasOrcadas: number
 }
+
+// ── Chamados ─────────────────────────────────────────────────────────────────
+
+export type SituacaoChamado =
+  | 'novo' | 'em_atendimento' | 'aguardando_cliente' | 'resolvido' | 'fechado' | 'cancelado'
+
+export type Urgencia = 'baixa' | 'media' | 'alta'
+export type Impacto = 'individual' | 'equipe' | 'empresa'
+export type Prioridade = 'P1' | 'P2' | 'P3' | 'P4'
+
+export type MensagemChamado = {
+  id: number
+  chamadoId: number
+  autor: string
+  interno: boolean
+  automatica: boolean
+  texto: string
+  criadoEm: string
+}
+
+export type Chamado = {
+  id: number
+  numero: string
+  assunto: string
+  descricao: string
+  clienteId: number
+  cliente: string
+  solicitante: string
+  categoria: string
+  urgencia: Urgencia
+  impacto: Impacto
+  situacao: SituacaoChamado
+  responsavel: string | null
+  abertoEm: string
+  /** Primeira resposta HUMANA — a automática não conta. */
+  primeiraRespostaEm: string | null
+  resolvidoEm: string | null
+  /** Soma dos períodos em que a bola estava com o cliente. */
+  minutosPausados: number
+  pausadoDesde: string | null
+  reaberturas: number
+  canal: 'e-mail' | 'telefone' | 'WhatsApp' | 'portal'
+}
+
+export type TotaisChamados = {
+  abertos: number
+  semResponsavel: number
+  slaEstourado: number
+  slaEmRisco: number
+  primeiraRespostaMedia: number
+  taxaReabertura: number
+}
