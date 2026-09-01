@@ -37,3 +37,21 @@ export function timeAgo(value: string | Date) {
 
 export const initials = (name: string) =>
   name.split(' ').filter(Boolean).slice(0, 2).map((p) => p[0]?.toUpperCase()).join('')
+
+/** Máscaras de exibição — o "banco" guarda só dígitos. */
+export const mascaraCnpj = (d: string) =>
+  d.replace(/\D/g, '').slice(0, 14)
+    .replace(/^(\d{2})(\d)/, '$1.$2')
+    .replace(/^(\d{2})\.(\d{3})(\d)/, '$1.$2.$3')
+    .replace(/^(\d{2})\.(\d{3})\.(\d{3})(\d)/, '$1.$2.$3/$4')
+    .replace(/^(\d{2})\.(\d{3})\.(\d{3})\/(\d{4})(\d)/, '$1.$2.$3/$4-$5')
+
+export const mascaraCep = (d: string) =>
+  d.replace(/\D/g, '').slice(0, 8).replace(/^(\d{5})(\d)/, '$1-$2')
+
+export const mascaraTelefoneBr = (d: string) => {
+  const n = d.replace(/\D/g, '').slice(0, 11)
+  return n.length > 10
+    ? n.replace(/^(\d{2})(\d{5})(\d)/, '($1) $2-$3')
+    : n.replace(/^(\d{2})(\d{4})(\d)/, '($1) $2-$3')
+}

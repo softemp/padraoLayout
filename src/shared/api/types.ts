@@ -344,3 +344,55 @@ export type BaixaLancamento = {
   juros: number
   desconto: number
 }
+
+// ── Configurações da empresa ─────────────────────────────────────────────────
+
+export type RegimeTributario = 'simples' | 'presumido' | 'real' | 'mei'
+
+export type Empresa = {
+  razaoSocial: string
+  nomeFantasia: string
+  /** Só dígitos: a máscara é apresentação. */
+  cnpj: string
+  inscricaoEstadual: string
+  inscricaoMunicipal: string
+  abertura: string
+  telefone: string
+  email: string
+  site: string
+  // Endereço
+  cep: string
+  logradouro: string
+  numero: string
+  complemento: string
+  bairro: string
+  cidade: string
+  uf: string
+  // Identidade
+  corPrimaria: string
+  logoUrl: string | null
+  // Fiscal
+  regime: RegimeTributario
+  cnae: string
+  serieNota: string
+  proximaNota: number
+  /** Só metadados do certificado — o arquivo e a senha nunca voltam. */
+  certificado: { nome: string; validade: string; instaladoEm: string } | null
+}
+
+export type Unidade = {
+  id: number
+  nome: string
+  tipo: 'matriz' | 'filial'
+  cnpj: string
+  cidade: string
+  uf: string
+  ativa: boolean
+}
+
+export type EnderecoCep = {
+  logradouro: string
+  bairro: string
+  cidade: string
+  uf: string
+}

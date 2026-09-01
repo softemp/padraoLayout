@@ -45,6 +45,7 @@ export const navegacao: NavSecao[] = [
         // Perfil NÃO entra aqui: o lugar dele é o dropdown do usuário, na navbar.
         // Duas portas para a mesma tela é como o menu incha.
         filhos: [
+          { rotulo: 'Empresa', icone: '🏢', rota: '/configuracoes/empresa' },
           { rotulo: 'Comunicação', icone: '📡', rota: '/configuracoes/comunicacao' },
           { rotulo: 'Usuários e acessos', icone: '🔐', rota: '/configuracoes/acessos' },
           { rotulo: 'Integrações', icone: '🔌', rota: '/configuracoes/integracoes' },
