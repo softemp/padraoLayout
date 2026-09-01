@@ -29,6 +29,7 @@ export const navegacao: NavSecao[] = [
           { rotulo: 'Faturas', icone: '🧾', rota: '/financeiro/faturas' },
           { rotulo: 'Recebimentos', icone: '💰', rota: '/financeiro/recebimentos' },
           { rotulo: 'Conciliação', icone: '⚖️', rota: '/financeiro/conciliacao' },
+          { rotulo: 'Relatórios financeiros', icone: '📊', rota: '/relatorios/financeiros' },
         ],
       },
       { rotulo: 'Relatórios', icone: '📈', rota: '/relatorios' },

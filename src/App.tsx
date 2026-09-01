@@ -19,6 +19,7 @@ const FaturasPage = lazy(() => import('@/features/financeiro/FaturasPage').then(
 const RecebimentosPage = lazy(() => import('@/features/financeiro/RecebimentosPage').then((m) => ({ default: m.RecebimentosPage })))
 const ConciliacaoPage = lazy(() => import('@/features/financeiro/ConciliacaoPage').then((m) => ({ default: m.ConciliacaoPage })))
 const ContasPage = lazy(() => import('@/features/financeiro/contas/ContasPage').then((m) => ({ default: m.ContasPage })))
+const RelatoriosFinanceirosPage = lazy(() => import('@/features/relatorios/RelatoriosFinanceirosPage').then((m) => ({ default: m.RelatoriosFinanceirosPage })))
 const RelatoriosPage = lazy(() => import('@/features/relatorios/RelatoriosPage').then((m) => ({ default: m.RelatoriosPage })))
 const AuditoriaPage = lazy(() => import('@/features/auditoria/AuditoriaPage').then((m) => ({ default: m.AuditoriaPage })))
 const EmpresaPage = lazy(() => import('@/features/configuracoes/EmpresaPage').then((m) => ({ default: m.EmpresaPage })))
@@ -71,6 +72,7 @@ export function App() {
           <Route path="/financeiro/recebimentos" element={<RecebimentosPage />} />
           <Route path="/financeiro/conciliacao" element={<ConciliacaoPage />} />
           <Route path="/relatorios" element={<RelatoriosPage />} />
+          <Route path="/relatorios/financeiros" element={<RelatoriosFinanceirosPage />} />
           <Route path="/auditoria" element={<AuditoriaPage />} />
           <Route path="/em-construcao" element={<EmConstrucaoPage />} />
         </Route>
