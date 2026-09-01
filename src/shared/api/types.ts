@@ -587,3 +587,51 @@ export type TotaisDocumentos = {
   semVinculo: number
   espacoBytes: number
 }
+
+// ── Tarefas ──────────────────────────────────────────────────────────────────
+
+/** "Atrasada" NÃO entra aqui: é derivada do prazo, como vencido e vencendo. */
+export type SituacaoTarefa = 'a_fazer' | 'em_andamento' | 'em_revisao' | 'concluida' | 'cancelada'
+export type PrioridadeTarefa = 'baixa' | 'media' | 'alta' | 'urgente'
+
+export type VinculoTarefa = {
+  tipo: 'cliente' | 'contrato' | 'documento' | 'lancamento' | 'nenhum'
+  id: number | null
+  rotulo: string
+}
+
+export type ItemChecklist = { id: number; texto: string; feito: boolean }
+
+export type ComentarioTarefa = {
+  id: number
+  tarefaId: number
+  autor: string
+  texto: string
+  criadoEm: string
+}
+
+export type Tarefa = {
+  id: number
+  titulo: string
+  descricao: string
+  situacao: SituacaoTarefa
+  prioridade: PrioridadeTarefa
+  responsavel: string | null
+  criadoPor: string
+  criadoEm: string
+  prazo: string | null
+  concluidaEm: string | null
+  concluidaPor: string | null
+  vinculo: VinculoTarefa
+  etiquetas: string[]
+  checklist: ItemChecklist[]
+  comentarios: number
+}
+
+export type TotaisTarefas = {
+  minhas: number
+  atrasadas: number
+  semResponsavel: number
+  semPrazo: number
+  concluidasSemana: number
+}
