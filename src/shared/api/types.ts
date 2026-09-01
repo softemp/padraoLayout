@@ -1143,3 +1143,63 @@ export type TotaisContratosFornecedor = {
   certidaoVencida: number
   comDesvioDePreco: number
 }
+
+// ── Comissões ────────────────────────────────────────────────────────────────
+
+export type BaseCalculo = 'faturamento' | 'margem'
+
+export type FaixaComissao = { ate: number; percentual: number }
+
+export type PlanoComissao = {
+  id: number
+  nome: string
+  base: BaseCalculo
+  faixas: FaixaComissao[]
+  /** Dias após o recebimento para a comissão deixar de poder ser estornada. */
+  carenciaDias: number
+  vigenteDesde: string
+}
+
+/**
+ * PROVISIONADA na venda, LIBERADA quando o cliente paga, PAGA no fechamento.
+ * Estornada quando a venda cai — comissão paga sobre venda estornada vira
+ * dívida do vendedor, e cobrar de volta é sempre pior que segurar.
+ */
+export type SituacaoComissao = 'provisionada' | 'liberada' | 'paga' | 'estornada'
+
+export type Comissao = {
+  id: number
+  vendaId: number
+  numeroVenda: string
+  vendedor: string
+  cliente: string
+  dataVenda: string
+  /** Regra COPIADA da venda: mudar o plano não recalcula o passado. */
+  baseCalculo: BaseCalculo
+  percentualAplicado: number
+  valorBase: number
+  valor: number
+  situacao: SituacaoComissao
+  liberadaEm: string | null
+  pagaEm: string | null
+  competencia: string
+}
+
+export type ApuracaoVendedor = {
+  vendedor: string
+  provisionado: number
+  liberado: number
+  pago: number
+  estornado: number
+  vendas: number
+  ticketMedio: number
+  margemMedia: number
+}
+
+export type TotaisComissoes = {
+  provisionado: number
+  liberado: number
+  pago: number
+  estornado: number
+  aguardandoRecebimento: number
+}

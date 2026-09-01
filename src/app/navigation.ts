@@ -27,6 +27,7 @@ export const navegacao: NavSecao[] = [
       { rotulo: 'Tarefas', icone: '✅', rota: '/tarefas' },
       { rotulo: 'Estoque', icone: '📦', rota: '/estoque' },
       { rotulo: 'Vendas', icone: '💼', rota: '/vendas' },
+      { rotulo: 'Comissões', icone: '🏅', rota: '/comissoes' },
       { rotulo: 'Pessoas (RH)', icone: '🧑‍💼', rota: '/rh' },
       { rotulo: 'Compras', icone: '🛒', rota: '/compras' },
       {
