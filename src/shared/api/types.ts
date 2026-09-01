@@ -1363,11 +1363,21 @@ export type Reserva = {
   criadaEm: string
 }
 
+/**
+ * Uma célula do espelho é MEIO DIA + MEIO DIA, não um bloco de 24h.
+ * Quem sai às 12h libera a manhã; quem entra às 14h ocupa a tarde — e no dia de
+ * virada as duas metades são de hóspedes diferentes.
+ */
 export type CelulaMapa = {
   data: string
-  reserva: Reserva | null
-  /** Primeira noite da reserva nesta faixa — onde o rótulo é desenhado. */
-  inicio: boolean
+  /** Noite inteira: dia no meio da estadia. */
+  noite: Reserva | null
+  /** Entra neste dia (ocupa a metade da tarde). */
+  chegada: Reserva | null
+  /** Sai neste dia (ocupou a metade da manhã). */
+  saida: Reserva | null
+  /** Onde o nome do hóspede é escrito, e de qual das metades ele é. */
+  rotulo: 'noite' | 'chegada' | null
 }
 
 export type LinhaMapa = {

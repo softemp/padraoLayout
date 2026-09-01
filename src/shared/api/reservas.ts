@@ -209,19 +209,40 @@ export async function obterReserva(id: number): Promise<Reserva> {
   return r
 }
 
-/** O mapa de ocupação: unidades × noites. É a tela que a recepção olha o dia todo. */
+/**
+ * O mapa (o "espelho") — unidades × dias, com cada dia partido em duas metades.
+ *
+ * A célula NÃO é um bloco de 24h: quem sai às 12h ocupou só a manhã, quem entra
+ * às 14h ocupa só a tarde. No dia de virada as duas metades pertencem a hóspedes
+ * diferentes — desenhar o dia inteiro cheio esconde exatamente a diária que está
+ * à venda, que é a informação que a recepção mais precisa ver.
+ */
 export async function mapaOcupacao(inicio: string, dias: number): Promise<LinhaMapa[]> {
   await latencia(320)
   const datas = Array.from({ length: dias }, (_, i) => maisDias(inicio, i))
-  return unidades.map((unidade) => ({
-    unidade,
-    celulas: datas.map((data) => {
-      const r = reservas.find(
-        (x) => x.unidadeId === unidade.id && ocupa(x) && data >= dia(x.entrada) && data < dia(x.saida),
-      )
-      return { data, reserva: r ?? null, inicio: !!r && dia(r.entrada) === data }
-    }),
-  }))
+
+  return unidades.map((unidade) => {
+    const doQuarto = reservas.filter((r) => r.unidadeId === unidade.id && ocupa(r))
+    const celulas = datas.map((data) => ({
+      data,
+      noite: doQuarto.find((r) => data > dia(r.entrada) && data < dia(r.saida)) ?? null,
+      chegada: doQuarto.find((r) => dia(r.entrada) === data) ?? null,
+      saida: doQuarto.find((r) => dia(r.saida) === data) ?? null,
+      rotulo: null as 'noite' | 'chegada' | null,
+    }))
+
+    // O nome vai na primeira noite CHEIA visível; estadia de uma noite só tem a
+    // metade da chegada, e é lá que ele cabe.
+    const jaRotulada = new Set<number>()
+    celulas.forEach((c) => {
+      if (c.noite && !jaRotulada.has(c.noite.id)) { jaRotulada.add(c.noite.id); c.rotulo = 'noite' }
+    })
+    celulas.forEach((c) => {
+      if (c.chegada && !jaRotulada.has(c.chegada.id)) { jaRotulada.add(c.chegada.id); c.rotulo = 'chegada' }
+    })
+
+    return { unidade, celulas }
+  })
 }
 
 export type NovaReserva = {

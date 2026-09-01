@@ -142,16 +142,43 @@ export function ReservasPage() {
             onCelulaVazia={(unidadeId, data) => setNova({ unidadeId, data })}
             onReserva={(r) => setDetalhe(r)}
           />
-          <div className="flex flex-wrap items-center gap-3 border-t border-border p-2 text-[12px] text-text-muted sm:p-4 lg:p-6">
-            {(['pre_reserva', 'confirmada', 'hospedado', 'finalizada'] as const).map((s) => (
-              <span key={s} className="flex items-center gap-1.5">
-                <span aria-hidden className={cn('h-3 w-5 rounded', SITUACAO[s].barra)} />{SITUACAO[s].rotulo}
+          <div className="space-y-2 border-t border-border p-2 text-[12px] text-text-muted sm:p-4 lg:p-6">
+            <div className="flex flex-wrap items-center gap-3">
+              {(['pre_reserva', 'confirmada', 'hospedado', 'finalizada'] as const).map((s) => (
+                <span key={s} className="flex items-center gap-1.5">
+                  <span aria-hidden className={cn('h-4 w-6 rounded-sm', SITUACAO[s].barra)} />{SITUACAO[s].rotulo}
+                </span>
+              ))}
+              <span className="flex items-center gap-1.5">
+                <span aria-hidden className="h-4 w-6 rounded-sm bg-surface-3" />Bloqueio (manutenção)
               </span>
-            ))}
-            <span className="flex items-center gap-1.5"><span aria-hidden className="h-3 w-5 rounded bg-surface-3" />Bloqueio (manutenção)</span>
-            <span className="ml-auto">
-              A barra termina na <strong className="text-text-secondary">última noite</strong>: o dia da saída já está à venda.
-            </span>
+            </div>
+
+            <div className="flex flex-wrap items-center gap-x-4 gap-y-2 border-t border-border/60 pt-2">
+              <span className="flex items-center gap-1.5">
+                <span aria-hidden className="relative h-4 w-6 rounded-sm bg-surface-3">
+                  <span className="absolute inset-0 bg-primary" style={{ clipPath: 'polygon(0 0, 100% 100%, 0 100%)' }} />
+                </span>
+                sai às {HORARIOS.saida} — metade da manhã
+              </span>
+              <span className="flex items-center gap-1.5">
+                <span aria-hidden className="relative h-4 w-6 rounded-sm bg-surface-3">
+                  <span className="absolute inset-0 bg-primary" style={{ clipPath: 'polygon(0 0, 100% 0, 100% 100%)' }} />
+                </span>
+                entra às {HORARIOS.entrada} — metade da tarde
+              </span>
+              <span className="flex items-center gap-1.5">
+                <span aria-hidden className="relative h-4 w-6 rounded-sm">
+                  <span className="absolute inset-0 bg-border-strong" style={{ clipPath: 'polygon(0 0, 100% 100%, 0 100%)' }} />
+                  <span className="absolute inset-0 bg-primary" style={{ clipPath: 'polygon(0 0, 100% 0, 100% 100%)' }} />
+                </span>
+                dia de virada — duas metades, dois hóspedes
+              </span>
+              <span className="w-full sm:ml-auto sm:w-auto sm:max-w-sm sm:text-right">
+                A diária não é bloco de 24h: o dia da saída fica <strong className="text-text-secondary">meio livre</strong>{' '}
+                e pode ser clicado para uma entrada no mesmo dia.
+              </span>
+            </div>
           </div>
         </Card>
       )}
