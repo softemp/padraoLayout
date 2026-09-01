@@ -88,7 +88,7 @@ export function ProjetoPage() {
   const d = p ? desvio(p) : 0
 
   return (
-    <div className="space-y-4 sm:space-y-5">
+    <div className="space-y-2 sm:space-y-4 lg:space-y-6">
       <nav aria-label="Trilha" className="flex items-center gap-1.5 text-[13px] text-text-muted">
         <Link to="/projetos" className="font-medium text-primary hover:underline">Projetos</Link>
         <span aria-hidden>/</span>
@@ -165,11 +165,11 @@ export function ProjetoPage() {
       </div>
 
       {aba === 'resumo' && p && (
-        <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-2 sm:gap-4 lg:gap-6">
           <Card className="lg:col-span-2">
             <CardHeader titulo="Financeiro do projeto" descricao="Contrato, custo realizado e o que sobra" />
             <CardBody>
-              <dl className="grid grid-cols-2 gap-4 sm:grid-cols-4">
+              <dl className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-4 lg:gap-6">
                 {[
                   ['Valor do contrato', money(p.valorContrato)],
                   ['Custo previsto', money(custoPrevisto(p))],
@@ -376,7 +376,7 @@ export function ProjetoPage() {
       >
         <div className="space-y-4">
           {erro && <p role="alert" className="rounded-lg border border-critical/30 bg-critical/10 px-3 py-2.5 text-[13px] text-critical">⚠️ {erro}</p>}
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-4 lg:gap-6">
             <Input label="Novo prazo" type="date" data-foco-inicial value={prazoNovo} onChange={(e) => setPrazoNovo(e.target.value)} />
             <Input label="Novas horas orçadas" type="number" min={1} value={horasNovas} onChange={(e) => setHorasNovas(Number(e.target.value))} />
           </div>
@@ -388,7 +388,7 @@ export function ProjetoPage() {
             onChange={(e) => setMotivo(e.target.value)}
           />
           {p && (
-            <dl className="grid grid-cols-2 gap-2 rounded-lg border border-border bg-surface-2 p-3 text-center">
+            <dl className="grid grid-cols-2 gap-2 rounded-lg border border-border bg-surface-2 p-2 sm:p-4 text-center">
               <div>
                 <dt className="text-[11px] uppercase tracking-wide text-text-muted">Linha de base</dt>
                 <dd className="mt-0.5 text-[13px] font-semibold tabular-nums text-text">{date(p.prazoBaseline)} · {number(p.horasBaseline)}h</dd>

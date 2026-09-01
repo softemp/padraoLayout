@@ -17,7 +17,7 @@ export function StatTile({ kpi }: { kpi: Kpi }) {
   const valor = formatadores[kpi.formato](kpi.valor)
 
   return (
-    <div className="rounded-xl border border-border bg-surface p-4 shadow-card transition-shadow duration-200 hover:shadow-pop">
+    <div className="rounded-xl border border-border bg-surface p-2 shadow-card transition-shadow sm:p-4 lg:p-6 duration-200 hover:shadow-pop">
       <p className="truncate text-[13px] font-medium text-text-muted">{kpi.label}</p>
 
       <div className="mt-2 flex items-end justify-between gap-3">

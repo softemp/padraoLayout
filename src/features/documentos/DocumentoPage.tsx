@@ -97,7 +97,7 @@ export function DocumentoPage() {
   const ativos = links.data?.filter((l) => !linkExpirado(l)) ?? []
 
   return (
-    <div className="space-y-4 sm:space-y-5">
+    <div className="space-y-2 sm:space-y-4 lg:space-y-6">
       <nav aria-label="Trilha" className="flex items-center gap-1.5 text-[13px] text-text-muted">
         <Link to="/documentos" className="font-medium text-primary hover:underline">Documentos</Link>
         <span aria-hidden>/</span>
@@ -166,7 +166,7 @@ export function DocumentoPage() {
       </div>
 
       {aba === 'resumo' && (
-        <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-2 sm:gap-4 lg:gap-6">
           <Card className="lg:col-span-2">
             <CardHeader titulo="Dados do documento" />
             <CardBody>

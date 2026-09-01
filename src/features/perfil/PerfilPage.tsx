@@ -179,7 +179,7 @@ export function PerfilPage() {
   }
 
   return (
-    <div className="space-y-4 sm:space-y-5">
+    <div className="space-y-2 sm:space-y-4 lg:space-y-6">
       <PageHeader titulo="Meu perfil" descricao="Seus dados, preferências, notificações e a segurança da sua conta." />
 
       {/* Cartão de identidade + os sinais que importam de imediato */}
@@ -236,7 +236,7 @@ export function PerfilPage() {
           <CardHeader titulo="Dados pessoais" descricao="Como você aparece para o restante da equipe" />
           <CardBody>
             <form onSubmit={formDados.handleSubmit((d) => salvarDados.mutate(d))} noValidate className="space-y-4">
-              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-4 lg:gap-6">
                 <Input label="Nome completo" error={formDados.formState.errors.nome?.message} {...formDados.register('nome')} />
                 <Input
                   label="E-mail"
@@ -282,7 +282,7 @@ export function PerfilPage() {
       )}
 
       {aba === 'preferencias' && (
-        <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 sm:gap-4 lg:gap-6">
           <Card>
             <CardHeader titulo="Aparência" descricao="Guardado neste navegador (ui-prefs) — o token nunca" />
             <CardBody className="space-y-2">
@@ -314,7 +314,7 @@ export function PerfilPage() {
 
           <Card>
             <CardHeader titulo="Região e idioma" descricao="Afeta datas, números e a página que abre no login" />
-            <CardBody className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <CardBody className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-4 lg:gap-6">
               <Select label="Fuso horário" defaultValue={perfil.fuso}>
                 <option value="America/Sao_Paulo">Brasília (GMT-3)</option>
                 <option value="America/Manaus">Manaus (GMT-4)</option>
@@ -410,7 +410,7 @@ export function PerfilPage() {
       )}
 
       {aba === 'seguranca' && (
-        <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-2 sm:gap-4 lg:gap-6">
           <Card className="lg:col-span-2">
             <CardHeader
               titulo="Senha"

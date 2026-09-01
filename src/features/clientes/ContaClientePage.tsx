@@ -88,7 +88,7 @@ export function ContaClientePage() {
   const saldo = extrato.data?.saldo ?? 0
 
   return (
-    <div className="space-y-4 sm:space-y-5">
+    <div className="space-y-2 sm:space-y-4 lg:space-y-6">
       {/* Trilha de volta: quem entra pela ação da tabela precisa do caminho de saída. */}
       <nav aria-label="Trilha" className="flex items-center gap-1.5 text-[13px] text-text-muted">
         <Link to="/clientes" className="font-medium text-primary hover:underline">Clientes</Link>
@@ -180,7 +180,7 @@ export function ContaClientePage() {
       </div>
 
       {aba === 'visao' && (
-        <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-2 sm:gap-4 lg:gap-6">
           <Card className="lg:col-span-2">
             <CardHeader titulo="Dados cadastrais" descricao="O que identifica a conta no sistema" />
             <CardBody>
@@ -208,10 +208,10 @@ export function ContaClientePage() {
 
           <Card>
             <CardHeader titulo="Saúde da conta" descricao="Sinais que antecedem o problema" />
-            <CardBody className="space-y-5">
+            <CardBody className="space-y-4">
               <Meter rotulo="Uso do plano" valor={68} total={100} formatar={(n) => `${n}%`} />
               <Meter rotulo="Faturas pagas no prazo" valor={11} total={12} formatar={(n) => `${n}`} />
-              <div className="rounded-lg bg-surface-2 p-3.5 text-[13px] text-text-secondary">
+              <div className="rounded-lg bg-surface-2 p-2 sm:p-4.5 text-[13px] text-text-secondary">
                 {saldo < 0 ? (
                   <>Saldo negativo de <strong className="font-semibold text-critical">{money(Math.abs(saldo))}</strong> — a próxima cobrança já entra com débito acumulado.</>
                 ) : (
@@ -282,7 +282,7 @@ export function ContaClientePage() {
       )}
 
       {aba === 'assinatura' && (
-        <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-2 sm:gap-4 lg:gap-6">
           <Card className="lg:col-span-2">
             <CardHeader titulo="Assinatura" descricao="Plano, ciclo e cobrança" />
             <CardBody>

@@ -117,10 +117,10 @@ export function RelatoriosPage() {
   const previa = linhas.slice(0, 8)
 
   return (
-    <div className="space-y-4 sm:space-y-5">
+    <div className="space-y-2 sm:space-y-4 lg:space-y-6">
       <PageHeader titulo="Relatórios" descricao="Escolha o relatório, confira a prévia e exporte no formato que precisa." />
 
-      <div className="grid grid-cols-1 gap-4 lg:grid-cols-[19rem_1fr] lg:gap-5">
+      <div className="grid grid-cols-1 lg:grid-cols-[19rem_1fr] gap-2 sm:gap-4 lg:gap-6">
         <div className="space-y-2">
           {RELATORIOS.map((relatorio) => {
             const ativo = escolhido.id === relatorio.id

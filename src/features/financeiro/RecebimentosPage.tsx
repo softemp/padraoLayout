@@ -10,6 +10,7 @@ import { Card, CardHeader } from '@/shared/ui/Card'
 import { PageHeader } from '@/shared/ui/PageHeader'
 import { Skeleton } from '@/shared/ui/Skeleton'
 import { date, money, moneyCompact, number } from '@/shared/lib/format'
+import { CartaoResumo, GradeResumo } from '@/shared/ui/CartaoResumo'
 import type { Recebimento } from '@/shared/api/types'
 
 export function RecebimentosPage() {
@@ -24,7 +25,7 @@ export function RecebimentosPage() {
   }, {})
 
   return (
-    <div className="space-y-4 sm:space-y-5">
+    <div className="space-y-2 sm:space-y-4 lg:space-y-6">
       <PageHeader
         titulo="Recebimentos"
         descricao="O dinheiro que entrou: por dia, por meio de pagamento e por conta."
@@ -47,19 +48,16 @@ export function RecebimentosPage() {
         }
       />
 
-      <section className="grid grid-cols-2 gap-3 sm:gap-4 xl:grid-cols-4">
+      <GradeResumo>
         {[
           { rotulo: 'Recebido em 30 dias', valor: money(noPeriodo) },
           { rotulo: 'Recebimentos', valor: number(data?.length ?? 0) },
           { rotulo: 'Ticket médio', valor: data?.length ? money(total / data.length) : money(0) },
           { rotulo: 'Maior entrada', valor: data?.length ? money(Math.max(...data.map((r) => r.valor))) : money(0) },
         ].map((item) => (
-          <div key={item.rotulo} className="rounded-xl border border-border bg-surface p-4 shadow-card">
-            <p className="text-[13px] font-medium text-text-muted">{item.rotulo}</p>
-            <p className="mt-1 text-xl font-semibold tabular-nums text-text lg:text-2xl">{item.valor}</p>
-          </div>
+          <CartaoResumo key={item.rotulo} rotulo={item.rotulo} valor={item.valor} />
         ))}
-      </section>
+      </GradeResumo>
 
       <ChartCard
         titulo="Entradas por dia"
@@ -100,7 +98,7 @@ export function RecebimentosPage() {
         </div>
       </ChartCard>
 
-      <div className="grid grid-cols-1 gap-4 xl:grid-cols-3">
+      <div className="grid grid-cols-1 xl:grid-cols-3 gap-2 sm:gap-4 lg:gap-6">
         <Card className="xl:col-span-2">
           <CardHeader titulo="Últimos recebimentos" descricao="Da entrada mais recente para a mais antiga" />
           <div className="overflow-x-auto">

@@ -17,6 +17,7 @@ import { PageHeader } from '@/shared/ui/PageHeader'
 import { Select } from '@/shared/ui/Field'
 import { Skeleton } from '@/shared/ui/Skeleton'
 import { cn } from '@/shared/lib/cn'
+import { CartaoResumo, GradeResumo } from '@/shared/ui/CartaoResumo'
 import { date, money, number, percent } from '@/shared/lib/format'
 
 const situacaoInfo: Record<SituacaoComissao, { tom: 'neutro' | 'info' | 'good' | 'critical'; rotulo: string; ajuda: string }> = {
@@ -72,7 +73,7 @@ export function ComissoesPage() {
   ]
 
   return (
-    <div className="space-y-4 sm:space-y-5">
+    <div className="space-y-2 sm:space-y-4 lg:space-y-6">
       <PageHeader
         titulo="Comissões"
         descricao="Nasce na venda, é devida no recebimento — e é aí que ela pode ser paga."
@@ -93,17 +94,17 @@ export function ComissoesPage() {
         }
       />
 
-      <section className="grid grid-cols-2 gap-3 sm:gap-4 xl:grid-cols-4">
+      <GradeResumo>
         {cartoes.map((c) => (
-          <div key={c.rotulo} className="rounded-xl border border-border bg-surface p-4 shadow-card">
-            <p className="text-[13px] font-medium text-text-muted">{c.rotulo}</p>
-            {c.valor === null ? <Skeleton className="mt-2 h-7 w-24" /> : (
-              <p className={cn('mt-1 text-xl font-semibold tabular-nums lg:text-2xl', c.destaque ?? 'text-text')}>{c.valor}</p>
-            )}
-            {c.nota && <p className="mt-1 text-[12px] text-text-muted">{c.nota}</p>}
-          </div>
+          <CartaoResumo
+            key={c.rotulo}
+            rotulo={c.rotulo}
+            valor={c.valor}
+            nota={c.nota}
+            destaque={c.destaque}
+          />
         ))}
-      </section>
+      </GradeResumo>
 
       {erro && (
         <p role="alert" className="flex items-start justify-between gap-3 rounded-lg border border-warning/40 bg-warning/10 px-4 py-3 text-[13px] text-text-secondary">
@@ -144,7 +145,7 @@ export function ComissoesPage() {
       </div>
 
       {aba === 'apuracao' && (
-        <div className="grid grid-cols-1 gap-3 sm:gap-4 lg:grid-cols-2">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 sm:gap-4 lg:gap-6">
           {isLoading && Array.from({ length: 4 }).map((_, i) => <Skeleton key={i} className="h-48 rounded-xl" />)}
           {apuracao?.map((a) => (
             <Card key={a.vendedor}>
@@ -159,7 +160,7 @@ export function ComissoesPage() {
                   </div>
                 </div>
 
-                <dl className="grid grid-cols-4 gap-2 rounded-lg bg-surface-2 p-3 text-center">
+                <dl className="grid grid-cols-4 gap-2 rounded-lg bg-surface-2 p-2 sm:p-4 text-center">
                   {[
                     ['Provisionado', money(a.provisionado), 'text-text-secondary'],
                     ['Liberado', money(a.liberado), 'text-good'],
@@ -272,7 +273,7 @@ export function ComissoesPage() {
       )}
 
       {aba === 'plano' && (
-        <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 sm:gap-4 lg:gap-6">
           <Card>
             <CardHeader titulo={planoVigente.nome} descricao={`Vigente desde ${date(planoVigente.vigenteDesde)} · carência de ${planoVigente.carenciaDias} dias`} />
             <CardBody className="space-y-4">
@@ -316,7 +317,7 @@ export function ComissoesPage() {
                 Comissão sobre <strong className="text-text">margem</strong> alinha os dois lados: o desconto que o
                 vendedor dá reduz a própria comissão, e defender o preço passa a valer a pena para ele também.
               </p>
-              <p className="rounded-lg bg-surface-2 p-3 text-[12px]">
+              <p className="rounded-lg bg-surface-2 p-2 sm:p-4 text-[12px]">
                 Exemplo: pedido de {money(10_000)} com custo de {money(7_000)}. Sobre faturamento, 6% = {money(600)};
                 sobre margem, 6% de {money(3_000)} = {money(180)}. Dando 10% de desconto, a comissão sobre faturamento
                 cai só {money(60)} — mas a margem da empresa cai {money(1_000)}.

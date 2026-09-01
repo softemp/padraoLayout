@@ -18,7 +18,7 @@ export function CardHeader({
   titulo, descricao, acoes, className,
 }: { titulo: ReactNode; descricao?: ReactNode; acoes?: ReactNode; className?: string }) {
   return (
-    <div className={cn('flex flex-wrap items-start justify-between gap-3 border-b border-border px-4 py-3.5 sm:px-5', className)}>
+    <div className={cn('flex flex-wrap items-start justify-between gap-3 border-b border-border px-2 py-3 sm:px-4 lg:px-6', className)}>
       <div className="min-w-0">
         <h3 className="truncate text-[15px] font-semibold tracking-tight text-text">{titulo}</h3>
         {descricao && <p className="mt-0.5 text-[13px] text-text-muted">{descricao}</p>}
@@ -29,5 +29,5 @@ export function CardHeader({
 }
 
 export function CardBody({ className, ...props }: HTMLAttributes<HTMLDivElement>) {
-  return <div className={cn('p-4 sm:p-5', className)} {...props} />
+  return <div className={cn('p-2 sm:p-4 lg:p-6', className)} {...props} />
 }

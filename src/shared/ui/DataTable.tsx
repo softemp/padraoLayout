@@ -49,7 +49,7 @@ export function DataTable<T>({
 
   return (
     <div className="overflow-hidden rounded-xl border border-border bg-surface shadow-card">
-      {toolbar && <div className="border-b border-border p-3 sm:p-4">{toolbar}</div>}
+      {toolbar && <div className="border-b border-border p-2 sm:p-4 lg:p-6">{toolbar}</div>}
 
       {/* A tabela larga rola DENTRO da própria caixa — o <body> nunca rola de lado. */}
       <div className="overflow-x-auto">
@@ -67,7 +67,7 @@ export function DataTable<T>({
                       scope="col"
                       aria-sort={ativa ? (sortDir === 'asc' ? 'ascending' : 'descending') : undefined}
                       className={cn(
-                        'whitespace-nowrap px-3 py-2.5 text-left text-[12px] font-semibold uppercase tracking-wide text-text-muted first:pl-4 last:pr-4',
+                        'whitespace-nowrap px-3 py-2.5 text-left text-[12px] font-semibold uppercase tracking-wide text-text-muted first:pl-2 last:pr-2 sm:first:pl-4 sm:last:pr-4 lg:first:pl-6 lg:last:pr-6',
                         (header.column.columnDef.meta as { alinhamento?: string } | undefined)?.alinhamento === 'direita' && 'text-right',
                       )}
                     >
@@ -118,7 +118,7 @@ export function DataTable<T>({
                     <td
                       key={cell.id}
                       className={cn(
-                        'px-3 py-2.5 align-middle text-text-secondary first:pl-4 last:pr-4',
+                        'px-3 py-2.5 align-middle text-text-secondary first:pl-2 last:pr-2 sm:first:pl-4 sm:last:pr-4 lg:first:pl-6 lg:last:pr-6',
                         (cell.column.columnDef.meta as { alinhamento?: string } | undefined)?.alinhamento === 'direita' && 'text-right',
                       )}
                     >
@@ -140,7 +140,7 @@ export function DataTable<T>({
       )}
       {semLinhas && <EmptyState icone="🔍" titulo={vazio?.titulo ?? 'Nada encontrado'} descricao={vazio?.descricao} acao={vazio?.acao} />}
 
-      <div className="flex flex-wrap items-center justify-between gap-3 border-t border-border px-3 py-3 sm:px-4">
+      <div className="flex flex-wrap items-center justify-between gap-3 border-t border-border px-2 py-3 sm:px-4 lg:px-6">
         <PageSizeSelect value={meta?.perPage ?? 10} onChange={onPerPage} />
         {meta && meta.total > 0 && (
           <Pagination

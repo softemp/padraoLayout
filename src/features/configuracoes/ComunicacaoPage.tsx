@@ -102,7 +102,7 @@ function FormularioEmail() {
 
   return (
     <form onSubmit={handleSubmit(async () => { await new Promise((r) => setTimeout(r, 600)) })} noValidate className="space-y-4">
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-4 lg:gap-6">
         <Input label="Nome do remetente" error={formState.errors.remetenteNome?.message} {...register('remetenteNome')} />
         <Input label="E-mail do remetente" type="email" error={formState.errors.remetenteEmail?.message} {...register('remetenteEmail')} />
         <Input label="Servidor SMTP" error={formState.errors.host?.message} {...register('host')} />
@@ -164,7 +164,7 @@ function FormularioApi({ canal }: { canal: 'whatsapp' | 'sms' }) {
 
   return (
     <form onSubmit={handleSubmit(async () => { await new Promise((r) => setTimeout(r, 600)) })} noValidate className="space-y-4">
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-4 lg:gap-6">
         <Select label="Provedor" {...register('provedor')}>
           {ehWhats ? (
             <>
@@ -224,13 +224,13 @@ export function ComunicacaoPage() {
   }
 
   return (
-    <div className="space-y-4 sm:space-y-5">
+    <div className="space-y-2 sm:space-y-4 lg:space-y-6">
       <PageHeader
         titulo="Comunicação"
         descricao="Os canais que o sistema usa para falar com o usuário: recuperação de senha, segundo fator e avisos."
       />
 
-      <div className="grid grid-cols-1 gap-3 sm:grid-cols-3 sm:gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-4 lg:gap-6">
         {ABAS.map((canal) => {
           const situacao = situacoes[canal.id]
           const info = situacaoBadge[situacao]

@@ -16,8 +16,8 @@ import { Card, CardHeader } from '@/shared/ui/Card'
 import { DataTable } from '@/shared/ui/DataTable'
 import { Select } from '@/shared/ui/Field'
 import { PageHeader } from '@/shared/ui/PageHeader'
-import { Skeleton } from '@/shared/ui/Skeleton'
 import { cn } from '@/shared/lib/cn'
+import { CartaoResumo, GradeResumo } from '@/shared/ui/CartaoResumo'
 import { date, money, number } from '@/shared/lib/format'
 
 const situacaoInfo: Record<SituacaoContratoFornecedor, { tom: 'good' | 'info' | 'warning' | 'neutro' | 'critical'; rotulo: string }> = {
@@ -147,7 +147,7 @@ export function ContratosFornecedorPage() {
   ]
 
   return (
-    <div className="space-y-4 sm:space-y-5">
+    <div className="space-y-2 sm:space-y-4 lg:space-y-6">
       <PageHeader
         titulo="Contratos de fornecedores"
         descricao="Mesma forma do contrato de cliente — o que muda é o risco: aqui o dinheiro sai."
@@ -172,17 +172,17 @@ export function ContratosFornecedorPage() {
         }
       />
 
-      <section className="grid grid-cols-2 gap-3 sm:gap-4 xl:grid-cols-4">
+      <GradeResumo>
         {cartoes.map((c) => (
-          <div key={c.rotulo} className="rounded-xl border border-border bg-surface p-4 shadow-card">
-            <p className="text-[13px] font-medium text-text-muted">{c.rotulo}</p>
-            {c.valor === null ? <Skeleton className="mt-2 h-7 w-20" /> : (
-              <p className={cn('mt-1 text-xl font-semibold tabular-nums lg:text-2xl', c.destaque ?? 'text-text')}>{c.valor}</p>
-            )}
-            {c.nota && <p className="mt-1 text-[12px] text-text-muted">{c.nota}</p>}
-          </div>
+          <CartaoResumo
+            key={c.rotulo}
+            rotulo={c.rotulo}
+            valor={c.valor}
+            nota={c.nota}
+            destaque={c.destaque}
+          />
         ))}
-      </section>
+      </GradeResumo>
 
       <Card className="border-warning/40">
         <CardHeader

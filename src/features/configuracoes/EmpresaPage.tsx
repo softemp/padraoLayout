@@ -128,7 +128,7 @@ export function EmpresaPage() {
   }
 
   return (
-    <form onSubmit={handleSubmit((dados) => salvar.mutate(dados))} noValidate className="space-y-4 sm:space-y-5">
+    <form onSubmit={handleSubmit((dados) => salvar.mutate(dados))} noValidate className="space-y-2 sm:space-y-4 lg:space-y-6">
       <PageHeader
         titulo="Configurações da empresa"
         descricao="Os dados que saem em documento, nota e comunicação — uma fonte só para o sistema inteiro."
@@ -159,7 +159,7 @@ export function EmpresaPage() {
       {aba === 'dados' && (
         <Card>
           <CardHeader titulo="Dados cadastrais" descricao="Aparecem em nota fiscal, contrato e rodapé de e-mail" />
-          <CardBody className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+          <CardBody className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-4 lg:gap-6">
             <Input label="Razão social" className="sm:col-span-2" error={formState.errors.razaoSocial?.message} {...register('razaoSocial')} />
             <Input label="Nome fantasia" error={formState.errors.nomeFantasia?.message} {...register('nomeFantasia')} />
             <Input
@@ -193,7 +193,7 @@ export function EmpresaPage() {
               </p>
             )}
 
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-6">
+            <div className="grid grid-cols-1 sm:grid-cols-6 gap-2 sm:gap-4 lg:gap-6">
               <div className="sm:col-span-2">
                 <Input
                   label="CEP"
@@ -222,10 +222,10 @@ export function EmpresaPage() {
       )}
 
       {aba === 'identidade' && (
-        <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-2 sm:gap-4 lg:gap-6">
           <Card className="lg:col-span-2">
             <CardHeader titulo="Marca" descricao="Logo e cor que aparecem no painel, no PDF e no e-mail" />
-            <CardBody className="space-y-5">
+            <CardBody className="space-y-4">
               <div className="flex flex-wrap items-center gap-4">
                 <span aria-hidden className="grid h-16 w-16 shrink-0 place-items-center rounded-xl text-lg font-bold text-white" style={{ background: cor }}>
                   SE
@@ -236,7 +236,7 @@ export function EmpresaPage() {
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-4 lg:gap-6">
                 <Input label="Cor principal" placeholder="#2a78d6" error={formState.errors.corPrimaria?.message} {...register('corPrimaria')} />
                 <div className="flex items-end">
                   <div className="flex h-10 w-full items-center gap-2 rounded-lg border border-border px-3">
@@ -272,10 +272,10 @@ export function EmpresaPage() {
       )}
 
       {aba === 'fiscal' && (
-        <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-2 sm:gap-4 lg:gap-6">
           <Card className="lg:col-span-2">
             <CardHeader titulo="Regime e numeração" descricao="Base do cálculo de imposto e da emissão" />
-            <CardBody className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <CardBody className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-4 lg:gap-6">
               <Select label="Regime tributário" {...register('regime')}>
                 <option value="simples">Simples Nacional</option>
                 <option value="presumido">Lucro Presumido</option>
@@ -300,7 +300,7 @@ export function EmpresaPage() {
             <CardBody className="space-y-3">
               {empresa?.certificado ? (
                 <>
-                  <div className="rounded-lg border border-border bg-surface-2 p-3.5">
+                  <div className="rounded-lg border border-border bg-surface-2 p-2 sm:p-4.5">
                     <p className="truncate font-mono text-[12px] text-text">{empresa.certificado.nome}</p>
                     <p className="mt-1.5 text-[13px] text-text-secondary">
                       Válido até <strong className="text-text">{date(empresa.certificado.validade)}</strong>

@@ -16,8 +16,8 @@ import { Card, CardHeader } from '@/shared/ui/Card'
 import { DataTable } from '@/shared/ui/DataTable'
 import { Select } from '@/shared/ui/Field'
 import { PageHeader } from '@/shared/ui/PageHeader'
-import { Skeleton } from '@/shared/ui/Skeleton'
 import { cn } from '@/shared/lib/cn'
+import { CartaoResumo, GradeResumo } from '@/shared/ui/CartaoResumo'
 import { money, number } from '@/shared/lib/format'
 
 export function EstoquePage() {
@@ -166,7 +166,7 @@ export function EstoquePage() {
   ]
 
   return (
-    <div className="space-y-4 sm:space-y-5">
+    <div className="space-y-2 sm:space-y-4 lg:space-y-6">
       <PageHeader
         titulo="Estoque"
         descricao="Saldo, disponível e ponto de pedido — com o custo médio saindo do próprio kardex."
@@ -195,17 +195,17 @@ export function EstoquePage() {
         }
       />
 
-      <section className="grid grid-cols-2 gap-3 sm:gap-4 xl:grid-cols-4">
+      <GradeResumo>
         {cartoes.map((cartao) => (
-          <div key={cartao.rotulo} className="rounded-xl border border-border bg-surface p-4 shadow-card">
-            <p className="text-[13px] font-medium text-text-muted">{cartao.rotulo}</p>
-            {cartao.valor === null ? <Skeleton className="mt-2 h-7 w-24" /> : (
-              <p className={cn('mt-1 text-xl font-semibold tabular-nums lg:text-2xl', cartao.destaque ?? 'text-text')}>{cartao.valor}</p>
-            )}
-            {cartao.nota && <p className="mt-1 text-[12px] text-text-muted">{cartao.nota}</p>}
-          </div>
+          <CartaoResumo
+            key={cartao.rotulo}
+            rotulo={cartao.rotulo}
+            valor={cartao.valor}
+            nota={cartao.nota}
+            destaque={cartao.destaque}
+          />
         ))}
-      </section>
+      </GradeResumo>
 
       {(totais?.precisamRepor ?? 0) > 0 && (
         <Card className="border-warning/40">

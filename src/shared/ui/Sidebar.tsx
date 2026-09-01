@@ -206,7 +206,7 @@ export function Sidebar() {
         </div>
 
         {/* Navegação */}
-        <nav className="flex-1 space-y-5 overflow-y-auto px-2.5 py-4">
+        <nav className="flex-1 space-y-4 overflow-y-auto px-2.5 py-4">
           {navegacao.map((secao) => (
             <div key={secao.titulo} className="space-y-1">
               {!recolhida && (

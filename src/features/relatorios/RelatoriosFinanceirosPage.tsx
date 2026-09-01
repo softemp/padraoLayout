@@ -67,7 +67,7 @@ export function RelatoriosFinanceirosPage() {
   const totalDespesas = despesas.reduce((s, l) => s + l.atual, 0)
 
   return (
-    <div className="space-y-4 sm:space-y-5">
+    <div className="space-y-2 sm:space-y-4 lg:space-y-6">
       <PageHeader
         titulo="Relatórios financeiros"
         descricao="Os mesmos lançamentos das telas de contas, lidos por eixos diferentes."
@@ -105,11 +105,11 @@ export function RelatoriosFinanceirosPage() {
       </div>
 
       {aba === 'resultado' && (
-        <div className="space-y-4 sm:space-y-5">
+        <div className="space-y-2 sm:space-y-4 lg:space-y-6">
           {/* TRÊS ÓTICAS lado a lado. Elas respondem perguntas diferentes e
               podem discordar sem nenhuma estar errada — mostrar só uma como
               "o resultado" é o jeito clássico de enganar a si mesmo. */}
-          <section className="grid grid-cols-1 gap-3 sm:gap-4 lg:grid-cols-3">
+          <section className="grid grid-cols-1 lg:grid-cols-3 gap-2 sm:gap-4 lg:gap-6">
             {[
               {
                 titulo: 'Competência',
@@ -332,7 +332,7 @@ export function RelatoriosFinanceirosPage() {
       )}
 
       {aba === 'aging' && (
-        <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 sm:gap-4 lg:gap-6">
           {[
             { titulo: 'A receber por idade', dados: agingReceber, cor: t.serie[0] },
             { titulo: 'A pagar por idade', dados: agingPagar, cor: t.serie[1] },

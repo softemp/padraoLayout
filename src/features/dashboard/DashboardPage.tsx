@@ -24,7 +24,7 @@ export function DashboardPage() {
   const [periodo, setPeriodo] = useState<(typeof PERIODOS)[number]>('12 meses')
 
   return (
-    <div className="space-y-4 sm:space-y-5 lg:space-y-6">
+    <div className="space-y-2 sm:space-y-4 lg:space-y-6">
       <PageHeader
         titulo="Visão geral"
         descricao="Como o negócio fechou o mês e o que exige atenção agora."
@@ -68,13 +68,13 @@ export function DashboardPage() {
       />
 
       {/* KPIs: número em destaque é stat tile, não gráfico de uma barra. */}
-      <section aria-label="Indicadores" className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4 xl:grid-cols-4">
+      <section aria-label="Indicadores" className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-2 sm:gap-4 lg:gap-6">
         {kpis.map((kpi) => (
           <StatTile key={kpi.id} kpi={kpi} />
         ))}
       </section>
 
-      <section className="grid grid-cols-1 gap-3 sm:gap-4 xl:grid-cols-3 lg:gap-5">
+      <section className="grid grid-cols-1 xl:grid-cols-3 gap-2 sm:gap-4 lg:gap-6">
         <ReceitaArea />
         <Card className="flex flex-col">
           <CardHeader titulo="Meta do mês" descricao="Agosto de 2026" />
@@ -83,7 +83,7 @@ export function DashboardPage() {
             <Meter rotulo="Novos clientes" valor={168} total={200} formatar={(n) => `${n}`} />
             <Meter rotulo="Renovações" valor={412} total={520} formatar={(n) => `${n}`} />
 
-            <div className="mt-auto space-y-2.5 rounded-lg bg-surface-2 p-3.5">
+            <div className="mt-auto space-y-2.5 rounded-lg bg-surface-2 p-2 sm:p-4.5">
               <p className="text-[13px] font-semibold text-text">Precisa de decisão</p>
               <ul className="space-y-2 text-[13px] text-text-secondary">
                 <li className="flex items-start gap-2">
@@ -105,12 +105,12 @@ export function DashboardPage() {
         <TopClientesCard />
       </section>
 
-      <section className="grid grid-cols-1 gap-3 sm:gap-4 lg:grid-cols-2 lg:gap-5">
+      <section className="grid grid-cols-1 lg:grid-cols-2 gap-2 sm:gap-4 lg:gap-6">
         <CanaisBarras />
         <CategoriasBarras />
       </section>
 
-      <section className="grid grid-cols-1 gap-3 sm:gap-4 xl:grid-cols-3 lg:gap-5">
+      <section className="grid grid-cols-1 xl:grid-cols-3 gap-2 sm:gap-4 lg:gap-6">
         <Card className="xl:col-span-2">
           <CardHeader
             titulo="Atividade recente"
@@ -138,7 +138,7 @@ export function DashboardPage() {
 
         <Card>
           <CardHeader titulo="Atalhos" descricao="As ações que este painel mais executa" />
-          <CardBody className="grid grid-cols-2 gap-2.5">
+          <CardBody className="grid grid-cols-2 gap-2">
             {[
               { icone: '➕', rotulo: 'Novo cliente', rota: '/clientes' },
               { icone: '🧾', rotulo: 'Faturas', rota: '/financeiro/faturas' },
@@ -150,7 +150,7 @@ export function DashboardPage() {
               <Link
                 key={a.rotulo}
                 to={a.rota}
-                className="flex flex-col items-start gap-2 rounded-lg border border-border p-3 text-[13px] font-medium text-text-secondary transition-colors hover:border-border-strong hover:bg-surface-2 hover:text-text"
+                className="flex flex-col items-start gap-2 rounded-lg border border-border p-2 sm:p-4 text-[13px] font-medium text-text-secondary transition-colors hover:border-border-strong hover:bg-surface-2 hover:text-text"
               >
                 <span aria-hidden className="text-lg">{a.icone}</span>
                 {a.rotulo}

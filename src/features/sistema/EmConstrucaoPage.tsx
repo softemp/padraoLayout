@@ -10,7 +10,7 @@ export function EmConstrucaoPage() {
   const titulo = params.get('t') ?? 'Módulo'
 
   return (
-    <div className="space-y-4 sm:space-y-5">
+    <div className="space-y-2 sm:space-y-4 lg:space-y-6">
       <PageHeader titulo={titulo} descricao="Rota de exemplo do modelo de layout." />
       <Card>
         <EmptyState

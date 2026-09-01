@@ -84,7 +84,7 @@ export function ColaboradorPage() {
   const pendentesCriticos = checklist.data?.filter((i) => i.critico && !i.feito).length ?? 0
 
   return (
-    <div className="space-y-4 sm:space-y-5">
+    <div className="space-y-2 sm:space-y-4 lg:space-y-6">
       <nav aria-label="Trilha" className="flex items-center gap-1.5 text-[13px] text-text-muted">
         <Link to="/rh" className="font-medium text-primary hover:underline">Pessoas</Link>
         <span aria-hidden>/</span>
@@ -138,7 +138,7 @@ export function ColaboradorPage() {
       </div>
 
       {aba === 'resumo' && (
-        <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-2 sm:gap-4 lg:gap-6">
           <Card className="lg:col-span-2">
             <CardHeader titulo="Dados" descricao="Cadastro funcional" />
             <CardBody>

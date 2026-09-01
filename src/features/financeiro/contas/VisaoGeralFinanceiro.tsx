@@ -23,8 +23,8 @@ export function VisaoGeralFinanceiro({ filtro }: { filtro: FiltroFinanceiro }) {
     .slice(0, 10)
 
   return (
-    <div className="space-y-4 sm:space-y-5">
-      <div className="grid grid-cols-1 gap-4 xl:grid-cols-2 lg:gap-5">
+    <div className="space-y-2 sm:space-y-4 lg:space-y-6">
+      <div className="grid grid-cols-1 xl:grid-cols-2 gap-2 sm:gap-4 lg:gap-6">
         {/* Entradas × saídas: barras divergentes em torno do zero. A saída é
             desenhada negativa porque é assim que ela pesa no caixa. */}
         <ChartCard
@@ -93,7 +93,7 @@ export function VisaoGeralFinanceiro({ filtro }: { filtro: FiltroFinanceiro }) {
         </ChartCard>
       </div>
 
-      <div className="grid grid-cols-1 gap-4 xl:grid-cols-3 lg:gap-5">
+      <div className="grid grid-cols-1 xl:grid-cols-3 gap-2 sm:gap-4 lg:gap-6">
         <Card className="xl:col-span-2">
           <CardHeader titulo="Próximos vencimentos" descricao="O que exige decisão nos próximos dias" />
           <ul className="divide-y divide-border">

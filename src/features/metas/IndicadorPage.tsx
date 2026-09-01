@@ -56,7 +56,7 @@ export function IndicadorPage() {
   const serie = indicador.serie.map((p) => ({ ...p, meta: indicador.meta }))
 
   return (
-    <div className="space-y-4 sm:space-y-5">
+    <div className="space-y-2 sm:space-y-4 lg:space-y-6">
       <nav aria-label="Trilha" className="flex items-center gap-1.5 text-[13px] text-text-muted">
         <Link to="/metas" className="font-medium text-primary hover:underline">Metas e indicadores</Link>
         <span aria-hidden>/</span>
@@ -94,7 +94,7 @@ export function IndicadorPage() {
         </div>
       </Card>
 
-      <div className="grid grid-cols-1 gap-4 xl:grid-cols-3">
+      <div className="grid grid-cols-1 xl:grid-cols-3 gap-2 sm:gap-4 lg:gap-6">
         <Card className="xl:col-span-2">
           <CardHeader titulo="Histórico" descricao="Últimos períodos contra a meta atual" />
           <CardBody>
@@ -148,7 +148,7 @@ export function IndicadorPage() {
             <Card>
               <CardHeader titulo="Contrapeso" descricao="O par que impede o jogo" />
               <CardBody className="space-y-2">
-                <Link to={`/metas/${contrapeso.id}`} className="block rounded-lg border border-border p-3 transition-colors hover:bg-surface-2">
+                <Link to={`/metas/${contrapeso.id}`} className="block rounded-lg border border-border p-2 sm:p-4 transition-colors hover:bg-surface-2">
                   <p className="text-[13px] font-semibold text-text">{contrapeso.nome}</p>
                   <p className="mt-0.5 text-[13px] tabular-nums text-text-secondary">
                     {formatarValor(contrapeso, contrapeso.atual)} · meta {formatarValor(contrapeso, contrapeso.meta)}
@@ -219,7 +219,7 @@ export function IndicadorPage() {
             value={motivo}
             onChange={(e) => setMotivo(e.target.value)}
           />
-          <dl className="grid grid-cols-2 gap-2 rounded-lg border border-border bg-surface-2 p-3 text-center">
+          <dl className="grid grid-cols-2 gap-2 rounded-lg border border-border bg-surface-2 p-2 sm:p-4 text-center">
             <div>
               <dt className="text-[11px] uppercase tracking-wide text-text-muted">Meta atual</dt>
               <dd className="mt-0.5 text-[13px] font-semibold tabular-nums text-text">{formatarValor(indicador, indicador.meta)}</dd>

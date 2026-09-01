@@ -62,7 +62,7 @@ export function AjusteContaModal({
         className="space-y-4"
         onSubmit={handleSubmit((dados) => tipo && onConfirmar({ ...dados, tipo }))}
       >
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-4 lg:gap-6">
           <Input
             label="Valor (R$)"
             type="number"
@@ -89,7 +89,7 @@ export function AjusteContaModal({
         />
 
         {/* Prévia do efeito: ninguém deveria descobrir o saldo novo só depois. */}
-        <dl className="grid grid-cols-3 gap-2 rounded-lg border border-border bg-surface-2 p-3 text-center">
+        <dl className="grid grid-cols-3 gap-2 rounded-lg border border-border bg-surface-2 p-2 sm:p-4 text-center">
           <div>
             <dt className="text-[11px] uppercase tracking-wide text-text-muted">Saldo atual</dt>
             <dd className="mt-0.5 text-[13px] font-semibold tabular-nums text-text">{money(saldoAtual)}</dd>

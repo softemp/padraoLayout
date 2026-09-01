@@ -31,7 +31,7 @@ export function AuditoriaPage() {
     setFiltros((atual) => ({ ...atual, [chave]: valor || undefined }))
 
   return (
-    <div className="space-y-4 sm:space-y-5">
+    <div className="space-y-2 sm:space-y-4 lg:space-y-6">
       <PageHeader
         titulo="Auditoria"
         descricao="Quem fez o quê, quando e de onde — inclusive o que mudou de valor."
@@ -62,7 +62,7 @@ export function AuditoriaPage() {
           descricao={data ? `${number(data.length)} eventos no recorte atual` : 'Carregando…'}
           acoes={temFiltro ? <Button size="sm" variant="ghost" onClick={() => setFiltros({})}>Limpar</Button> : undefined}
         />
-        <div className="grid grid-cols-1 gap-3 p-4 sm:grid-cols-3 sm:p-5">
+        <div className="grid grid-cols-1 p-4 sm:grid-cols-3 sm:p-5 gap-2 sm:gap-4 lg:gap-6">
           <Select label="Autor" value={filtros.autor ?? ''} onChange={(e) => trocar('autor', e.target.value)}>
             <option value="">Todos os autores</option>
             {autoresAuditoria.map((a) => <option key={a} value={a}>{a}</option>)}

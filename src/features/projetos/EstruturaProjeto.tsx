@@ -86,7 +86,7 @@ export function EstruturaProjeto({ projeto }: { projeto: Projeto }) {
       {/* O confronto que quase nenhuma ferramenta faz. */}
       <Card className={cn(Math.abs(diferenca) / Math.max(projeto.horasOrcadas, 1) > 0.1 && 'border-warning/40')}>
         <CardBody className="flex flex-wrap items-center justify-between gap-4">
-          <div className="grid flex-1 grid-cols-2 gap-4 sm:grid-cols-4">
+          <div className="grid flex-1 grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-4 lg:gap-6">
             {[
               { rotulo: 'Horas orçadas', valor: `${number(projeto.horasOrcadas)}h` },
               { rotulo: 'Planejado nas tarefas', valor: `${number(planejadas)}h` },
@@ -113,7 +113,7 @@ export function EstruturaProjeto({ projeto }: { projeto: Projeto }) {
         )}
       </Card>
 
-      <div className="grid grid-cols-1 gap-4 xl:grid-cols-3">
+      <div className="grid grid-cols-1 xl:grid-cols-3 gap-2 sm:gap-4 lg:gap-6">
         <div className="space-y-4 xl:col-span-2">
           {fases.isLoading && <Skeleton className="h-64 w-full rounded-xl" />}
 
@@ -269,7 +269,7 @@ export function EstruturaProjeto({ projeto }: { projeto: Projeto }) {
         <div className="space-y-4">
           {erro && <p role="alert" className="rounded-lg border border-critical/30 bg-critical/10 px-3 py-2.5 text-[13px] text-critical">⚠️ {erro}</p>}
           <Input label="Nome da fase" data-foco-inicial placeholder="Ex.: Homologação" value={nomeFase} onChange={(e) => setNomeFase(e.target.value)} />
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-4 lg:gap-6">
             <Input label="Início previsto" type="date" value={inicioFase} onChange={(e) => setInicioFase(e.target.value)} />
             <Input label="Fim previsto" type="date" hint={`Projeto termina em ${date(projeto.prazo)}`} value={fimFase} onChange={(e) => setFimFase(e.target.value)} />
           </div>
@@ -292,7 +292,7 @@ export function EstruturaProjeto({ projeto }: { projeto: Projeto }) {
         <div className="space-y-4">
           {erro && <p role="alert" className="rounded-lg border border-critical/30 bg-critical/10 px-3 py-2.5 text-[13px] text-critical">⚠️ {erro}</p>}
           <Input label="O que precisa ser feito" data-foco-inicial value={nomeTarefa} onChange={(e) => setNomeTarefa(e.target.value)} />
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-4 lg:gap-6">
             <Select label="Responsável" hint="Tarefa sem responsável não é feita, é reencontrada." value={responsavel} onChange={(e) => setResponsavel(e.target.value)}>
               <option value="">Definir depois</option>
               {equipeDisponivel.map((p) => <option key={p} value={p}>{p}</option>)}

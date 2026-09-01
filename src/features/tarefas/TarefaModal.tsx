@@ -80,7 +80,7 @@ export function TarefaModal({ tarefa, onFechar }: { tarefa: Tarefa | null; onFec
 
           <p className="text-[13px] leading-relaxed text-text-secondary">{tarefa.descricao}</p>
 
-          <dl className="grid grid-cols-2 gap-3 rounded-lg border border-border bg-surface-2 p-3 sm:grid-cols-4">
+          <dl className="grid grid-cols-2 rounded-lg border border-border bg-surface-2 p-2 sm:p-4 sm:grid-cols-4 gap-2 sm:gap-4 lg:gap-6">
             {[
               ['Responsável', tarefa.responsavel ?? 'ninguém'],
               ['Prazo', tarefa.prazo ? date(tarefa.prazo) : 'sem prazo'],

@@ -104,7 +104,7 @@ export function MovimentoModal({
           </p>
         )}
 
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-4 lg:gap-6">
           <Select label="Tipo de movimento" data-foco-inicial {...register('tipo')}>
             <option value="entrada">Entrada (compra, devolução)</option>
             <option value="saida">Saída (venda, consumo, perda)</option>
@@ -148,7 +148,7 @@ export function MovimentoModal({
 
         {/* Prévia do efeito: saldo e custo médio antes de gravar. */}
         {item && (
-          <dl className="grid grid-cols-2 gap-2 rounded-lg border border-border bg-surface-2 p-3 text-center sm:grid-cols-4">
+          <dl className="grid grid-cols-2 gap-2 rounded-lg border border-border bg-surface-2 p-2 sm:p-4 text-center sm:grid-cols-4">
             <div>
               <dt className="text-[11px] uppercase tracking-wide text-text-muted">Saldo hoje</dt>
               <dd className="mt-0.5 text-[13px] font-semibold tabular-nums text-text">{number(saldo)}</dd>

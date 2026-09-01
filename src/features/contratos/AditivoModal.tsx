@@ -91,7 +91,7 @@ export function AditivoModal({
           </p>
         )}
 
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-4 lg:gap-6">
           <Select label="Tipo de aditivo" data-foco-inicial {...register('tipo')}>
             <option value="reajuste">Reajuste de valor</option>
             <option value="valor">Alteração de valor</option>
@@ -115,7 +115,7 @@ export function AditivoModal({
 
         {/* O "de → para" na tela, antes de gravar. */}
         {contrato && (mudaValor || mudaPrazo) && (
-          <dl className="grid grid-cols-3 gap-2 rounded-lg border border-border bg-surface-2 p-3 text-center">
+          <dl className="grid grid-cols-3 gap-2 rounded-lg border border-border bg-surface-2 p-2 sm:p-4 text-center">
             <div>
               <dt className="text-[11px] uppercase tracking-wide text-text-muted">Hoje</dt>
               <dd className="mt-0.5 text-[13px] font-semibold tabular-nums text-text">

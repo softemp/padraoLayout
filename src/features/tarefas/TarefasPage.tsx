@@ -19,6 +19,7 @@ import { Skeleton } from '@/shared/ui/Skeleton'
 import { cn } from '@/shared/lib/cn'
 import { date, number } from '@/shared/lib/format'
 import { TarefaCard } from './TarefaCard'
+import { CartaoResumo, GradeResumo } from '@/shared/ui/CartaoResumo'
 import { TarefaModal } from './TarefaModal'
 
 export function TarefasPage() {
@@ -129,7 +130,7 @@ export function TarefasPage() {
   ]
 
   return (
-    <div className="space-y-4 sm:space-y-5">
+    <div className="space-y-2 sm:space-y-4 lg:space-y-6">
       <PageHeader
         titulo="Tarefas"
         descricao="O que precisa ser feito, por quem e até quando — no quadro ou na lista."
@@ -156,17 +157,17 @@ export function TarefasPage() {
         }
       />
 
-      <section className="grid grid-cols-2 gap-3 sm:gap-4 xl:grid-cols-4">
+      <GradeResumo>
         {cartoes.map((cartao) => (
-          <div key={cartao.rotulo} className="rounded-xl border border-border bg-surface p-4 shadow-card">
-            <p className="text-[13px] font-medium text-text-muted">{cartao.rotulo}</p>
-            {cartao.valor === null ? <Skeleton className="mt-2 h-7 w-16" /> : (
-              <p className={cn('mt-1 text-xl font-semibold tabular-nums lg:text-2xl', cartao.destaque ?? 'text-text')}>{cartao.valor}</p>
-            )}
-            {cartao.nota && <p className="mt-1 text-[12px] text-text-muted">{cartao.nota}</p>}
-          </div>
+          <CartaoResumo
+            key={cartao.rotulo}
+            rotulo={cartao.rotulo}
+            valor={cartao.valor}
+            nota={cartao.nota}
+            destaque={cartao.destaque}
+          />
         ))}
-      </section>
+      </GradeResumo>
 
       <div className="flex flex-wrap items-end gap-2 rounded-xl border border-border bg-surface p-2.5 sm:gap-3">
         <label className="relative min-w-0 flex-1 sm:max-w-xs">
@@ -226,7 +227,7 @@ export function TarefasPage() {
       )}
 
       {visao === 'quadro' ? (
-        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-2 sm:gap-4 lg:gap-6">
           {SITUACOES.map((coluna) => {
             const cartoesColuna = quadro.data?.[coluna.id] ?? []
             const estourou = coluna.limite != null && cartoesColuna.length > coluna.limite
@@ -235,7 +236,7 @@ export function TarefasPage() {
                 key={coluna.id}
                 onDragOver={(e) => e.preventDefault()}
                 onDrop={() => { if (arrastando) mover.mutate({ id: arrastando, situacao: coluna.id }); setArrastando(null) }}
-                className="flex flex-col rounded-xl border border-border bg-surface-2/50 p-2.5"
+                className="flex flex-col rounded-xl border border-border bg-surface-2/50 p-2 sm:p-4"
               >
                 <header className="flex items-center justify-between gap-2 px-1 pb-2.5">
                   <h2 className="text-[13px] font-semibold text-text">{coluna.rotulo}</h2>

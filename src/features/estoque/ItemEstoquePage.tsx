@@ -62,7 +62,7 @@ export function ItemEstoquePage() {
   const cobertura = i ? diasDeCobertura(i) : null
 
   return (
-    <div className="space-y-4 sm:space-y-5">
+    <div className="space-y-2 sm:space-y-4 lg:space-y-6">
       <nav aria-label="Trilha" className="flex items-center gap-1.5 text-[13px] text-text-muted">
         <Link to="/estoque" className="font-medium text-primary hover:underline">Estoque</Link>
         <span aria-hidden>/</span>
@@ -123,7 +123,7 @@ export function ItemEstoquePage() {
         </div>
       </Card>
 
-      <div className="grid grid-cols-1 gap-4 xl:grid-cols-3">
+      <div className="grid grid-cols-1 xl:grid-cols-3 gap-2 sm:gap-4 lg:gap-6">
         <Card className="xl:col-span-2">
           <CardHeader
             titulo="Kardex"
@@ -184,7 +184,7 @@ export function ItemEstoquePage() {
                     total={Math.max(pontoDePedido(i), 1)}
                     formatar={(n) => `${number(n)} ${i.unidade}`}
                   />
-                  <dl className="grid grid-cols-2 gap-3 text-[13px]">
+                  <dl className="grid grid-cols-2 text-[13px] gap-2 sm:gap-4 lg:gap-6">
                     {[
                       ['Consumo médio', `${i.consumoMedioDiario}/dia`],
                       ['Prazo de reposição', `${i.prazoReposicaoDias} dias`],
@@ -197,7 +197,7 @@ export function ItemEstoquePage() {
                       </div>
                     ))}
                   </dl>
-                  <p className="rounded-lg bg-surface-2 p-3 text-[12px] leading-relaxed text-text-secondary">
+                  <p className="rounded-lg bg-surface-2 p-2 sm:p-4 text-[12px] leading-relaxed text-text-secondary">
                     Ponto de pedido = <strong className="text-text">{i.consumoMedioDiario} × {i.prazoReposicaoDias} + {i.estoqueSeguranca}</strong> ={' '}
                     <strong className="text-text">{number(pontoDePedido(i))} {i.unidade}</strong>. Avisar só no mínimo
                     faz o pedido chegar depois de a prateleira esvaziar.

@@ -149,7 +149,7 @@ export function LancamentoFormModal({
           ))}
         </div>
 
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-4 lg:gap-6">
           <Input label="Descrição" className="sm:col-span-2" error={formState.errors.descricao?.message} {...register('descricao')} />
           <Input
             label={tipo === 'receber' ? 'Cliente' : 'Fornecedor'}
@@ -192,7 +192,7 @@ export function LancamentoFormModal({
 
           {recorrente && (
             <>
-              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-4 lg:gap-6">
                 <Select label="Periodicidade" {...register('periodicidade')}>
                   <option value="mensal">Mensal</option>
                   <option value="semanal">Semanal</option>

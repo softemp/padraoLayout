@@ -74,7 +74,7 @@ export function Modal({
           largura,
         )}
       >
-        <div className="flex items-start justify-between gap-4 border-b border-border px-5 py-4">
+        <div className="flex items-start justify-between gap-4 border-b border-border px-2 py-3 sm:px-4 lg:px-6">
           <div className="min-w-0">
             <h2 className="text-[15px] font-semibold tracking-tight text-text">{titulo}</h2>
             {descricao && <div className="mt-1 text-[13px] text-text-muted">{descricao}</div>}
@@ -89,8 +89,8 @@ export function Modal({
           </button>
         </div>
 
-        {children && <div className="max-h-[70vh] overflow-y-auto px-5 py-4">{children}</div>}
-        {rodape && <div className="flex flex-wrap justify-end gap-2 border-t border-border bg-surface-2/60 px-5 py-3.5">{rodape}</div>}
+        {children && <div className="max-h-[70vh] overflow-y-auto p-2 sm:p-4 lg:p-6">{children}</div>}
+        {rodape && <div className="flex flex-wrap justify-end gap-2 border-t border-border bg-surface-2/60 px-2 py-3 sm:px-4 lg:px-6">{rodape}</div>}
       </div>
     </div>,
     document.body,

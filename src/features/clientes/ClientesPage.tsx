@@ -95,7 +95,7 @@ export function ClientesPage() {
   const naAbaLixeira = tabela.escopo === 'lixeira'
 
   return (
-    <div className="space-y-4 sm:space-y-5">
+    <div className="space-y-2 sm:space-y-4 lg:space-y-6">
       <PageHeader
         titulo="Clientes"
         descricao="Paginação, ordenação e busca acontecem no servidor — a tela abre igual com 200 ou 200 mil linhas."

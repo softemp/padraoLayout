@@ -67,7 +67,7 @@ export function PedidoCompraPage() {
   const criouEsteUsuario = p?.criadoPor === USUARIO_ATUAL
 
   return (
-    <div className="space-y-4 sm:space-y-5">
+    <div className="space-y-2 sm:space-y-4 lg:space-y-6">
       <nav aria-label="Trilha" className="flex items-center gap-1.5 text-[13px] text-text-muted">
         <Link to="/compras" className="font-medium text-primary hover:underline">Compras</Link>
         <span aria-hidden>/</span>
@@ -160,7 +160,7 @@ export function PedidoCompraPage() {
         </div>
       </Card>
 
-      <div className="grid grid-cols-1 gap-4 xl:grid-cols-3">
+      <div className="grid grid-cols-1 xl:grid-cols-3 gap-2 sm:gap-4 lg:gap-6">
         <Card className="xl:col-span-2">
           <CardHeader titulo="Itens do pedido" descricao="Pedido × recebido, item a item" />
           <div className="overflow-x-auto">

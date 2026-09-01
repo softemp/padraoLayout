@@ -52,7 +52,7 @@ export function ClienteFormModal({
         </>
       }
     >
-      <form id="form-cliente" onSubmit={handleSubmit(onSalvar)} noValidate className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+      <form id="form-cliente" onSubmit={handleSubmit(onSalvar)} noValidate className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-4 lg:gap-6">
         <Input label="Nome" className="sm:col-span-2" data-foco-inicial error={formState.errors.nome?.message} {...register('nome')} />
         <Input label="E-mail" type="email" className="sm:col-span-2" error={formState.errors.email?.message} {...register('email')} />
         <Select label="Plano" error={formState.errors.plano?.message} {...register('plano')}>

@@ -58,7 +58,7 @@ function Secao({ titulo, descricao, children }: { titulo: string; descricao: str
 
 export function ComponentesPage() {
   return (
-    <div className="space-y-4 sm:space-y-5">
+    <div className="space-y-2 sm:space-y-4 lg:space-y-6">
       <PageHeader
         titulo="Componentes"
         descricao="O inventário do kit: o que existe, como se chama e como se comporta nos dois temas."
@@ -84,7 +84,7 @@ export function ComponentesPage() {
         <Badge>Inativo</Badge>
       </Secao>
 
-      <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 sm:gap-4 lg:gap-6">
         <Card>
           <CardHeader titulo="Campos de formulário" descricao="Rótulo, dica, erro com papel de alerta e foco visível." />
           <CardBody className="space-y-4">
@@ -128,7 +128,7 @@ export function ComponentesPage() {
           titulo="Exportação"
           descricao="Um componente, três saídas — e cada formato liga ou desliga por prop."
         />
-        <CardBody className="space-y-5">
+        <CardBody className="space-y-4">
           <div className="flex flex-wrap items-center gap-3">
             <BotaoExportar {...exportacaoDemo} />
             <span className="text-[13px] text-text-muted">
@@ -159,7 +159,7 @@ export function ComponentesPage() {
 
       <Card>
         <CardHeader titulo="Indicadores" descricao="Rótulo · valor · variação contra período nomeado · minigráfico." />
-        <CardBody className="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4">
+        <CardBody className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-2 sm:gap-4 lg:gap-6">
           {kpis.map((kpi) => <StatTile key={kpi.id} kpi={kpi} />)}
         </CardBody>
       </Card>

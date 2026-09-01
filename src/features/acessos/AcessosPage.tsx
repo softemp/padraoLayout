@@ -47,7 +47,7 @@ export function AcessosPage() {
   }
 
   return (
-    <div className="space-y-4 sm:space-y-5">
+    <div className="space-y-2 sm:space-y-4 lg:space-y-6">
       <PageHeader
         titulo="Acessos"
         descricao="Quem entra onde, e o que pode fazer lá dentro: papéis, módulos, permissões e usuários."
@@ -81,7 +81,7 @@ export function AcessosPage() {
       </div>
 
       {aba === 'papeis' && (
-        <div className="grid grid-cols-1 gap-3 sm:gap-4 lg:grid-cols-2 xl:grid-cols-3">
+        <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-2 sm:gap-4 lg:gap-6">
           {carregandoPapeis &&
             Array.from({ length: 3 }).map((_, i) => (
               <Card key={i}><CardBody><Skeleton className="h-24 w-full" /></CardBody></Card>

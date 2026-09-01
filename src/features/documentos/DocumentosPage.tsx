@@ -16,8 +16,8 @@ import { ConfirmarAcao } from '@/shared/ui/ConfirmarAcao'
 import { DataTable } from '@/shared/ui/DataTable'
 import { Select } from '@/shared/ui/Field'
 import { PageHeader } from '@/shared/ui/PageHeader'
-import { Skeleton } from '@/shared/ui/Skeleton'
 import { cn } from '@/shared/lib/cn'
+import { CartaoResumo, GradeResumo } from '@/shared/ui/CartaoResumo'
 import { date, number } from '@/shared/lib/format'
 
 const rotuloTipo: Record<TipoDocumento, string> = {
@@ -205,7 +205,7 @@ export function DocumentosPage() {
   ]
 
   return (
-    <div className="space-y-4 sm:space-y-5">
+    <div className="space-y-2 sm:space-y-4 lg:space-y-6">
       <PageHeader
         titulo="Documentos"
         descricao="Todo arquivo vinculado a alguém, com versão, validade e prazo de compartilhamento."
@@ -231,19 +231,17 @@ export function DocumentosPage() {
         }
       />
 
-      <section className="grid grid-cols-2 gap-3 sm:gap-4 xl:grid-cols-4">
+      <GradeResumo>
         {cartoes.map((cartao) => (
-          <div key={cartao.rotulo} className="rounded-xl border border-border bg-surface p-4 shadow-card">
-            <p className="text-[13px] font-medium text-text-muted">{cartao.rotulo}</p>
-            {cartao.valor === null ? (
-              <Skeleton className="mt-2 h-7 w-20" />
-            ) : (
-              <p className={cn('mt-1 text-xl font-semibold tabular-nums lg:text-2xl', cartao.destaque ?? 'text-text')}>{cartao.valor}</p>
-            )}
-            {cartao.nota && <p className="mt-1 text-[12px] text-text-muted">{cartao.nota}</p>}
-          </div>
+          <CartaoResumo
+            key={cartao.rotulo}
+            rotulo={cartao.rotulo}
+            valor={cartao.valor}
+            nota={cartao.nota}
+            destaque={cartao.destaque}
+          />
         ))}
-      </section>
+      </GradeResumo>
 
       {/* Arquivado é o mesmo recorte da mesma listagem, não outra tela. */}
       <div role="tablist" aria-label="Escopo" className="flex items-center gap-1 border-b border-border">

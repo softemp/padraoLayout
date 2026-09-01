@@ -65,7 +65,7 @@ export function NovoProjetoModal({ aberto, onFechar, onCriado }: { aberto: boole
       <div className="space-y-4">
         {erro && <p role="alert" className="rounded-lg border border-critical/30 bg-critical/10 px-3 py-2.5 text-[13px] text-critical">⚠️ {erro}</p>}
 
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-4 lg:gap-6">
           <Input label="Nome do projeto" className="sm:col-span-2" data-foco-inicial value={nome} onChange={(e) => setNome(e.target.value)} />
           <Select label="Cliente" value={clienteId} onChange={(e) => setClienteId(e.target.value)}>
             <option value="">Selecione…</option>
@@ -81,7 +81,7 @@ export function NovoProjetoModal({ aberto, onFechar, onCriado }: { aberto: boole
           <Input label="Custo por hora (R$)" type="number" step="0.01" min={0} hint="Copiado no projeto: reajuste futuro não reescreve esta margem." value={custoHora} onChange={(e) => setCustoHora(Number(e.target.value))} />
         </div>
 
-        <dl className="grid grid-cols-3 gap-2 rounded-lg border border-border bg-surface-2 p-3 text-center">
+        <dl className="grid grid-cols-3 gap-2 rounded-lg border border-border bg-surface-2 p-2 sm:p-4 text-center">
           <div>
             <dt className="text-[11px] uppercase tracking-wide text-text-muted">Custo previsto</dt>
             <dd className="mt-0.5 text-[13px] font-semibold tabular-nums text-text">{money(custoTotal)}</dd>

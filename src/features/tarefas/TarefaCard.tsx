@@ -35,7 +35,7 @@ export function TarefaCard({
       onDragStart={onDragStart}
       onDragEnd={onDragEnd}
       className={cn(
-        'group rounded-xl border border-border bg-surface p-3 shadow-card transition-shadow',
+        'group rounded-xl border border-border bg-surface p-2 shadow-card sm:p-4 transition-shadow',
         'hover:shadow-pop',
         arrastando && 'opacity-40',
       )}

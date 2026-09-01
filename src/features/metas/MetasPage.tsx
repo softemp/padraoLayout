@@ -54,7 +54,7 @@ function CartaoIndicador({ indicador }: { indicador: Indicador }) {
   return (
     <Link
       to={`/metas/${indicador.id}`}
-      className="block rounded-xl border border-border bg-surface p-4 shadow-card transition-shadow hover:shadow-pop"
+      className="block rounded-xl border border-border bg-surface p-2 shadow-card sm:p-4 lg:p-6 transition-shadow hover:shadow-pop"
     >
       <div className="flex items-start justify-between gap-2">
         <div className="min-w-0">
@@ -122,7 +122,7 @@ export function MetasPage() {
   const foraDoRitmo = (data ?? []).filter((i) => farol(i) === 'vermelho').length
 
   return (
-    <div className="space-y-4 sm:space-y-5">
+    <div className="space-y-2 sm:space-y-4 lg:space-y-6">
       <PageHeader
         titulo="Metas e indicadores"
         descricao="Cada número sai de um módulo do sistema — nenhum é digitado à mão."
@@ -167,11 +167,11 @@ export function MetasPage() {
       )}
 
       {isLoading ? (
-        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4 xl:grid-cols-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-2 sm:gap-4 lg:gap-6">
           {Array.from({ length: 6 }).map((_, i) => <Skeleton key={i} className="h-44 rounded-xl" />)}
         </div>
       ) : (
-        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4 xl:grid-cols-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-2 sm:gap-4 lg:gap-6">
           {filtrados.map((i) => <CartaoIndicador key={i.id} indicador={i} />)}
         </div>
       )}

@@ -50,7 +50,7 @@ export function ContratoFornecedorPage() {
   const desempenho = c ? desempenhoFornecedor(c.fornecedor) : null
 
   return (
-    <div className="space-y-4 sm:space-y-5">
+    <div className="space-y-2 sm:space-y-4 lg:space-y-6">
       <nav aria-label="Trilha" className="flex items-center gap-1.5 text-[13px] text-text-muted">
         <Link to="/contratos-fornecedores" className="font-medium text-primary hover:underline">Contratos de fornecedores</Link>
         <span aria-hidden>/</span>
@@ -121,7 +121,7 @@ export function ContratoFornecedorPage() {
         </div>
       </Card>
 
-      <div className="grid grid-cols-1 gap-4 xl:grid-cols-3">
+      <div className="grid grid-cols-1 xl:grid-cols-3 gap-2 sm:gap-4 lg:gap-6">
         {/* O confronto que faz o contrato valer: preço acordado × preço da compra. */}
         <Card className="xl:col-span-2">
           <CardHeader

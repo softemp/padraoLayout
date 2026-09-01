@@ -90,7 +90,7 @@ export function BaixaModal({
           </p>
         )}
 
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-4 lg:gap-6">
           <Input label="Data do pagamento" type="date" data-foco-inicial error={formState.errors.pagamentoEm?.message} {...register('pagamentoEm')} />
           <Select label="Conta bancária" hint="Sem conta vinculada, o saldo não se move." {...register('contaId')}>
             <option value="">Não movimentar conta</option>
@@ -99,13 +99,13 @@ export function BaixaModal({
             ))}
           </Select>
           <Input label="Valor pago (R$)" type="number" step="0.01" min={0} error={formState.errors.valorPago?.message} {...register('valorPago')} />
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-2 gap-2 sm:gap-4 lg:gap-6">
             <Input label="Juros/multa" type="number" step="0.01" min={0} {...register('juros')} />
             <Input label="Desconto" type="number" step="0.01" min={0} {...register('desconto')} />
           </div>
         </div>
 
-        <dl className="grid grid-cols-3 gap-2 rounded-lg border border-border bg-surface-2 p-3 text-center">
+        <dl className="grid grid-cols-3 gap-2 rounded-lg border border-border bg-surface-2 p-2 sm:p-4 text-center">
           <div>
             <dt className="text-[11px] uppercase tracking-wide text-text-muted">Em aberto</dt>
             <dd className="mt-0.5 text-[13px] font-semibold tabular-nums text-text">{money(aberto)}</dd>

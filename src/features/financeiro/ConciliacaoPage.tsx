@@ -39,7 +39,7 @@ export function ConciliacaoPage() {
   }
 
   return (
-    <div className="space-y-4 sm:space-y-5">
+    <div className="space-y-2 sm:space-y-4 lg:space-y-6">
       <PageHeader
         titulo="Conciliação bancária"
         descricao="O extrato do banco de um lado, o que o sistema registrou do outro."
@@ -52,7 +52,7 @@ export function ConciliacaoPage() {
       />
 
       <Card>
-        <div className="grid grid-cols-1 gap-4 p-4 sm:grid-cols-3 sm:p-5">
+        <div className="grid grid-cols-1 p-4 sm:grid-cols-3 sm:p-5 gap-2 sm:gap-4 lg:gap-6">
           <Meter rotulo="Conciliado no período" valor={conciliados} total={pares.length || 1} formatar={(n) => `${n} lançamentos`} />
           <div>
             <p className="text-[13px] font-medium text-text-muted">Pendentes</p>

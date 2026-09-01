@@ -11,11 +11,11 @@ import { Button } from '@/shared/ui/Button'
 import { Card, CardHeader } from '@/shared/ui/Card'
 import { EmptyState } from '@/shared/ui/EmptyState'
 import { PageHeader } from '@/shared/ui/PageHeader'
-import { Skeleton } from '@/shared/ui/Skeleton'
 import { cn } from '@/shared/lib/cn'
 import { date, money } from '@/shared/lib/format'
 import { LancamentoFormModal } from './LancamentoFormModal'
 import { ListaLancamentos } from './ListaLancamentos'
+import { CartaoResumo, GradeResumo } from '@/shared/ui/CartaoResumo'
 import { VisaoGeralFinanceiro } from './VisaoGeralFinanceiro'
 
 const ABAS = [
@@ -108,7 +108,7 @@ export function ContasPage() {
   ]
 
   return (
-    <div className="space-y-4 sm:space-y-5">
+    <div className="space-y-2 sm:space-y-4 lg:space-y-6">
       <PageHeader
         titulo="Contas a pagar e a receber"
         descricao="O compromisso, a data e o dinheiro — com o mesmo eixo em todas as telas."
@@ -176,19 +176,17 @@ export function ContasPage() {
         </span>
       </div>
 
-      <section className="grid grid-cols-2 gap-3 sm:gap-4 xl:grid-cols-4">
+      <GradeResumo>
         {cartoes.map((cartao) => (
-          <div key={cartao.rotulo} className="rounded-xl border border-border bg-surface p-4 shadow-card">
-            <p className="text-[13px] font-medium text-text-muted">{cartao.rotulo}</p>
-            {cartao.valor === undefined ? (
-              <Skeleton className="mt-2 h-7 w-28" />
-            ) : (
-              <p className={cn('mt-1 text-xl font-semibold tabular-nums lg:text-2xl', cartao.cor)}>{money(cartao.valor)}</p>
-            )}
-            {cartao.nota && <p className="mt-1 text-[12px] text-text-muted">{cartao.nota}</p>}
-          </div>
+          <CartaoResumo
+            key={cartao.rotulo}
+            rotulo={cartao.rotulo}
+            valor={cartao.valor === undefined ? undefined : money(cartao.valor)}
+            nota={cartao.nota}
+            destaque={cartao.cor}
+          />
         ))}
-      </section>
+      </GradeResumo>
 
       <div role="tablist" aria-label="Seções financeiras" className="flex flex-wrap items-center gap-1 border-b border-border">
         {ABAS.map((item) => {
@@ -216,7 +214,7 @@ export function ContasPage() {
       {aba === 'pagar' && <ListaLancamentos tipo="pagar" base={base} de={de} ate={ate} />}
 
       {aba === 'categorias' && (
-        <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 sm:gap-4 lg:gap-6">
           {(['receber', 'pagar'] as const).map((tipo) => (
             <Card key={tipo}>
               <CardHeader
@@ -246,7 +244,7 @@ export function ContasPage() {
       )}
 
       {aba === 'contas' && (
-        <div className="grid grid-cols-1 gap-4 xl:grid-cols-[22rem_1fr]">
+        <div className="grid grid-cols-1 xl:grid-cols-[22rem_1fr] gap-2 sm:gap-4 lg:gap-6">
           <div className="space-y-3">
             {contas?.map((conta) => {
               const ativa = contaAberta === conta.id
