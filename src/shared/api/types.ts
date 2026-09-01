@@ -448,3 +448,76 @@ export type AcessoRegistrado = {
   dispositivo: string
   resultado: 'sucesso' | 'senha_incorreta' | 'segundo_fator_falhou' | 'bloqueado'
 }
+
+// ── Contratos ────────────────────────────────────────────────────────────────
+
+/**
+ * "A vencer" NÃO é status: é derivado da vigência, como "vencido" no
+ * financeiro. Gravar o estado cria um valor que envelhece sozinho.
+ */
+export type StatusContrato = 'rascunho' | 'em_assinatura' | 'vigente' | 'encerrado' | 'rescindido'
+
+export type IndiceReajuste = 'IPCA' | 'IGP-M' | 'INPC' | 'sem_reajuste'
+
+export type Contrato = {
+  id: number
+  numero: string
+  clienteId: number
+  cliente: string
+  objeto: string
+  valorMensal: number
+  inicio: string
+  fim: string
+  status: StatusContrato
+  renovacaoAutomatica: boolean
+  /** Dias de aviso prévio para não renovar — é o que torna a renovação segura. */
+  avisoPrevioDias: number
+  indice: IndiceReajuste
+  /** Mês/dia base do reajuste anual. */
+  dataBaseReajuste: string
+  ultimoReajusteEm: string | null
+  gestor: string
+  observacao?: string
+}
+
+export type Aditivo = {
+  id: number
+  contratoId: number
+  numero: string
+  tipo: 'reajuste' | 'prazo' | 'valor' | 'escopo' | 'rescisao'
+  criadoEm: string
+  vigenciaEm: string
+  descricao: string
+  valorAnterior: number | null
+  valorNovo: number | null
+  fimAnterior: string | null
+  fimNovo: string | null
+  autor: string
+}
+
+export type AssinaturaContrato = {
+  id: number
+  contratoId: number
+  parte: string
+  papel: 'contratante' | 'contratada' | 'testemunha'
+  email: string
+  assinadoEm: string | null
+  meio: 'digital' | 'fisico' | null
+}
+
+export type EventoContrato = {
+  id: number
+  contratoId: number
+  criadoEm: string
+  autor: string
+  acao: string
+  detalhe: string
+}
+
+export type TotaisContratos = {
+  vigentes: number
+  receitaMensal: number
+  vencendo: number
+  semAssinatura: number
+  reajustePendente: number
+}
