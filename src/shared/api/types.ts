@@ -396,3 +396,55 @@ export type EnderecoCep = {
   cidade: string
   uf: string
 }
+
+// ── Perfil do usuário ────────────────────────────────────────────────────────
+
+export type PerfilUsuario = {
+  nome: string
+  email: string
+  emailVerificado: boolean
+  telefone: string
+  telefoneVerificado: boolean
+  cargo: string
+  bio: string
+  fuso: string
+  idioma: 'pt-BR' | 'en-US' | 'es-ES'
+  formatoData: 'dd/MM/yyyy' | 'yyyy-MM-dd' | 'MM/dd/yyyy'
+  paginaInicial: string
+  avatarUrl: string | null
+  segundoFatorAtivo: boolean
+  codigosRecuperacaoRestantes: number
+  senhaAlteradaEm: string
+}
+
+export type CanalNotificacao = 'email' | 'whatsapp' | 'push'
+
+export type PreferenciaNotificacao = {
+  evento: string
+  rotulo: string
+  descricao: string
+  /** Canais ligados para este evento. */
+  canais: Record<CanalNotificacao, boolean>
+  /** Evento crítico não pode ser desligado por completo. */
+  obrigatorio?: boolean
+}
+
+export type SessaoAtiva = {
+  id: number
+  dispositivo: string
+  navegador: string
+  sistema: string
+  ip: string
+  local: string
+  ultimaAtividade: string
+  atual: boolean
+}
+
+export type AcessoRegistrado = {
+  id: number
+  data: string
+  ip: string
+  local: string
+  dispositivo: string
+  resultado: 'sucesso' | 'senha_incorreta' | 'segundo_fator_falhou' | 'bloqueado'
+}
