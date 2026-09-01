@@ -521,3 +521,69 @@ export type TotaisContratos = {
   semAssinatura: number
   reajustePendente: number
 }
+
+// ── Documentos ───────────────────────────────────────────────────────────────
+
+export type TipoDocumento =
+  | 'contrato' | 'aditivo' | 'nota_fiscal' | 'certidao' | 'procuracao'
+  | 'identidade' | 'comprovante' | 'apolice' | 'outro'
+
+export type Confidencialidade = 'interno' | 'restrito' | 'confidencial'
+
+/** Vínculo: documento sem dono é documento que ninguém acha depois. */
+export type VinculoDocumento = {
+  tipo: 'cliente' | 'contrato' | 'fornecedor' | 'colaborador' | 'empresa'
+  id: number | null
+  rotulo: string
+}
+
+export type Documento = {
+  id: number
+  nome: string
+  tipo: TipoDocumento
+  vinculo: VinculoDocumento
+  confidencialidade: Confidencialidade
+  tags: string[]
+  /** Metadados da versão VIGENTE. */
+  versaoAtual: number
+  extensao: string
+  tamanhoBytes: number
+  enviadoPor: string
+  enviadoEm: string
+  /** null = documento que não vence (contrato assinado, nota emitida). */
+  validade: string | null
+  arquivadoEm: string | null
+}
+
+export type VersaoDocumento = {
+  id: number
+  documentoId: number
+  numero: number
+  nome: string
+  tamanhoBytes: number
+  enviadoPor: string
+  enviadoEm: string
+  motivo: string
+  /** Impressão do arquivo — muda a cada versão; é o que prova que é outro arquivo. */
+  hash: string
+  vigente: boolean
+}
+
+export type CompartilhamentoDocumento = {
+  id: number
+  documentoId: number
+  destinatario: string
+  criadoEm: string
+  expiraEm: string
+  revogadoEm: string | null
+  acessos: number
+  criadoPor: string
+}
+
+export type TotaisDocumentos = {
+  total: number
+  vencendo: number
+  vencidos: number
+  semVinculo: number
+  espacoBytes: number
+}
