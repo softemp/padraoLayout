@@ -23,6 +23,7 @@ function tituloDaRota(pathname: string) {
   if (/^\/documentos\/\d+$/.test(pathname)) return 'Documentos · Ficha do documento'
   if (/^\/estoque\/\d+$/.test(pathname)) return 'Estoque · Ficha do item'
   if (/^\/compras\/\d+$/.test(pathname)) return 'Compras · Pedido de compra'
+  if (/^\/vendas\/\d+$/.test(pathname)) return 'Vendas · Pedido de venda'
   for (const secao of navegacao) {
     for (const item of secao.itens) {
       if (!ehPai(item)) {

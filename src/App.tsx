@@ -25,6 +25,8 @@ const AuditoriaPage = lazy(() => import('@/features/auditoria/AuditoriaPage').th
 const EmpresaPage = lazy(() => import('@/features/configuracoes/EmpresaPage').then((m) => ({ default: m.EmpresaPage })))
 const IntegracoesPage = lazy(() => import('@/features/configuracoes/IntegracoesPage').then((m) => ({ default: m.IntegracoesPage })))
 const DashboardPage = lazy(() => import('@/features/dashboard/DashboardPage').then((m) => ({ default: m.DashboardPage })))
+const VendasPage = lazy(() => import('@/features/vendas/VendasPage').then((m) => ({ default: m.VendasPage })))
+const VendaPage = lazy(() => import('@/features/vendas/VendaPage').then((m) => ({ default: m.VendaPage })))
 const ComprasPage = lazy(() => import('@/features/compras/ComprasPage').then((m) => ({ default: m.ComprasPage })))
 const PedidoCompraPage = lazy(() => import('@/features/compras/PedidoCompraPage').then((m) => ({ default: m.PedidoCompraPage })))
 const EstoquePage = lazy(() => import('@/features/estoque/EstoquePage').then((m) => ({ default: m.EstoquePage })))
@@ -73,6 +75,8 @@ export function App() {
           <Route path="/contratos" element={<ContratosPage />} />
           <Route path="/contratos/:id" element={<ContratoPage />} />
           <Route path="/tarefas" element={<TarefasPage />} />
+          <Route path="/vendas" element={<VendasPage />} />
+          <Route path="/vendas/:id" element={<VendaPage />} />
           <Route path="/compras" element={<ComprasPage />} />
           <Route path="/compras/:id" element={<PedidoCompraPage />} />
           <Route path="/estoque" element={<EstoquePage />} />

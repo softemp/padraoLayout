@@ -758,3 +758,48 @@ export type TotaisCompras = {
   valorEmAberto: number
   sugestoes: number
 }
+
+// ── Vendas ───────────────────────────────────────────────────────────────────
+
+export type SituacaoVenda =
+  | 'orcamento' | 'aguardando_desconto' | 'confirmado' | 'faturado_parcial' | 'faturado' | 'cancelado'
+
+export type ItemVenda = {
+  id: number
+  itemEstoqueId: number
+  sku: string
+  nome: string
+  unidade: string
+  quantidade: number
+  quantidadeFaturada: number
+  /** Preço de tabela COPIADO na criação — tabela que muda depois não mexe no pedido. */
+  precoTabela: number
+  precoPraticado: number
+  /** Custo médio no momento da venda, também copiado: é o que sustenta a margem. */
+  custoNaVenda: number
+}
+
+export type PedidoVenda = {
+  id: number
+  numero: string
+  clienteId: number
+  cliente: string
+  situacao: SituacaoVenda
+  vendedor: string
+  criadoEm: string
+  validadeOrcamento: string
+  condicaoPagamento: string
+  aprovadoPor: string | null
+  aprovadoEm: string | null
+  itens: ItemVenda[]
+  lancamentoId: number | null
+  observacao: string
+}
+
+export type TotaisVendas = {
+  emOrcamento: number
+  aguardandoDesconto: number
+  aFaturar: number
+  faturadoMes: number
+  margemMedia: number
+}

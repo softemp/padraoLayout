@@ -279,5 +279,29 @@ export async function registrarMovimento(itemId: number, dados: NovoMovimento): 
   return movimento
 }
 
+/**
+ * Reserva: promete sem mover o físico. Reservar e dar baixa são operações
+ * distintas — fundi-las faz o estoque cair no pedido e subir no cancelamento,
+ * poluindo o kardex com movimento que nunca aconteceu na prateleira.
+ */
+export async function reservarEstoque(itemId: number, quantidade: number): Promise<void> {
+  await latencia(280)
+  const item = itens.find((i) => i.id === itemId)
+  if (!item) throw new Error('Item não encontrado.')
+  if (quantidade > disponivel(item)) {
+    throw new Error(
+      `${item.sku}: disponível é ${disponivel(item)} ${item.unidade} (saldo ${item.saldo} menos ${item.reservado} já reservado).`,
+    )
+  }
+  item.reservado += quantidade
+}
+
+export async function liberarReserva(itemId: number, quantidade: number): Promise<void> {
+  await latencia(240)
+  const item = itens.find((i) => i.id === itemId)
+  if (!item) return
+  item.reservado = Math.max(item.reservado - quantidade, 0)
+}
+
 export const categorias = [...CATEGORIAS]
 export const fornecedores = [...FORNECEDORES]
