@@ -21,6 +21,7 @@ export const navegacao: NavSecao[] = [
           { rotulo: 'Novos no mês', icone: '✨', rota: '/clientes?sortBy=criadoEm&sortDir=desc' },
         ],
       },
+      { rotulo: 'Projetos', icone: '📁', rota: '/projetos' },
       { rotulo: 'Tarefas', icone: '✅', rota: '/tarefas' },
       { rotulo: 'Estoque', icone: '📦', rota: '/estoque' },
       { rotulo: 'Vendas', icone: '💼', rota: '/vendas' },

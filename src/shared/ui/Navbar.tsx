@@ -25,6 +25,7 @@ function tituloDaRota(pathname: string) {
   if (/^\/compras\/\d+$/.test(pathname)) return 'Compras · Pedido de compra'
   if (/^\/vendas\/\d+$/.test(pathname)) return 'Vendas · Pedido de venda'
   if (/^\/rh\/\d+$/.test(pathname)) return 'Pessoas · Ficha do colaborador'
+  if (/^\/projetos\/\d+$/.test(pathname)) return 'Projetos · Ficha do projeto'
   for (const secao of navegacao) {
     for (const item of secao.itens) {
       if (!ehPai(item)) {

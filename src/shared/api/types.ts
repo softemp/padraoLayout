@@ -866,3 +866,127 @@ export type TotaisRh = {
   aniversariantes: number
   custoFolha: number | null
 }
+
+// ── Projetos ─────────────────────────────────────────────────────────────────
+
+export type SituacaoProjeto = 'planejado' | 'em_andamento' | 'em_risco' | 'pausado' | 'concluido' | 'cancelado'
+
+export type Marco = {
+  id: number
+  projetoId: number
+  nome: string
+  previsto: string
+  /** Data da linha de base original — o replanejamento não a apaga. */
+  previstoBaseline: string
+  entregue: string | null
+  /** Peso do marco no avanço físico do projeto (soma 100). */
+  peso: number
+  concluido: boolean
+}
+
+export type Apontamento = {
+  id: number
+  projetoId: number
+  pessoa: string
+  data: string
+  horas: number
+  atividade: string
+  faturavel: boolean
+}
+
+export type Risco = {
+  id: number
+  projetoId: number
+  descricao: string
+  probabilidade: 'baixa' | 'media' | 'alta'
+  impacto: 'baixo' | 'medio' | 'alto'
+  mitigacao: string
+  aberto: boolean
+}
+
+export type Replanejamento = {
+  id: number
+  projetoId: number
+  criadoEm: string
+  autor: string
+  motivo: string
+  prazoAnterior: string
+  prazoNovo: string
+  horasAnteriores: number
+  horasNovas: number
+}
+
+export type Projeto = {
+  id: number
+  codigo: string
+  nome: string
+  cliente: string
+  clienteId: number
+  responsavel: string
+  situacao: SituacaoProjeto
+  inicio: string
+  prazo: string
+  /** Linha de base: o prazo prometido no começo. */
+  prazoBaseline: string
+  horasOrcadas: number
+  horasBaseline: number
+  valorContrato: number
+  custoHora: number
+  despesas: number
+}
+
+export type TotaisProjetos = {
+  emAndamento: number
+  atrasados: number
+  estourandoHoras: number
+  margemMedia: number
+  horasMes: number
+}
+
+// ── Projetos: estrutura e alocação ───────────────────────────────────────────
+
+export type Fase = {
+  id: number
+  projetoId: number
+  nome: string
+  ordem: number
+  inicioPrevisto: string
+  fimPrevisto: string
+  concluida: boolean
+}
+
+export type TarefaProjeto = {
+  id: number
+  projetoId: number
+  faseId: number
+  nome: string
+  responsavel: string | null
+  horasEstimadas: number
+  horasApontadas: number
+  inicioPrevisto: string
+  fimPrevisto: string
+  /** Tarefa que precisa terminar antes desta começar. */
+  dependeDe: number | null
+  concluida: boolean
+}
+
+export type CapacidadePessoa = {
+  pessoa: string
+  /** Horas por dia útil que a pessoa tem para projetos. */
+  capacidadeDiaria: number
+  horasAlocadas: number
+  diasUteisNoPeriodo: number
+  capacidadeTotal: number
+}
+
+export type NovoProjeto = {
+  nome: string
+  cliente: string
+  clienteId: number
+  responsavel: string
+  inicio: string
+  prazo: string
+  valorContrato: number
+  custoHora: number
+  horasOrcadas: number
+}
