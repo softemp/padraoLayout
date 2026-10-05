@@ -11,7 +11,11 @@ export type CanalRecuperacao = 'email' | 'whatsapp' | 'sms'
 export type ConfigAcesso = {
   /** Formas aceitas no campo de identificação do login. */
   identificadores: TipoIdentificador[]
-  /** Segundo fator exigido depois da senha. */
+  /**
+   * Segundo fator exigido depois da senha. NASCE DESLIGADO em todo projeto novo: o admin liga no painel
+   * depois que o sistema está de pé (Cofre: Base_Auth_Travas_Nascem_Desligadas). Ligado no primeiro dia,
+   * ninguém entra para configurar envio, gateway ou o próprio 2FA.
+   */
   segundoFator: boolean
   /** Canais oferecidos na recuperação de senha, na ordem de exibição. */
   canaisRecuperacao: CanalRecuperacao[]
@@ -21,7 +25,7 @@ export type ConfigAcesso = {
 
 export const configAcesso: ConfigAcesso = {
   identificadores: ['email', 'telefone', 'cpf'],
-  segundoFator: true,
+  segundoFator: false,
   canaisRecuperacao: ['email', 'whatsapp', 'sms'],
   autoCadastro: true,
 }

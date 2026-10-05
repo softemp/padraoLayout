@@ -19,7 +19,7 @@ const perfil: PerfilUsuario = {
   formatoData: 'dd/MM/yyyy',
   paginaInicial: '/',
   avatarUrl: null,
-  segundoFatorAtivo: true,
+  segundoFatorAtivo: false,
   codigosRecuperacaoRestantes: 8,
   senhaAlteradaEm: diasAtras(96),
 }
