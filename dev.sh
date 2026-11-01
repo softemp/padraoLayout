@@ -37,7 +37,7 @@ porta_ocupada() { ss -ltnH "sport = :$1" 2>/dev/null | grep -q .; }
 pids_da_porta() { ss -ltnpH "sport = :$1" 2>/dev/null | grep -o 'pid=[0-9]*' | cut -d= -f2 | sort -u; }
 pasta_do()      { readlink "/proc/$1/cwd" 2>/dev/null || true; }
 comando_do()    { tr '\0' ' ' <"/proc/$1/cmdline" 2>/dev/null | cut -c1-100 || true; }
-pai_do()        { sed 's/^.*) //' "/proc/$1/stat" 2>/dev/null | cut -d' ' -f2 || true; }  # comm pode ter espaco/parenteses
+pai_do()        { ps -o ppid= -p "$1" 2>/dev/null | tr -d ' ' || true; }
 
 do_projeto() {
   local pasta; pasta="$(pasta_do "$1")"
