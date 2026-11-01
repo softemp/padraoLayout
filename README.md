@@ -8,7 +8,7 @@ componentes e o padrão de gráficos, já montados e navegáveis.
 
 ```bash
 npm install
-npm run dev       # http://localhost:5273
+./dev.sh          # http://localhost:5273 (par 5273/5274; 5274 reservada, sem backend)
 ```
 
 Outros comandos: `npm run build`, `npm run preview`, `npm run typecheck`.
