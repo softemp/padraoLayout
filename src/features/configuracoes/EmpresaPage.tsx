@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useSearchParams } from 'react-router-dom'
+
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -14,6 +14,7 @@ import { PageHeader } from '@/shared/ui/PageHeader'
 import { Skeleton } from '@/shared/ui/Skeleton'
 import { cn } from '@/shared/lib/cn'
 import { date, mascaraCep, mascaraCnpj, mascaraTelefoneBr } from '@/shared/lib/format'
+import { useParametrosDaTela } from '@/shared/hooks/useParametrosDaTela'
 
 const ABAS = [
   { id: 'dados', rotulo: 'Dados da empresa', icone: '🏢' },
@@ -54,7 +55,7 @@ type Formulario = z.infer<typeof schema>
 
 export function EmpresaPage() {
   const qc = useQueryClient()
-  const [params, setParams] = useSearchParams()
+  const [params, setParams] = useParametrosDaTela()
   const aba = (params.get('aba') ?? 'dados') as AbaId
 
   const [salvo, setSalvo] = useState(false)

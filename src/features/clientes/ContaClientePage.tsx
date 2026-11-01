@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Link, useParams, useSearchParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import {
   lancarAjuste, obterAssinatura, obterAuditoria, obterCliente, obterExtrato, obterUsuariosDaConta,
@@ -18,6 +18,7 @@ import { date, datetime, money, timeAgo } from '@/shared/lib/format'
 import { AjusteContaModal } from './AjusteContaModal'
 import { ClienteFormModal, type ClienteFormulario } from './ClienteFormModal'
 import { mascaraCpf } from './colunas'
+import { useParametrosDaTela } from '@/shared/hooks/useParametrosDaTela'
 
 const ABAS = [
   { id: 'visao', rotulo: 'Visão geral', icone: '📋' },
@@ -42,7 +43,7 @@ export function ContaClientePage() {
   const { id } = useParams()
   const clienteId = Number(id)
   const qc = useQueryClient()
-  const [params, setParams] = useSearchParams()
+  const [params, setParams] = useParametrosDaTela()
   const aba = (params.get('aba') ?? 'visao') as AbaId
 
   const [editando, setEditando] = useState(false)
@@ -157,7 +158,7 @@ export function ContaClientePage() {
         </div>
       </Card>
 
-      {/* Abas da conta — o estado mora na URL, então o link leva à aba certa. */}
+      {/* Abas da conta — o estado mora no `state` do histórico: o F5 preserva e a barra fica limpa. */}
       <div role="tablist" aria-label="Seções da conta" className="flex flex-wrap items-center gap-1 border-b border-border">
         {ABAS.map((item) => {
           const ativa = aba === item.id

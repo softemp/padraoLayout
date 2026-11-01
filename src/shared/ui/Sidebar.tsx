@@ -5,21 +5,26 @@ import { cn } from '@/shared/lib/cn'
 import { useUi } from '@/store/ui'
 import { useEhDesktop } from '@/shared/hooks/useMediaQuery'
 import { ehPai, navegacao, type NavFolha, type NavPai } from '@/app/navigation'
+import { telaDoState } from '@/shared/hooks/useParametrosDaTela'
 
-const rotaBase = (rota: string) => rota.split('?')[0]
 const LARGURA_FAIXA = 72 // px — a faixa de ícones (md:w-[4.5rem])
+
+/** Atalho com recorte (tela: { status: 'inadimplente' }) só fica ativo se o recorte do `state` bater. */
+function folhaAtiva(item: NavFolha, pathname: string, state: unknown) {
+  const tela = telaDoState(state)
+  return pathname === item.rota && Object.entries(item.tela ?? {}).every(([k, v]) => tela[k] === v)
+}
 
 function Folha({ item, recolhida, aninhado, onNavegar }: {
   item: NavFolha; recolhida: boolean; aninhado?: boolean; onNavegar: () => void
 }) {
-  const { pathname, search } = useLocation()
-  // Item com query (?status=inadimplente) só fica ativo se a query bater.
-  const [base, query] = item.rota.split('?')
-  const ativo = pathname === base && (!query || search.includes(query))
+  const { pathname, state } = useLocation()
+  const ativo = folhaAtiva(item, pathname, state)
 
   return (
     <NavLink
       to={item.rota}
+      state={item.tela ? { tela: item.tela } : undefined}
       onClick={onNavegar}
       title={recolhida ? item.rotulo : undefined}
       className={cn(
@@ -49,6 +54,7 @@ function Folha({ item, recolhida, aninhado, onNavegar }: {
  */
 function Flyout({ item, topo, onFechar }: { item: NavPai; topo: number; onFechar: () => void }) {
   const painel = useRef<HTMLDivElement>(null)
+  const { pathname, state } = useLocation()
 
   useEffect(() => {
     const clique = (e: MouseEvent) => {
@@ -93,12 +99,13 @@ function Flyout({ item, topo, onFechar }: { item: NavPai; topo: number; onFechar
           <NavLink
             key={filho.rotulo}
             to={filho.rota}
+            state={filho.tela ? { tela: filho.tela } : undefined}
             role="menuitem"
             onClick={onFechar}
-            className={({ isActive }) =>
+            className={
               cn(
                 'flex items-center gap-2.5 rounded-lg px-2.5 py-2 text-[13px] transition-colors',
-                isActive
+                folhaAtiva(filho, pathname, state)
                   ? 'bg-primary/10 font-semibold text-primary'
                   : 'font-medium text-text-secondary hover:bg-surface-2 hover:text-text',
               )
@@ -144,7 +151,7 @@ export function Sidebar() {
   useEffect(() => {
     for (const secao of navegacao) {
       for (const item of secao.itens) {
-        if (ehPai(item) && item.filhos.some((f) => rotaBase(f.rota) === pathname)) {
+        if (ehPai(item) && item.filhos.some((f) => f.rota === pathname)) {
           setGrupoAberto(item.rotulo)
           return
         }
@@ -219,7 +226,7 @@ export function Sidebar() {
                   return <Folha key={item.rotulo} item={item} recolhida={recolhida} onNavegar={fecharNoMobile} />
                 }
 
-                const filhoAtivo = item.filhos.some((f) => rotaBase(f.rota) === pathname)
+                const filhoAtivo = item.filhos.some((f) => f.rota === pathname)
                 const aberto = recolhida ? flyout?.item.rotulo === item.rotulo : grupoAberto === item.rotulo
 
                 return (

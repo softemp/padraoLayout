@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
-import { Link, useNavigate, useSearchParams } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { keepPreviousData, useQuery } from '@tanstack/react-query'
 import type { ColumnDef } from '@tanstack/react-table'
 import {
@@ -20,6 +20,7 @@ import { PageHeader } from '@/shared/ui/PageHeader'
 import { cn } from '@/shared/lib/cn'
 import { CartaoResumo, GradeResumo } from '@/shared/ui/CartaoResumo'
 import { date, money, number, percent } from '@/shared/lib/format'
+import { useParametrosDaTela } from '@/shared/hooks/useParametrosDaTela'
 
 const situacaoInfo: Record<SituacaoPedido, { tom: 'neutro' | 'warning' | 'info' | 'good' | 'critical'; rotulo: string }> = {
   rascunho: { tom: 'neutro', rotulo: 'Rascunho' },
@@ -33,7 +34,7 @@ const situacaoInfo: Record<SituacaoPedido, { tom: 'neutro' | 'warning' | 'info' 
 
 export function ComprasPage() {
   const navigate = useNavigate()
-  const [params, setParams] = useSearchParams()
+  const [params, setParams] = useParametrosDaTela()
   const aba = (params.get('aba') ?? 'pedidos') as 'pedidos' | 'sugestoes'
 
   const tabela = useTableState({ sortBy: 'criadoEm', sortDir: 'desc', filtros: ['situacao', 'fornecedor'] })

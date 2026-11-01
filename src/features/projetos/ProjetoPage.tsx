@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Link, useParams, useSearchParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import {
   apontarHoras, atrasado, avancoFisico, concluirMarco, consumoHoras, custoPrevisto,
@@ -18,6 +18,7 @@ import { Skeleton } from '@/shared/ui/Skeleton'
 import { EstruturaProjeto } from './EstruturaProjeto'
 import { cn } from '@/shared/lib/cn'
 import { date, datetime, money, number, percent } from '@/shared/lib/format'
+import { useParametrosDaTela } from '@/shared/hooks/useParametrosDaTela'
 
 const ABAS = [
   { id: 'resumo', rotulo: 'Resumo', icone: '📊' },
@@ -38,7 +39,7 @@ export function ProjetoPage() {
   const { id } = useParams()
   const projetoId = Number(id)
   const qc = useQueryClient()
-  const [params, setParams] = useSearchParams()
+  const [params, setParams] = useParametrosDaTela()
   const aba = (params.get('aba') ?? 'resumo') as AbaId
 
   const [apontando, setApontando] = useState(false)

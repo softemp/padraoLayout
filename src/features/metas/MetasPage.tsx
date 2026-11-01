@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Link, useSearchParams } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
 import {
   atingimento, esperadoAteAgora, farol, listarIndicadores, PERSPECTIVAS, projecaoFimDoPeriodo,
@@ -14,6 +14,7 @@ import { Skeleton } from '@/shared/ui/Skeleton'
 import { cn } from '@/shared/lib/cn'
 import { formatarMinutos } from '@/shared/api/chamados'
 import { money, moneyCompact, number, percent } from '@/shared/lib/format'
+import { useParametrosDaTela } from '@/shared/hooks/useParametrosDaTela'
 
 export const formatarValor = (i: Indicador, v: number) =>
   i.formato === 'moeda' ? (v >= 100_000 ? moneyCompact(v) : money(v))
@@ -109,7 +110,7 @@ function CartaoIndicador({ indicador }: { indicador: Indicador }) {
 }
 
 export function MetasPage() {
-  const [params, setParams] = useSearchParams()
+  const [params, setParams] = useParametrosDaTela()
   const perspectiva = (params.get('p') ?? 'todas') as Perspectiva | 'todas'
   const [soRisco, setSoRisco] = useState(false)
 

@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
-import { useSearchParams } from 'react-router-dom'
+
 import { keepPreviousData, useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import type { ColumnDef } from '@tanstack/react-table'
 import {
@@ -21,10 +21,11 @@ import { date, number } from '@/shared/lib/format'
 import { TarefaCard } from './TarefaCard'
 import { CartaoResumo, GradeResumo } from '@/shared/ui/CartaoResumo'
 import { TarefaModal } from './TarefaModal'
+import { useParametrosDaTela } from '@/shared/hooks/useParametrosDaTela'
 
 export function TarefasPage() {
   const qc = useQueryClient()
-  const [params, setParams] = useSearchParams()
+  const [params, setParams] = useParametrosDaTela()
   const visao = (params.get('visao') ?? 'quadro') as 'quadro' | 'lista'
   const soMinhas = params.get('minhas') !== '0'
 

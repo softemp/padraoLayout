@@ -1,5 +1,5 @@
 import { Fragment, useMemo, useState } from 'react'
-import { useSearchParams } from 'react-router-dom'
+
 import { useQuery } from '@tanstack/react-query'
 import { Bar, BarChart, CartesianGrid, Cell, Line, LineChart, ReferenceLine, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
 import {
@@ -17,6 +17,7 @@ import { Select } from '@/shared/ui/Field'
 import { Skeleton } from '@/shared/ui/Skeleton'
 import { cn } from '@/shared/lib/cn'
 import { money, moneyCompact, number, percent } from '@/shared/lib/format'
+import { useParametrosDaTela } from '@/shared/hooks/useParametrosDaTela'
 
 const ABAS = [
   { id: 'resultado', rotulo: 'Resultado', icone: '📊' },
@@ -42,7 +43,7 @@ function Variacao({ valor }: { valor: number | null }) {
 
 export function RelatoriosFinanceirosPage() {
   const t = useChartTokens()
-  const [params, setParams] = useSearchParams()
+  const [params, setParams] = useParametrosDaTela()
   const aba = (params.get('aba') ?? 'resultado') as AbaId
 
   const hoje = new Date()

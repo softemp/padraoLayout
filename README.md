@@ -51,7 +51,7 @@ src/
     ui/          o kit: AppShell, Sidebar, Navbar, DataTable, Button, Field…
     charts/      ChartCard + gráficos, tokens de cor de série
     api/         API FALSA (mock) com o contrato canônico de listagem
-    hooks/       useTableState (estado na URL), useDebouncedValue…
+    hooks/       useTableState (estado no componente), useParametrosDaTela, useDebouncedValue…
     lib/         cn, format (pt-BR), ui-prefs (único acesso ao localStorage)
   store/         estado global de UI (tema, sidebar)
   index.css      DESIGN TOKENS — a única fonte de cor do projeto
@@ -66,8 +66,12 @@ src/
 - **Listagem server-side de verdade.** A API mocada pagina, ordena e busca
   "no banco", com latência simulada — os estados de carregando, vazio e erro
   aparecem como aparecem em produção. Ordem padrão com desempate por id.
-- **Estado da listagem na URL** (`?page=&sortBy=&search=`): link compartilhável
-  e "voltar" que devolve a mesma página.
+- **URL limpa, sem query string de navegação.** Aba, recorte e destino moram no
+  `state` do histórico (`useParametrosDaTela`/`useAbaDaTela`); a listagem
+  (página, ordem, busca, filtros) mora no componente (`useTableState`); módulo
+  ganha rota própria. O `<ParametrosNoEstado />` na raiz move a query de link
+  antigo para o `state` e limpa a barra. Query só por obrigação de terceiro,
+  anotada na spec (Cofre: `Base_Frontend_URL_Limpa_Estado_De_Navegacao`).
 - **Cor de gráfico validada.** A ordem das séries é fixa e passou no validador
   de daltonismo nos dois temas; todo gráfico tem alternância **Gráfico ↔ Tabela**,
   que é o caminho de quem lê por leitor de tela e a compensação exigida para as

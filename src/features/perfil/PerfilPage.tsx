@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useSearchParams } from 'react-router-dom'
+
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -23,6 +23,7 @@ import { cn } from '@/shared/lib/cn'
 import { datetime, mascaraTelefoneBr, timeAgo } from '@/shared/lib/format'
 import { useUi } from '@/store/ui'
 import type { ThemeChoice } from '@/shared/lib/ui-prefs'
+import { useParametrosDaTela } from '@/shared/hooks/useParametrosDaTela'
 
 const ABAS = [
   { id: 'dados', rotulo: 'Dados pessoais', icone: '👤' },
@@ -84,7 +85,7 @@ type FormSenha = z.infer<typeof schemaSenha>
 
 export function PerfilPage() {
   const qc = useQueryClient()
-  const [params, setParams] = useSearchParams()
+  const [params, setParams] = useParametrosDaTela()
   const aba = (params.get('aba') ?? 'dados') as AbaId
 
   const tema = useUi((s) => s.theme)

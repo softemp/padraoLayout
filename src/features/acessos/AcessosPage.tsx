@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useSearchParams } from 'react-router-dom'
+
 import { useQuery } from '@tanstack/react-query'
 import { ACOES, listarModulos, listarPapeis, listarPermissoes, listarUsuariosSistema } from '@/shared/api/rbac'
 import type { Painel, Papel } from '@/shared/api/types'
@@ -12,6 +12,7 @@ import { Skeleton } from '@/shared/ui/Skeleton'
 import { cn } from '@/shared/lib/cn'
 import { number, timeAgo } from '@/shared/lib/format'
 import { MatrizPermissoes } from './MatrizPermissoes'
+import { useParametrosDaTela } from '@/shared/hooks/useParametrosDaTela'
 
 const ABAS = [
   { id: 'papeis', rotulo: 'Papéis', icone: '🎭' },
@@ -29,7 +30,7 @@ function PainelBadge({ painel }: { painel: Painel | null }) {
 }
 
 export function AcessosPage() {
-  const [params, setParams] = useSearchParams()
+  const [params, setParams] = useParametrosDaTela()
   const aba = (params.get('aba') ?? 'papeis') as AbaId
   const [papelSelecionado, setPapel] = useState<number | null>(null)
 

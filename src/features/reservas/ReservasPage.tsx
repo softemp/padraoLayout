@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useSearchParams } from 'react-router-dom'
+
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import {
   cancelarReserva, confirmarReserva, criarReserva, fazerCheckin, fazerCheckout, HORARIOS, hoje,
@@ -20,6 +20,7 @@ import { CANAL, SITUACAO, TIPO } from './comum'
 import { MapaOcupacao } from './MapaOcupacao'
 import { NovaReservaModal } from './NovaReservaModal'
 import { UnidadesPainel } from './UnidadesPainel'
+import { useParametrosDaTela } from '@/shared/hooks/useParametrosDaTela'
 
 const maisDias = (base: string, n: number) =>
   new Date(+new Date(`${base}T12:00:00`) + n * 86400000).toISOString().slice(0, 10)
@@ -28,7 +29,7 @@ type Aba = 'mapa' | 'reservas' | 'unidades'
 
 export function ReservasPage() {
   const qc = useQueryClient()
-  const [params, setParams] = useSearchParams()
+  const [params, setParams] = useParametrosDaTela()
   const aba = (params.get('aba') ?? 'mapa') as Aba
   const [inicioMapa, setInicioMapa] = useState(maisDias(hoje(), -2))
   const [nova, setNova] = useState<{ unidadeId?: number; data?: string } | null>(null)

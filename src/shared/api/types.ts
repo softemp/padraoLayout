@@ -1057,6 +1057,8 @@ export type Indicador = {
   /** De ONDE o número sai — indicador digitado é indicador que ninguém confia. */
   fonte: string
   rotaFonte: string | null
+  /** Recorte da tela de origem, no `state` do histórico (sem query na rota). */
+  telaFonte?: Record<string, string>
   formato: FormatoIndicador
   direcao: DirecaoMeta
   meta: number

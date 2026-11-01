@@ -1,13 +1,14 @@
-import { Link, useSearchParams } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { Card } from '@/shared/ui/Card'
 import { EmptyState } from '@/shared/ui/EmptyState'
 import { PageHeader } from '@/shared/ui/PageHeader'
 import { Button } from '@/shared/ui/Button'
 
-/** Rota de exemplo: o menu inteiro navega, sem link morto no protótipo. */
-export function EmConstrucaoPage() {
-  const [params] = useSearchParams()
-  const titulo = params.get('t') ?? 'Módulo'
+/**
+ * Rota de exemplo: o menu inteiro navega, sem link morto no protótipo. Cada módulo ganha ROTA PRÓPRIA e passa o
+ * título por prop — nunca `/em-construcao?t=Titulo` (Base_Frontend_URL_Limpa_Estado_De_Navegacao).
+ */
+export function EmConstrucaoPage({ titulo = 'Módulo' }: { titulo?: string }) {
 
   return (
     <div className="space-y-2 sm:space-y-4 lg:space-y-6">

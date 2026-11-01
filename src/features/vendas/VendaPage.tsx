@@ -137,7 +137,7 @@ export function VendaPage() {
           <p>{number(resultado.saidas)} saídas no estoque{resultado.lancamentoCriado && ' · conta a receber criada'}</p>
           <p className="flex flex-wrap gap-3 pt-1">
             <Link to="/estoque" className="font-medium text-primary hover:underline">ver no estoque</Link>
-            <Link to="/financeiro/contas?aba=receber" className="font-medium text-primary hover:underline">ver em contas a receber</Link>
+            <Link to="/financeiro/contas" state={{ tela: { aba: 'receber' } }} className="font-medium text-primary hover:underline">ver em contas a receber</Link>
           </p>
         </div>
       )}

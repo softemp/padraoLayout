@@ -32,9 +32,9 @@ function tituloDaRota(pathname: string) {
   for (const secao of navegacao) {
     for (const item of secao.itens) {
       if (!ehPai(item)) {
-        if (item.rota.split('?')[0] === pathname) return item.rotulo
+        if (item.rota === pathname) return item.rotulo
       } else {
-        const filho = item.filhos.find((f) => f.rota.split('?')[0] === pathname)
+        const filho = item.filhos.find((f) => f.rota === pathname)
         if (filho) return `${item.rotulo} · ${filho.rotulo}`
       }
     }

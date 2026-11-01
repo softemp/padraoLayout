@@ -270,7 +270,7 @@ export function ProjetosPage() {
       <NovoProjetoModal
         aberto={criando}
         onFechar={() => setCriando(false)}
-        onCriado={(id) => { setCriando(false); navigate(`/projetos/${id}?aba=estrutura`) }}
+        onCriado={(id) => { setCriando(false); navigate(`/projetos/${id}`, { state: { tela: { aba: 'estrutura' } } }) }}
       />
     </div>
   )

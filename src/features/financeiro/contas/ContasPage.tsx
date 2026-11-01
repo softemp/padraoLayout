@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react'
-import { useSearchParams } from 'react-router-dom'
+
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import {
   contas as contasMock, criarLancamento, DuplicidadeError, extratoConta, listarCategorias,
@@ -17,6 +17,7 @@ import { LancamentoFormModal } from './LancamentoFormModal'
 import { ListaLancamentos } from './ListaLancamentos'
 import { CartaoResumo, GradeResumo } from '@/shared/ui/CartaoResumo'
 import { VisaoGeralFinanceiro } from './VisaoGeralFinanceiro'
+import { useParametrosDaTela } from '@/shared/hooks/useParametrosDaTela'
 
 const ABAS = [
   { id: 'visao', rotulo: 'Visão geral', icone: '📊' },
@@ -61,7 +62,7 @@ function intervalo(periodo: PeriodoId): { de: string; ate: string } {
 
 export function ContasPage() {
   const qc = useQueryClient()
-  const [params, setParams] = useSearchParams()
+  const [params, setParams] = useParametrosDaTela()
   const aba = (params.get('aba') ?? 'visao') as AbaId
 
   const [periodo, setPeriodo] = useState<PeriodoId>('mes')

@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Link, useParams, useSearchParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import {
   agendarFerias, alternarItemDesligamento, checklistDesligamento, diasEmAberto, diasParaDobra,
@@ -17,6 +17,7 @@ import { Modal } from '@/shared/ui/Modal'
 import { Skeleton } from '@/shared/ui/Skeleton'
 import { cn } from '@/shared/lib/cn'
 import { date, datetime, money, number } from '@/shared/lib/format'
+import { useParametrosDaTela } from '@/shared/hooks/useParametrosDaTela'
 
 const ABAS = [
   { id: 'resumo', rotulo: 'Resumo', icone: '📋' },
@@ -45,7 +46,7 @@ export function ColaboradorPage() {
   const { id } = useParams()
   const colaboradorId = Number(id)
   const qc = useQueryClient()
-  const [params, setParams] = useSearchParams()
+  const [params, setParams] = useParametrosDaTela()
   const aba = (params.get('aba') ?? 'resumo') as AbaId
 
   const [agendando, setAgendando] = useState<number | null>(null)

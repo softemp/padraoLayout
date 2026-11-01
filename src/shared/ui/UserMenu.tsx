@@ -44,7 +44,7 @@ export function UserMenu() {
           </div>
           <div className="py-1.5">
             <DropdownItem icone="👤" onClick={() => { fechar(); navigate('/perfil') }}>Perfil</DropdownItem>
-            <DropdownItem icone="⚙️" onClick={() => { fechar(); navigate('/perfil?aba=preferencias') }}>Preferências</DropdownItem>
+            <DropdownItem icone="⚙️" onClick={() => { fechar(); navigate('/perfil', { state: { tela: { aba: 'preferencias' } } }) }}>Preferências</DropdownItem>
             <DropdownItem icone="❓" onClick={fechar}>Ajuda e suporte</DropdownItem>
           </div>
           <div className="border-t border-border py-1.5">

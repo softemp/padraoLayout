@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Link, useSearchParams } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import {
   apuracaoPorVendedor, estornarComissao, liberarComissao, listarComissoes, pagarComissoes,
@@ -19,6 +19,7 @@ import { Skeleton } from '@/shared/ui/Skeleton'
 import { cn } from '@/shared/lib/cn'
 import { CartaoResumo, GradeResumo } from '@/shared/ui/CartaoResumo'
 import { date, money, number, percent } from '@/shared/lib/format'
+import { useParametrosDaTela } from '@/shared/hooks/useParametrosDaTela'
 
 const situacaoInfo: Record<SituacaoComissao, { tom: 'neutro' | 'info' | 'good' | 'critical'; rotulo: string; ajuda: string }> = {
   provisionada: { tom: 'neutro', rotulo: 'Provisionada', ajuda: 'venda faturada, cliente ainda não pagou' },
@@ -29,7 +30,7 @@ const situacaoInfo: Record<SituacaoComissao, { tom: 'neutro' | 'info' | 'good' |
 
 export function ComissoesPage() {
   const qc = useQueryClient()
-  const [params, setParams] = useSearchParams()
+  const [params, setParams] = useParametrosDaTela()
   const aba = (params.get('aba') ?? 'apuracao') as 'apuracao' | 'lancamentos' | 'plano'
   const [situacao, setSituacao] = useState<SituacaoComissao | ''>('')
   const [pagando, setPagando] = useState<string | null>(null)

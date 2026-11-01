@@ -69,7 +69,7 @@ export function IndicadorPage() {
         acoes={
           <>
             {indicador.rotaFonte && (
-              <Button variant="secondary"><Link to={indicador.rotaFonte}>Ver a origem do número</Link></Button>
+              <Button variant="secondary"><Link to={indicador.rotaFonte} state={indicador.telaFonte ? { tela: indicador.telaFonte } : undefined}>Ver a origem do número</Link></Button>
             )}
             <Button onClick={() => { setErro(null); setNovaMeta(indicador.meta); setRevisando(true) }}>Revisar meta</Button>
           </>
@@ -135,7 +135,7 @@ export function IndicadorPage() {
               <p><strong className="text-text">{indicador.fonte}</strong></p>
               <p>Responsável: <strong className="text-text">{indicador.responsavel}</strong> · período {indicador.periodo}.</p>
               {indicador.rotaFonte && (
-                <Button variant="secondary" size="sm" block><Link to={indicador.rotaFonte}>Abrir a tela de origem</Link></Button>
+                <Button variant="secondary" size="sm" block><Link to={indicador.rotaFonte} state={indicador.telaFonte ? { tela: indicador.telaFonte } : undefined}>Abrir a tela de origem</Link></Button>
               )}
               <p className="border-t border-border pt-2 text-[12px] text-text-muted">
                 Indicador digitado à mão fica verde por três meses porque alguém esqueceu de atualizar. Este é

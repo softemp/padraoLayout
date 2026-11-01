@@ -1,5 +1,9 @@
-/** Navegação em NÍVEIS: cada item é FOLHA (rota) ou PAI (com filhos). */
-export type NavFolha = { rotulo: string; icone: string; rota: string; badge?: string }
+/**
+ * Navegação em NÍVEIS: cada item é FOLHA (rota) ou PAI (com filhos). Atalho para um recorte da mesma tela
+ * (inadimplentes, novos no mês) leva o recorte em `tela`, que vai no `state` do histórico — a rota fica sem query
+ * (Base_Frontend_URL_Limpa_Estado_De_Navegacao).
+ */
+export type NavFolha = { rotulo: string; icone: string; rota: string; tela?: Record<string, string>; badge?: string }
 export type NavPai = { rotulo: string; icone: string; filhos: NavFolha[] }
 export type NavItem = NavFolha | NavPai
 
@@ -18,8 +22,8 @@ export const navegacao: NavSecao[] = [
         icone: '👥',
         filhos: [
           { rotulo: 'Todos os clientes', icone: '📇', rota: '/clientes' },
-          { rotulo: 'Inadimplentes', icone: '🚩', rota: '/clientes?status=inadimplente', badge: '12' },
-          { rotulo: 'Novos no mês', icone: '✨', rota: '/clientes?sortBy=criadoEm&sortDir=desc' },
+          { rotulo: 'Inadimplentes', icone: '🚩', rota: '/clientes', tela: { status: 'inadimplente' }, badge: '12' },
+          { rotulo: 'Novos no mês', icone: '✨', rota: '/clientes', tela: { sortBy: 'criadoEm', sortDir: 'desc' } },
         ],
       },
       { rotulo: 'Reservas', icone: '🗓️', rota: '/reservas' },

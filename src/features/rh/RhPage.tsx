@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
-import { useNavigate, useSearchParams } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { keepPreviousData, useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import type { ColumnDef } from '@tanstack/react-table'
 import {
@@ -21,6 +21,7 @@ import { PageHeader } from '@/shared/ui/PageHeader'
 import { cn } from '@/shared/lib/cn'
 import { CartaoResumo, GradeResumo } from '@/shared/ui/CartaoResumo'
 import { date, money, number } from '@/shared/lib/format'
+import { useParametrosDaTela } from '@/shared/hooks/useParametrosDaTela'
 
 const situacaoInfo: Record<SituacaoColaborador, { tom: 'good' | 'info' | 'warning' | 'neutro' | 'critical'; rotulo: string }> = {
   ativo: { tom: 'good', rotulo: 'Ativo' },
@@ -39,7 +40,7 @@ const tempoDeCasa = (admissao: string) => {
 export function RhPage() {
   const navigate = useNavigate()
   const qc = useQueryClient()
-  const [params, setParams] = useSearchParams()
+  const [params, setParams] = useParametrosDaTela()
   const aba = (params.get('aba') ?? 'pessoas') as 'pessoas' | 'ferias'
 
   const tabela = useTableState({ sortBy: 'nome', sortDir: 'asc', filtros: ['situacao', 'departamento', 'contrato'] })
@@ -299,7 +300,7 @@ export function RhPage() {
                     return (
                       <tr key={periodo.id} className="border-b border-border/60 transition-colors last:border-0 hover:bg-surface-2">
                         <td className="px-4 py-2.5">
-                          <button type="button" onClick={() => navigate(`/rh/${colaborador.id}?aba=ferias`)} className="text-left">
+                          <button type="button" onClick={() => navigate(`/rh/${colaborador.id}`, { state: { tela: { aba: 'ferias' } } })} className="text-left">
                             <p className="text-[13px] font-medium text-text hover:underline">{colaborador.nome}</p>
                             <p className="text-[11px] text-text-muted">{colaborador.departamento}</p>
                           </button>

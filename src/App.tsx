@@ -1,6 +1,7 @@
 import { Suspense, lazy } from 'react'
 import { Navigate, Route, Routes } from 'react-router-dom'
 import { AppShell } from '@/shared/ui/AppShell'
+import { ParametrosNoEstado } from '@/shared/hooks/useParametrosDaTela'
 import { AuthLayout } from '@/features/auth/AuthLayout'
 import { LoginPage } from '@/features/auth/LoginPage'
 import { NotFoundPage } from '@/features/sistema/NotFoundPage'
@@ -72,61 +73,65 @@ export function App() {
   return (
     <Suspense fallback={<CarregandoPagina />}>
       <Routes>
-        {/* Telas de acesso — moldura própria, sem sidebar */}
-        <Route element={<AuthLayout />}>
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/cadastro" element={<RegisterPage />} />
-          <Route path="/recuperar-senha" element={<ForgotPasswordPage />} />
-          <Route path="/verificacao" element={<VerificacaoPage />} />
-        </Route>
+        {/* Raiz: link antigo com ?x= tem a query movida para o `state` e a barra limpa
+            (Base_Frontend_URL_Limpa_Estado_De_Navegacao). */}
+        <Route element={<ParametrosNoEstado />}>
+          {/* Telas de acesso — moldura própria, sem sidebar */}
+          <Route element={<AuthLayout />}>
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/cadastro" element={<RegisterPage />} />
+            <Route path="/recuperar-senha" element={<ForgotPasswordPage />} />
+            <Route path="/verificacao" element={<VerificacaoPage />} />
+          </Route>
 
-        {/* Área logada — um AppShell só, para todos os painéis */}
-        <Route element={<AppShell />}>
-          <Route path="/" element={<DashboardPage />} />
-          <Route path="/clientes" element={<ClientesPage />} />
-          <Route path="/clientes/:id" element={<ContaClientePage />} />
-          <Route path="/contratos" element={<ContratosPage />} />
-          <Route path="/contratos-fornecedores" element={<ContratosFornecedorPage />} />
-          <Route path="/contratos-fornecedores/:id" element={<ContratoFornecedorPage />} />
-          <Route path="/contratos/:id" element={<ContratoPage />} />
-          <Route path="/tarefas" element={<TarefasPage />} />
-          <Route path="/metas" element={<MetasPage />} />
-          <Route path="/metas/:id" element={<IndicadorPage />} />
-          <Route path="/chamados" element={<ChamadosPage />} />
-          <Route path="/chamados/:id" element={<ChamadoPage />} />
-          <Route path="/projetos" element={<ProjetosPage />} />
-          <Route path="/projetos/:id" element={<ProjetoPage />} />
-          <Route path="/rh" element={<RhPage />} />
-          <Route path="/rh/:id" element={<ColaboradorPage />} />
-          <Route path="/vendas" element={<VendasPage />} />
-          <Route path="/comissoes" element={<ComissoesPage />} />
-          <Route path="/chat" element={<ChatPage />} />
-          <Route path="/reservas" element={<ReservasPage />} />
-          <Route path="/vendas/:id" element={<VendaPage />} />
-          <Route path="/compras" element={<ComprasPage />} />
-          <Route path="/compras/:id" element={<PedidoCompraPage />} />
-          <Route path="/estoque" element={<EstoquePage />} />
-          <Route path="/estoque/:id" element={<ItemEstoquePage />} />
-          <Route path="/documentos" element={<DocumentosPage />} />
-          <Route path="/documentos/:id" element={<DocumentoPage />} />
-          <Route path="/perfil" element={<PerfilPage />} />
-          <Route path="/componentes" element={<ComponentesPage />} />
-          <Route path="/configuracoes/comunicacao" element={<ComunicacaoPage />} />
-          <Route path="/configuracoes/acessos" element={<AcessosPage />} />
-          <Route path="/configuracoes/empresa" element={<EmpresaPage />} />
-          <Route path="/configuracoes/integracoes" element={<IntegracoesPage />} />
-          <Route path="/financeiro/contas" element={<ContasPage />} />
-          <Route path="/financeiro/faturas" element={<FaturasPage />} />
-          <Route path="/financeiro/recebimentos" element={<RecebimentosPage />} />
-          <Route path="/financeiro/conciliacao" element={<ConciliacaoPage />} />
-          <Route path="/relatorios" element={<RelatoriosPage />} />
-          <Route path="/relatorios/financeiros" element={<RelatoriosFinanceirosPage />} />
-          <Route path="/auditoria" element={<AuditoriaPage />} />
-          <Route path="/em-construcao" element={<EmConstrucaoPage />} />
-        </Route>
+          {/* Área logada — um AppShell só, para todos os painéis */}
+          <Route element={<AppShell />}>
+            <Route path="/" element={<DashboardPage />} />
+            <Route path="/clientes" element={<ClientesPage />} />
+            <Route path="/clientes/:id" element={<ContaClientePage />} />
+            <Route path="/contratos" element={<ContratosPage />} />
+            <Route path="/contratos-fornecedores" element={<ContratosFornecedorPage />} />
+            <Route path="/contratos-fornecedores/:id" element={<ContratoFornecedorPage />} />
+            <Route path="/contratos/:id" element={<ContratoPage />} />
+            <Route path="/tarefas" element={<TarefasPage />} />
+            <Route path="/metas" element={<MetasPage />} />
+            <Route path="/metas/:id" element={<IndicadorPage />} />
+            <Route path="/chamados" element={<ChamadosPage />} />
+            <Route path="/chamados/:id" element={<ChamadoPage />} />
+            <Route path="/projetos" element={<ProjetosPage />} />
+            <Route path="/projetos/:id" element={<ProjetoPage />} />
+            <Route path="/rh" element={<RhPage />} />
+            <Route path="/rh/:id" element={<ColaboradorPage />} />
+            <Route path="/vendas" element={<VendasPage />} />
+            <Route path="/comissoes" element={<ComissoesPage />} />
+            <Route path="/chat" element={<ChatPage />} />
+            <Route path="/reservas" element={<ReservasPage />} />
+            <Route path="/vendas/:id" element={<VendaPage />} />
+            <Route path="/compras" element={<ComprasPage />} />
+            <Route path="/compras/:id" element={<PedidoCompraPage />} />
+            <Route path="/estoque" element={<EstoquePage />} />
+            <Route path="/estoque/:id" element={<ItemEstoquePage />} />
+            <Route path="/documentos" element={<DocumentosPage />} />
+            <Route path="/documentos/:id" element={<DocumentoPage />} />
+            <Route path="/perfil" element={<PerfilPage />} />
+            <Route path="/componentes" element={<ComponentesPage />} />
+            <Route path="/configuracoes/comunicacao" element={<ComunicacaoPage />} />
+            <Route path="/configuracoes/acessos" element={<AcessosPage />} />
+            <Route path="/configuracoes/empresa" element={<EmpresaPage />} />
+            <Route path="/configuracoes/integracoes" element={<IntegracoesPage />} />
+            <Route path="/financeiro/contas" element={<ContasPage />} />
+            <Route path="/financeiro/faturas" element={<FaturasPage />} />
+            <Route path="/financeiro/recebimentos" element={<RecebimentosPage />} />
+            <Route path="/financeiro/conciliacao" element={<ConciliacaoPage />} />
+            <Route path="/relatorios" element={<RelatoriosPage />} />
+            <Route path="/relatorios/financeiros" element={<RelatoriosFinanceirosPage />} />
+            <Route path="/auditoria" element={<AuditoriaPage />} />
+            <Route path="/em-construcao" element={<EmConstrucaoPage />} />
+          </Route>
 
-        <Route path="/dashboard" element={<Navigate to="/" replace />} />
-        <Route path="*" element={<NotFoundPage />} />
+          <Route path="/dashboard" element={<Navigate to="/" replace />} />
+          <Route path="*" element={<NotFoundPage />} />
+        </Route>
       </Routes>
     </Suspense>
   )

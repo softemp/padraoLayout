@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useSearchParams } from 'react-router-dom'
+
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
@@ -9,6 +9,7 @@ import { Card, CardBody, CardHeader } from '@/shared/ui/Card'
 import { Checkbox, Input, Select } from '@/shared/ui/Field'
 import { PageHeader } from '@/shared/ui/PageHeader'
 import { cn } from '@/shared/lib/cn'
+import { useParametrosDaTela } from '@/shared/hooks/useParametrosDaTela'
 
 /**
  * Configuração dos canais de comunicação: e-mail (SMTP), WhatsApp e SMS.
@@ -214,7 +215,7 @@ function FormularioApi({ canal }: { canal: 'whatsapp' | 'sms' }) {
 }
 
 export function ComunicacaoPage() {
-  const [params, setParams] = useSearchParams()
+  const [params, setParams] = useParametrosDaTela()
   const aba = (params.get('canal') ?? 'email') as CanalId
 
   const situacoes: Record<CanalId, Situacao> = {

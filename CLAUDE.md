@@ -27,7 +27,11 @@ O conhecimento desta stack vive em `~/Documentos/projetos/IA/brainSoftEmp`.
 - PT-BR nos nomes de domínio e nos textos; código e libs em inglês.
 - Componente do kit mora em `src/shared/ui`; gráfico em `src/shared/charts`;
   tela em `src/features/<feature>`.
-- Não escreva tabela nova: use `DataTable` com `useTableState`.
+- Não escreva tabela nova: use `DataTable` com `useTableState` (estado no componente).
+- **URL limpa:** nada de `?aba=`, `?t=`, `?page=`/`?sortBy=` ou `?volta=` para navegação
+  interna. Rota própria → `state` do histórico (`useParametrosDaTela`, `useAbaDaTela`,
+  `<Link state={{ tela: { aba: 'x' } }}>`) → estado do componente. Varredura antes de
+  fechar: `grep -rnE "useSearchParams|\?[a-z_]+=" src` só acha o hook de migração.
 - Gráfico novo passa pelas regras de dataviz: uma cor por entidade (ordem fixa),
   um eixo só, legenda quando há 2+ séries, `isAnimationActive={false}`,
   e sempre com a alternância gráfico↔tabela do `ChartCard`.

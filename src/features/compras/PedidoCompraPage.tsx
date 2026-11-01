@@ -136,7 +136,7 @@ export function PedidoCompraPage() {
           </p>
           <p className="flex flex-wrap gap-3 pt-1">
             <Link to="/estoque" className="font-medium text-primary hover:underline">ver no estoque</Link>
-            <Link to="/financeiro/contas?aba=pagar" className="font-medium text-primary hover:underline">ver em contas a pagar</Link>
+            <Link to="/financeiro/contas" state={{ tela: { aba: 'pagar' } }} className="font-medium text-primary hover:underline">ver em contas a pagar</Link>
           </p>
         </div>
       )}

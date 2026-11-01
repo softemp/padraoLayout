@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Link, useParams, useSearchParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import {
   criarAditivo, diasParaVencer, estaVencendo, listarAditivos, listarAssinaturas, listarHistorico,
@@ -15,6 +15,7 @@ import { Skeleton } from '@/shared/ui/Skeleton'
 import { cn } from '@/shared/lib/cn'
 import { date, datetime, money, number } from '@/shared/lib/format'
 import { AditivoModal } from './AditivoModal'
+import { useParametrosDaTela } from '@/shared/hooks/useParametrosDaTela'
 
 const ABAS = [
   { id: 'resumo', rotulo: 'Resumo', icone: '📋' },
@@ -40,7 +41,7 @@ export function ContratoPage() {
   const { id } = useParams()
   const contratoId = Number(id)
   const qc = useQueryClient()
-  const [params, setParams] = useSearchParams()
+  const [params, setParams] = useParametrosDaTela()
   const aba = (params.get('aba') ?? 'resumo') as AbaId
 
   const [aditivoAberto, setAditivoAberto] = useState(false)

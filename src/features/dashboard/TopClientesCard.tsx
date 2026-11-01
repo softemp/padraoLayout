@@ -25,7 +25,8 @@ export function TopClientesCard() {
         descricao="Por receita recorrente mensal"
         acoes={
           <Link
-            to="/clientes?sortBy=mrr&sortDir=desc"
+            to="/clientes"
+            state={{ tela: { sortBy: 'mrr', sortDir: 'desc' } }}
             className="whitespace-nowrap text-[13px] font-medium text-primary hover:underline"
           >
             Ver todos
